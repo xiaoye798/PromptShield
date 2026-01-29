@@ -1,67 +1,92 @@
 # PromptShield
 
-> A Novel MCP-based Architecture for Overcoming Statelessness in LLM-powered Honeypots
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://python.org)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-orange.svg)](https://modelcontextprotocol.io)
+[![MITRE ATT&CK](https://img.shields.io/badge/MITRE%20ATT%26CK-Persistence-red.svg)](https://attack.mitre.org/)
 
-## Overview
+> 🛡️ A Novel MCP-based Architecture for Overcoming Statelessness in LLM-powered Honeypots
 
-PromptShield is a stateful defense framework designed to address the critical architectural weakness of LLM-powered honeypots: the inherent statelessness that causes implanted persistence mechanisms to vanish upon session termination.
+## 🎯 Project Overview
 
-Built upon the **Model Context Protocol (MCP)**, PromptShield introduces an external state management layer that:
-- Captures state-altering operations through a semantic **Command Analyzer**
-- Persists state changes to structured external storage
-- Dynamically injects query-relevant context during inference
+PromptShield is a stateful defense framework designed to address the critical architectural weakness of LLM-powered honeypots: **the inherent statelessness that causes implanted persistence mechanisms to vanish upon session termination**.
 
-This enables LLM honeypots to exhibit coherent state awareness across independent attacker sessions while maintaining **O(1)** operational complexity.
+Built upon the **Model Context Protocol (MCP)**, PromptShield introduces an external state management layer that enables LLM honeypots to exhibit coherent state awareness across independent attacker sessions while maintaining **O(1)** operational complexity.
 
-## Key Features
+### ✨ Key Features
 
-- **Cross-Session State Persistence**: Maintains state fidelity across arbitrary session boundaries
-- **Semantic Command Analysis**: Distinguishes state-altering commands from read-only queries
-- **Selective Context Injection**: Injects only query-relevant state to minimize prompt overhead
-- **Robust Noise Resilience**: Withstands high-entropy noise attacks and sandwich injection
-- **Constant Complexity**: Achieves O(1) token consumption vs O(N) for history-stacking approaches
+- 🔄 **Cross-Session State Persistence**: Maintains state fidelity across arbitrary session boundaries
+- 🧠 **Semantic Command Analysis**: Distinguishes state-altering commands from read-only queries  
+- 💉 **Selective Context Injection**: Injects only query-relevant state to minimize prompt overhead
+- 🛡️ **Robust Noise Resilience**: Withstands high-entropy noise attacks and sandwich injection
+- ⚡ **Constant Complexity**: Achieves O(1) token consumption vs O(N) for history-stacking approaches
+- 🔌 **MCP Protocol Support**: Compatible with all MCP-enabled LLM clients
 
-## Installation
+## 🚀 Quick Start
 
-### Prerequisites
+### Requirements
 
 - Python 3.8+
 - DeepSeek API key or OpenAI API key
 
-### Setup
+### Installation
 
-1. Clone the repository:
 ```bash
+# Clone the repository
 git clone https://github.com/anonymous/PromptShield.git
 cd PromptShield
-```
 
-2. Install dependencies:
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-3. Configure API credentials:
-```bash
+# Configure API credentials
 cp .env.example .env
 # Edit .env with your API keys
 ```
 
-## Quick Start
-
-### Running PromptShield Honeypot
+### Basic Usage
 
 ```bash
+# Start the PromptShield honeypot
 python LinuxSSHbot_mcp.py
-```
 
-### Running with Custom Configuration
-
-```bash
+# Or with custom configuration
 python LinuxSSHbot_mcp.py --config personalitySSH.yml
 ```
 
-## Project Structure
+## 📖 Architecture
+
+```
+┌─────────────────────────────────────┐
+│         Attacker Session            │
+│      (SSH Terminal / Web Shell)     │
+└─────────────────────────────────────┘
+                  │
+                  ▼
+┌─────────────────────────────────────┐
+│        Command Analyzer             │
+│  (Semantic Classification Layer)    │
+└─────────────────────────────────────┘
+                  │
+        ┌─────────┴─────────┐
+        ▼                   ▼
+┌───────────────┐   ┌───────────────┐
+│ record_event  │   │ query_state   │
+│  (MCP Tool)   │   │  (MCP Tool)   │
+└───────────────┘   └───────────────┘
+        │                   │
+        └─────────┬─────────┘
+                  ▼
+┌─────────────────────────────────────┐
+│      Persistent State Storage       │
+│   ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐   │
+│   │ 𝓕   │ │ 𝓤   │ │ 𝓒   │ │ 𝓥   │   │
+│   │File │ │User │ │Cron │ │Svc  │   │
+│   └─────┘ └─────┘ └─────┘ └─────┘   │
+└─────────────────────────────────────┘
+```
+
+## 📁 Project Structure
 
 ```
 PromptShield/
@@ -85,7 +110,7 @@ PromptShield/
 └── *_results*.json           # Experimental results
 ```
 
-## HoneyComb Benchmark
+## 🍯 HoneyComb Benchmark
 
 HoneyComb is a domain-specific benchmark suite comprising **10 real-world persistence scenarios** derived from MITRE ATT&CK tactics:
 
@@ -102,18 +127,44 @@ HoneyComb is a domain-specific benchmark suite comprising **10 real-world persis
 | Hijacking/Backdoor | T1574.006 | Linker Hijack |
 | Hijacking/Backdoor | T1556.003 | PAM Backdoor |
 
-## Evaluation Metrics
+## 📊 Evaluation Metrics
 
-- **State Fidelity Rate (SFR)**: Measures semantic accuracy and operational viability
-- **State Persistence Rate (SPR)**: Measures logical existence of state artifacts
-- **Response Latency**: Average time between command and response
-- **Token Consumption**: Total tokens processed per interaction
+| Metric | Description |
+|--------|-------------|
+| **SFR** (State Fidelity Rate) | Semantic accuracy and operational viability |
+| **SPR** (State Persistence Rate) | Logical existence of state artifacts |
+| **Latency** | Average response time |
+| **Tokens** | Total tokens processed per interaction |
 
-## Experimental Results
+## 📈 Experimental Results
 
-| System | Ideal SFR | Noise-100 SFR | Token Usage |
-|--------|-----------|---------------|-------------|
-| PromptShield | 10/10 | 10/10 | 25K |
-| shelLM | 10/10 | 8/10 | 394K |
-| Beelzebub | 0/10 | 0/10 | 4.5K |
+| System | Ideal SFR | Noise-100 SFR | Sandwich SFR | Token Usage |
+|--------|-----------|---------------|--------------|-------------|
+| **PromptShield** | ✅ 10/10 | ✅ 10/10 | ✅ 10/10 | 25K |
+| shelLM | ✅ 10/10 | ⚠️ 8/10 | ❌ 0/10 | 394K |
+| Beelzebub | ❌ 0/10 | ❌ 0/10 | ❌ 0/10 | 4.5K |
+
+> 💡 PromptShield achieves **100% SFR** across all conditions with **15.8× lower token consumption** compared to shelLM.
+
+## 🛠️ MCP Tools Reference
+
+### record_event - Record State Changes
+
+```python
+record_event(
+    command="useradd -m sysupdate",
+    event_type="USER_OPERATION",
+    state_changes={"user_created": "sysupdate", "uid": 1001}
+)
+```
+
+### query_state - Retrieve Persisted State
+
+```python
+query_state(
+    query_type="user_list",
+    target="sysupdate"
+)
+```
+
 
