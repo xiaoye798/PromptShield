@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-HoneyComb v2 端到端真实测试脚本
-测试真实的 LLM 交互流程，验证持久化在完整蜜罐系统中的表现
+HoneyComb v2 End-to-End Real-Test Script
+Tests the actual LLM interaction process and verifies the performance of persistence in the complete honeypot system
 
-支持 5 指标评估框架：SPR, SFR, PDR (by tier), Latency, Token Consumption
+SPR, SFR, Latency, Token Consumption
 """
 
 import asyncio
