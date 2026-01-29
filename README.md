@@ -117,21 +117,3 @@ HoneyComb is a domain-specific benchmark suite comprising **10 real-world persis
 | shelLM | 10/10 | 8/10 | 394K |
 | Beelzebub | 0/10 | 0/10 | 4.5K |
 
-## Citation
-
-```bibtex
-@inproceedings{promptshield2026,
-  title={Beyond the Blank Slate: A Novel MCP-based Architecture for Overcoming Statelessness in LLM-powered Honeypots},
-  author={Anonymous},
-  booktitle={Proceedings of [Conference]},
-  year={2026}
-}
-```
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-This research was supported by [Anonymous for Review].
