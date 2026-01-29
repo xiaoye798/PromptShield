@@ -1,0 +1,16 @@
+apiVersion: "v1"
+protocol: "ssh"
+address: ":2222"
+description: "SSH interactive ChatGPT"
+commands:
+  - regex: "^(.+)$"
+    plugin: "LLMHoneypot"
+serverVersion: "OpenSSH"
+serverName: "ubuntu"
+passwordRegex: "^(root|qwerty|Smoker666|123456|jenkins|minecraft|sinus|alex|postgres|Ly123456|1234)$"
+deadlineTimeoutSeconds: 6000
+plugin:
+  llmProvider: "openai"
+  host: "https://api.deepseek.com/v1/chat/completions"
+  llmModel: "deepseek-chat"
+  openAISecretKey: "sk-1eac42905a824ddd9aff9534cf2a1a63"

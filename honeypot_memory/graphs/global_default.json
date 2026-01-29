@@ -1,0 +1,483 @@
+{
+  "ip_address": "attacker_ip",
+  "nodes": {
+    "fe49ee39-534e-478e-afc7-85276f2dd817": {
+      "id": "fe49ee39-534e-478e-afc7-85276f2dd817",
+      "timestamp": "2025-12-09T19:07:24.170234",
+      "event_type": "command_execution",
+      "command": "ls",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Last login: Tue Dec  9 19:07:09 2025 from 192.168.1.105\nalex@devbox:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "0b6c3fa2-bd1c-4da4-aa25-fba061348b09": {
+      "id": "0b6c3fa2-bd1c-4da4-aa25-fba061348b09",
+      "timestamp": "2025-12-09T19:18:07.850157",
+      "event_type": "command_execution",
+      "command": "ls",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Last login: Tue Dec  9 19:18:01 2025 from 192.168.1.105\nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "7d0d59e6-a404-46d4-9ecf-77ae32363dc5": {
+      "id": "7d0d59e6-a404-46d4-9ecf-77ae32363dc5",
+      "timestamp": "2025-12-09T19:18:14.746106",
+      "event_type": "command_execution",
+      "command": "ls",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "alex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "5d681c95-3637-444f-9f7c-a9f7ff0a65d3": {
+      "id": "5d681c95-3637-444f-9f7c-a9f7ff0a65d3",
+      "timestamp": "2025-12-09T19:18:58.969311",
+      "event_type": "command_execution",
+      "command": "cd /root",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "alex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "46ca7dfd-0cd0-43cb-8d55-836d8f1c2597": {
+      "id": "46ca7dfd-0cd0-43cb-8d55-836d8f1c2597",
+      "timestamp": "2025-12-09T19:19:01.993254",
+      "event_type": "command_execution",
+      "command": "ls",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "alex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "bbae3f90-0b61-49e3-b27a-70127b224aae": {
+      "id": "bbae3f90-0b61-49e3-b27a-70127b224aae",
+      "timestamp": "2025-12-09T19:28:04.707956",
+      "event_type": "command_execution",
+      "command": "ls",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Last login: Tue Dec  9 19:27:59 2025 from 192.168.1.105\nalex@devserver:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "8f5696f4-95f8-4a6c-9a36-20b0363f2a3b": {
+      "id": "8f5696f4-95f8-4a6c-9a36-20b0363f2a3b",
+      "timestamp": "2025-12-09T19:28:16.172961",
+      "event_type": "command_execution",
+      "command": "cd /Desktop",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Desktop    Documents    Downloads    Music    Pictures    Public    Templates    Videos\nalex@devserver:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "e275b21b-695a-422a-bd69-fbfe629cfe23": {
+      "id": "e275b21b-695a-422a-bd69-fbfe629cfe23",
+      "timestamp": "2025-12-09T19:28:29.011802",
+      "event_type": "command_execution",
+      "command": "cd \\Desktop",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "bash: cd: /Desktop: No such file or directory\nalex@devserver:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "2cc630eb-a58f-442e-9240-f7d74b6ada4e": {
+      "id": "2cc630eb-a58f-442e-9240-f7d74b6ada4e",
+      "timestamp": "2025-12-09T19:28:42.275321",
+      "event_type": "command_execution",
+      "command": "cd ~",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "alex@devserver:~/Desktop$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "65265135-90f0-42b7-afbe-be57516d98a5": {
+      "id": "65265135-90f0-42b7-afbe-be57516d98a5",
+      "timestamp": "2025-12-09T19:43:52.643363",
+      "event_type": "command_execution",
+      "command": "ls",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Last login: Tue Dec  9 19:43:36 2025 from 192.168.1.105\nmichael@devserver:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "b63b1a53-3481-40ce-a78f-f8da5bbd5173": {
+      "id": "b63b1a53-3481-40ce-a78f-f8da5bbd5173",
+      "timestamp": "2025-12-09T20:13:25.411754",
+      "event_type": "command_execution",
+      "command": "touch test.txt",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Last login: Tue Dec 9 20:13:09 2025 from 192.168.1.105\nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [
+        {
+          "target": "/root/test.txt",
+          "change_type": "create",
+          "old_value": null,
+          "new_value": "",
+          "metadata": {
+            "op": "touch"
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    "37c37c9e-1761-4c53-b617-32a8b0957a45": {
+      "id": "37c37c9e-1761-4c53-b617-32a8b0957a45",
+      "timestamp": "2025-12-09T20:14:23.280246",
+      "event_type": "command_execution",
+      "command": "touch text.txt",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Last login: Tue Dec 9 20:13:50 2025 from 192.168.1.105\nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [
+        {
+          "target": "/root/text.txt",
+          "change_type": "create",
+          "old_value": null,
+          "new_value": "",
+          "metadata": {
+            "op": "touch"
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    "68467bb0-6b4e-4811-92ed-37477816e516": {
+      "id": "68467bb0-6b4e-4811-92ed-37477816e516",
+      "timestamp": "2025-12-09T20:27:26.951440",
+      "event_type": "command_execution",
+      "command": "touch /tmp/test.txt",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Last login: Tue Dec 9 20:25:38 2025 from 192.168.1.105\nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [
+        {
+          "target": "/tmp/test.txt",
+          "change_type": "create",
+          "old_value": null,
+          "new_value": "",
+          "metadata": {
+            "op": "touch"
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    "32f4efed-4004-4a57-9348-489b665d1bb1": {
+      "id": "32f4efed-4004-4a57-9348-489b665d1bb1",
+      "timestamp": "2025-12-09T20:38:34.285731",
+      "event_type": "command_execution",
+      "command": "touch /tmp/file",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Last login: Tue Dec 9 20:38:22 2025 from 192.168.1.105\nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [
+        {
+          "target": "/tmp/file",
+          "change_type": "create",
+          "old_value": null,
+          "new_value": "",
+          "metadata": {
+            "op": "touch"
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    "723c26c1-a3f0-466d-9c78-32964f2a60a5": {
+      "id": "723c26c1-a3f0-466d-9c78-32964f2a60a5",
+      "timestamp": "2025-12-09T20:38:35.591555",
+      "event_type": "command_execution",
+      "command": "",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "alex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "9562e48a-69f6-4219-8d9f-d655d226c35f": {
+      "id": "9562e48a-69f6-4219-8d9f-d655d226c35f",
+      "timestamp": "2025-12-09T20:38:49.458628",
+      "event_type": "command_execution",
+      "command": "touch /tmp/file",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Last login: Tue Dec 9 20:38:45 2025 from 192.168.1.105  \nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [
+        {
+          "target": "/tmp/file",
+          "change_type": "create",
+          "old_value": null,
+          "new_value": "",
+          "metadata": {
+            "op": "touch"
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    "7d53c350-ce18-4a44-98b6-276e404c43e4": {
+      "id": "7d53c350-ce18-4a44-98b6-276e404c43e4",
+      "timestamp": "2025-12-09T20:38:52.428072",
+      "event_type": "command_execution",
+      "command": "touch /tmp/file",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "alex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [
+        {
+          "target": "/tmp/file",
+          "change_type": "create",
+          "old_value": null,
+          "new_value": "",
+          "metadata": {
+            "op": "touch"
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    "e845d3c0-bc45-4e47-94cf-935360ca8ff4": {
+      "id": "e845d3c0-bc45-4e47-94cf-935360ca8ff4",
+      "timestamp": "2025-12-09T20:39:46.412032",
+      "event_type": "command_execution",
+      "command": "touch /tmp/file",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Last login: Tue Dec 9 20:39:40 2025 from 192.168.1.105\nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [
+        {
+          "target": "/tmp/file",
+          "change_type": "create",
+          "old_value": null,
+          "new_value": "",
+          "metadata": {
+            "op": "touch"
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    "cd6566e3-a6b0-4c6e-9ef6-49290cab7471": {
+      "id": "cd6566e3-a6b0-4c6e-9ef6-49290cab7471",
+      "timestamp": "2025-12-09T20:39:49.587614",
+      "event_type": "command_execution",
+      "command": "touch /tmp/file",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "alex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [
+        {
+          "target": "/tmp/file",
+          "change_type": "create",
+          "old_value": null,
+          "new_value": "",
+          "metadata": {
+            "op": "touch"
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    "d5481882-524a-4f99-adef-4a8862369bec": {
+      "id": "d5481882-524a-4f99-adef-4a8862369bec",
+      "timestamp": "2025-12-09T20:54:14.675117",
+      "event_type": "command_execution",
+      "command": "touch /tmp/file",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "alex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [
+        {
+          "target": "/tmp/file",
+          "change_type": "create",
+          "old_value": null,
+          "new_value": "",
+          "metadata": {
+            "op": "touch"
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    "5a08225b-075e-4736-881e-d8cb707d2e51": {
+      "id": "5a08225b-075e-4736-881e-d8cb707d2e51",
+      "timestamp": "2025-12-09T20:55:20.556514",
+      "event_type": "command_execution",
+      "command": "ls /tmp",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Last login: Tue Dec 9 20:55:03 2025 from 192.168.1.105\nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "82cf154a-2c1e-42a7-aae8-7c48640a5679": {
+      "id": "82cf154a-2c1e-42a7-aae8-7c48640a5679",
+      "timestamp": "2025-12-09T20:55:27.450655",
+      "event_type": "command_execution",
+      "command": "ls \\tmp",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "No such file or directory\nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "cce0841f-7def-47ec-a911-cce35f487f3c": {
+      "id": "cce0841f-7def-47ec-a911-cce35f487f3c",
+      "timestamp": "2025-12-09T20:55:48.429048",
+      "event_type": "command_execution",
+      "command": "ls",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "ls: cannot access '\\tmp': No such file or directory\nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    },
+    "e68a6aee-5b9c-4460-b956-d22873d655be": {
+      "id": "e68a6aee-5b9c-4460-b956-d22873d655be",
+      "timestamp": "2025-12-09T20:56:16.396890",
+      "event_type": "command_execution",
+      "command": "touch /Desktop/test.txt",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "Desktop    Documents  Downloads  Pictures  Videos\nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [
+        {
+          "target": "/Desktop/test.txt",
+          "change_type": "create",
+          "old_value": null,
+          "new_value": "",
+          "metadata": {
+            "op": "touch"
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    "7447401c-e67d-4b5d-8bec-97b4adee8cd4": {
+      "id": "7447401c-e67d-4b5d-8bec-97b4adee8cd4",
+      "timestamp": "2025-12-09T20:56:35.449604",
+      "event_type": "command_execution",
+      "command": "touch \\Desktop\\test.txt",
+      "session_id": "global_session",
+      "ip_address": "attacker_ip",
+      "user_context": "root",
+      "status": "success",
+      "stdout": "touch: cannot touch '/Desktop/test.txt': No such file or directory\nalex@cyberlab:~$",
+      "stderr": "",
+      "return_code": 0,
+      "state_changes": [],
+      "metadata": {}
+    }
+  },
+  "edges": {},
+  "created_at": "2025-12-09T19:07:24.170234",
+  "updated_at": "2025-12-09T20:56:35.449604"
+}

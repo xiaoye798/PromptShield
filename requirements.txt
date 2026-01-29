@@ -1,0 +1,24 @@
+# MCP蜜罐系统依赖 (MCP Honeypot Dependencies)
+
+# MCP协议核心库
+mcp>=1.0.0
+
+# 数据验证和模型
+pydantic>=2.0.0
+
+# AI模型API客户端
+openai>=1.0.0
+
+# 环境变量管理
+python-dotenv>=1.0.0
+
+# YAML配置文件解析
+PyYAML>=6.0.0
+
+# HTTP请求库（DeepSeek客户端需要）
+requests>=2.31.0
+httpx>=0.24.0
+
+# 异步支持
+asyncio>=3.4.3
+

