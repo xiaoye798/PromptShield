@@ -1,14 +1,11 @@
 """
-LinuxSSHbot with MCP Integration - 使用MCP协议进行状态管理的蜜罐系统
-(LinuxSSHbot with MCP Integration - Honeypot system using MCP protocol for state management)
-
-这是LinuxSSHbot的MCP版本，使用MCP客户端与状态管理服务器通信。
-
-主要改进：
-1. 通过MCP协议与状态管理服务器通信
-2. 完全异步架构
-3. 更好的错误处理和日志记录
-4. 符合MCP官方最佳实践
+Linux SSHbot with MCP Integration - A honeypot system for status management using the MCP protocol (LinuxSSHbot with MCP Integration - Honeypot system using MCP protocol for state management)
+This is the MCP version of LinuxSSHbot, which communicates with the status management server using the MCP client.
+Key improvements:
+1. Communicates with the status management server via the MCP protocol
+2. Completely asynchronous architecture
+3. Better error handling and logging
+4. Complies with the official best practices of MCP
 """
 
 import asyncio
@@ -25,21 +22,21 @@ from typing import List, Dict, Any, Optional
 import openai
 from dotenv import dotenv_values
 
-# 导入MCP客户端和状态管理组件
+# Import the MCP client and the state management component
 from mcp_client import HoneypotMCPClient
 from deepseek_client import DeepSeekClient, DeepSeekChatCompletion
 from mcp_state_manager.command_analyzer import CommandAnalyzer
 from mcp_state_manager.state_context_builder import StateContextBuilder
 from mcp_state_manager.system_template import ContextOptimizer
 
-# 配置
+# Configuration
 config = dotenv_values(".env")
 api_provider = config.get("API_PROVIDER", "openai").lower()
 
-# 调试模式开关（设置为False可以隐藏所有调试信息）
+# Debug mode switch (setting it to False will hide all debug information)
 DEBUG_MODE = config.get("DEBUG_MODE", "false").lower() == "true"
 
-# 详细追踪模式（显示完整的命令执行流程）
+# Detailed tracking mode (displaying the complete command execution process)
 TRACE_MODE = config.get("TRACE_MODE", "false").lower() == "true"
 
 # 追踪日志文件路径
