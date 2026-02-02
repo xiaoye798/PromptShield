@@ -1,8 +1,8 @@
 """
-状态上下文构建器 (State Context Builder)
+State Context Builder
 
-用于将系统状态信息转换为AI可理解的prompt上下文，
-实现真正的跨会话一致性。
+Used to convert system state information into prompt context understandable by AI,
+realizing true cross-session consistency.
 """
 
 from typing import Any, Dict, List, Optional
@@ -11,24 +11,24 @@ from .memory_system import SystemState
 
 
 class StateContextBuilder:
-    """状态上下文构建器"""
+    """State Context Builder"""
     
     def __init__(self):
-        self.max_files_to_show = 20  # 最多显示的文件数量
-        self.max_users_to_show = 10   # 最多显示的用户数量
+        self.max_files_to_show = 20  # Maximum number of files to show
+        self.max_users_to_show = 10   # Maximum number of users to show
     
     def build_context_for_command(self, command: str, system_state: SystemState, 
                                   current_cwd: str = "/root") -> str:
         """
-        根据命令类型构建相关的状态上下文信息
+        Build relevant state context information based on command type
         
         Args:
-            command: 用户输入的命令
-            system_state: 当前系统状态
-            current_cwd: 当前工作目录
+            command: User input command
+            system_state: Current system state
+            current_cwd: Current working directory
             
         Returns:
-            格式化的状态上下文字符串
+            Formatted state context string
         """
         if not command or not system_state:
             return ""
@@ -41,7 +41,7 @@ class StateContextBuilder:
         cmd = parts[0]
         context_parts = []
         
-        # 根据命令类型构建不同的上下文
+        # Build different contexts based on command type
         if cmd in ['ls', 'dir', 'll']:
             context_parts.append(self._build_ls_context(command, system_state, current_cwd))
         
@@ -72,16 +72,16 @@ class StateContextBuilder:
         elif cmd in ['dpkg', 'apt', 'apt-get', 'yum', 'rpm']:
             context_parts.append(self._build_package_context(command, system_state))
         
-        # 添加当前工作目录信息（始终包含）
+        # Add current working directory information (always included)
         context_parts.insert(0, f"Current working directory: {current_cwd}")
         
-        # 过滤空内容
+        # Filter out empty content
         context_parts = [part for part in context_parts if part]
         
         if not context_parts:
             return ""
         
-        # 构建最终上下文
+        # Build final context
         context = "\n".join(context_parts)
         return f"""
 [SYSTEM STATE CONTEXT - Use this information to ensure consistency with previous sessions]
@@ -90,11 +90,11 @@ class StateContextBuilder:
 """
     
     def _build_ls_context(self, command: str, system_state: SystemState, cwd: str) -> str:
-        """构建ls命令的上下文"""
-        # 解析目标路径
+        """Build context for ls command"""
+        # Parse target path
         target_path = self._extract_target_path(command, cwd, default=cwd)
         
-        # 获取该目录下的文件和子目录
+        # Get files and subdirectories in this directory
         files_in_dir = []
         dirs_in_dir = []
         
@@ -120,19 +120,19 @@ class StateContextBuilder:
         return context
     
     def _build_file_read_context(self, command: str, system_state: SystemState, cwd: str) -> str:
-        """构建文件读取命令的上下文"""
+        """Build context for file read command"""
         target_path = self._extract_target_path(command, cwd)
         if not target_path:
             return ""
         
-        # 检查文件是否存在
+        # Check if file exists
         if target_path not in system_state.filesystem.files:
             return f"File '{target_path}' does NOT exist in the system."
         
         file_info = system_state.filesystem.files[target_path]
         content = file_info.get("content", "")
         
-        # 限制内容长度
+        # Limit content length
         if len(content) > 500:
             content_preview = content[:500] + "... (content truncated)"
         else:
@@ -144,11 +144,11 @@ class StateContextBuilder:
 ---"""
     
     def _build_directory_context(self, command: str, system_state: SystemState, cwd: str) -> str:
-        """构建目录操作的上下文"""
+        """Build context for directory operations"""
         if command.startswith('pwd'):
             return f"User is currently in: {cwd}"
         
-        # cd 命令
+        # cd command
         parts = command.split()
         if len(parts) < 2:
             return f"Target directory for 'cd': /root (user's home)"
@@ -156,14 +156,14 @@ class StateContextBuilder:
         target = parts[1]
         target_path = self._resolve_path(target, cwd)
         
-        # 检查目录是否存在
+        # Check if directory exists
         if target_path in system_state.filesystem.directories:
             return f"Directory '{target_path}' EXISTS in the system. Allow navigation."
         else:
             return f"Directory '{target_path}' does NOT exist. Should show error."
     
     def _build_file_operation_context(self, command: str, system_state: SystemState, cwd: str) -> str:
-        """构建文件操作的上下文"""
+        """Build context for file operations"""
         target_path = self._extract_target_path(command, cwd)
         if not target_path:
             return ""
@@ -171,7 +171,7 @@ class StateContextBuilder:
         cmd = command.split()[0]
         
         if cmd in ['touch', 'mkdir']:
-            # 检查是否已存在
+            # Check if already exists
             if cmd == 'touch' and target_path in system_state.filesystem.files:
                 return f"File '{target_path}' ALREADY exists. 'touch' should update timestamp only."
             elif cmd == 'mkdir' and target_path in system_state.filesystem.directories:
@@ -188,7 +188,7 @@ class StateContextBuilder:
         return ""
     
     def _build_copy_move_context(self, command: str, system_state: SystemState, cwd: str) -> str:
-        """构建复制/移动命令的上下文"""
+        """Build context for copy/move commands"""
         parts = command.split()
         if len(parts) < 3:
             return ""
@@ -198,7 +198,7 @@ class StateContextBuilder:
         
         context = ""
         
-        # 检查源文件
+        # Check source file
         if src_path in system_state.filesystem.files:
             content = system_state.filesystem.files[src_path].get("content", "")
             if len(content) > 200:
@@ -207,7 +207,7 @@ class StateContextBuilder:
         else:
             context += f"Source file '{src_path}' does NOT exist. Should show error.\n"
         
-        # 检查目标
+        # Check destination
         if dst_path in system_state.filesystem.files:
             context += f"Destination '{dst_path}' ALREADY exists. Will be overwritten.\n"
         else:
@@ -216,7 +216,7 @@ class StateContextBuilder:
         return context
     
     def _build_user_query_context(self, system_state: SystemState) -> str:
-        """构建用户查询命令的上下文"""
+        """Build context for user query commands"""
         current_user = system_state.users.current_user
         
         if current_user not in system_state.users.users:
@@ -232,12 +232,12 @@ class StateContextBuilder:
         return context
     
     def _build_user_management_context(self, command: str, system_state: SystemState) -> str:
-        """构建用户管理命令的上下文"""
+        """Build context for user management commands"""
         parts = command.split()
         if len(parts) < 2:
             return ""
         
-        username = parts[-1]  # 通常用户名是最后一个参数
+        username = parts[-1]  # Usually the username is the last argument
         
         if username in system_state.users.users:
             user_info = system_state.users.users[username]
@@ -246,8 +246,8 @@ class StateContextBuilder:
             return f"User '{username}' does NOT exist yet."
     
     def _build_service_context(self, command: str, system_state: SystemState) -> str:
-        """构建服务管理命令的上下文"""
-        # 提取服务名称
+        """Build context for service management commands"""
+        # Extract service name
         service_name = None
         parts = command.split()
         
@@ -269,7 +269,7 @@ class StateContextBuilder:
             return f"Service '{service_name}' does NOT exist in the system."
     
     def _build_process_context(self, system_state: SystemState) -> str:
-        """构建进程查询的上下文"""
+        """Build context for process query"""
         if not system_state.services.processes:
             return "No specific processes recorded. Show default system processes."
         
@@ -277,8 +277,8 @@ class StateContextBuilder:
         return f"System has {process_count} recorded processes."
     
     def _build_package_context(self, command: str, system_state: SystemState) -> str:
-        """构建包管理命令的上下文"""
-        # 提取包名
+        """Build context for package management commands"""
+        # Extract package name
         package_name = None
         parts = command.split()
         
@@ -298,13 +298,13 @@ class StateContextBuilder:
         else:
             return f"Package '{package_name}' is NOT installed yet."
     
-    # 辅助方法
+    # Helper methods
     
     def _extract_target_path(self, command: str, cwd: str, default: str = None) -> str:
-        """从命令中提取目标路径"""
+        """Extract target path from command"""
         parts = command.split()
         
-        # 过滤掉选项参数
+        # Filter out option arguments
         paths = [p for p in parts[1:] if not p.startswith('-')]
         
         if not paths:
@@ -314,7 +314,7 @@ class StateContextBuilder:
         return self._resolve_path(target, cwd)
     
     def _resolve_path(self, path: str, cwd: str) -> str:
-        """解析路径为绝对路径"""
+        """Resolve path to absolute path"""
         if not path:
             return cwd
         
@@ -324,18 +324,17 @@ class StateContextBuilder:
         if path.startswith("/"):
             return path
         
-        # 相对路径
+        # Relative path
         import os
         full_path = os.path.join(cwd, path)
         return os.path.normpath(full_path).replace("\\", "/")
     
     def _get_parent_directory(self, path: str) -> str:
-        """获取路径的父目录"""
+        """Get parent directory of path"""
         if '/' not in path:
             return "/"
         return '/'.join(path.split('/')[:-1]) or "/"
     
     def _get_basename(self, path: str) -> str:
-        """获取路径的基础名称"""
+        """Get basename of path"""
         return path.split('/')[-1]
-
