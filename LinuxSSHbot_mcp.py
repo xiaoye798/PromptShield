@@ -1,6 +1,6 @@
 """
-Linux SSHbot with MCP Integration - A honeypot system for status management using the MCP protocol (LinuxSSHbot with MCP Integration - Honeypot system using MCP protocol for state management)
-This is the MCP version of LinuxSSHbot, which communicates with the status management server using the MCP client.
+Linux SSHbot with MCP Integration - A honeypot system for state management using the MCP protocol
+This is the MCP version of LinuxSSHbot, which communicates with the state management server using the MCP client.
 Key improvements:
 1. Communicates with the status management server via the MCP protocol
 2. Completely asynchronous architecture
@@ -39,19 +39,19 @@ DEBUG_MODE = config.get("DEBUG_MODE", "false").lower() == "true"
 # Detailed tracking mode (displaying the complete command execution process)
 TRACE_MODE = config.get("TRACE_MODE", "false").lower() == "true"
 
-# 追踪日志文件路径
+# Trace log file path
 TRACE_LOG_FILE = config.get("TRACE_LOG_FILE", "trace_execution.log")
 
-# 初始化追踪日志文件
+# Initialize trace log file
 if TRACE_MODE:
-    # 创建或清空追踪日志文件
+    # Create or clear trace log file
     with open(TRACE_LOG_FILE, "w", encoding="utf-8") as f:
         f.write(f"{'='*70}\n")
-        f.write(f"执行追踪日志 - 会话开始于 {datetime.now()}\n")
+        f.write(f"Execution Trace Log - Session started at {datetime.now()}\n")
         f.write(f"{'='*70}\n\n")
-    print(f"[系统] 追踪模式已启用，日志将保存到: {TRACE_LOG_FILE}")
+    print(f"[System] Trace mode enabled, log will be saved to: {TRACE_LOG_FILE}")
 
-# 初始化AI客户端
+# Initialize AI client
 if api_provider == "openai":
     openai.api_key = config["OPENAI_API_KEY"]
     chat_client = None
@@ -62,29 +62,29 @@ elif api_provider == "deepseek":
     )
     chat_client = DeepSeekChatCompletion(deepseek_client)
 else:
-    raise ValueError(f"不支持的API提供商: {api_provider}")
+    raise ValueError(f"Unsupported API provider: {api_provider}")
 
-# MCP客户端（全局，会在main中初始化）
+# MCP client (global, will be initialized in main)
 mcp_client: Optional[HoneypotMCPClient] = None
 
 
-# ==================== 追踪辅助函数 ====================
+# ==================== Trace Helper Functions ====================
 
 def trace_log(step: str, message: str, details: Any = None):
     """
-    追踪日志输出 - 写入文件而不是终端
+    Trace log output - write to file instead of terminal
     
     Args:
-        step: 步骤描述
-        message: 主要消息
-        details: 详细信息（可以是dict、list或其他类型）
+        step: Step description
+        message: Main message
+        details: Detailed information (can be dict, list, or other types)
     """
     if not TRACE_MODE:
         return
     
     try:
         with open(TRACE_LOG_FILE, "a", encoding="utf-8") as f:
-            # 写入时间戳
+            # Write timestamp
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
             f.write(f"\n{'='*70}\n")
             f.write(f"[{timestamp}] [TRACE] {step}\n")
@@ -94,39 +94,39 @@ def trace_log(step: str, message: str, details: Any = None):
             if details:
                 if isinstance(details, dict):
                     for key, value in details.items():
-                        # 限制值的长度，避免日志过大
+                        # Limit the length of values to avoid large logs
                         value_str = str(value)
                         if len(value_str) > 500:
-                            value_str = value_str[:500] + "... (截断)"
+                            value_str = value_str[:500] + "... (truncated)"
                         f.write(f"  • {key}: {value_str}\n")
                 elif isinstance(details, list):
                     for i, item in enumerate(details, 1):
                         item_str = str(item)
                         if len(item_str) > 300:
-                            item_str = item_str[:300] + "... (截断)"
+                            item_str = item_str[:300] + "... (truncated)"
                         f.write(f"  [{i}] {item_str}\n")
                 else:
                     detail_str = str(details)
                     if len(detail_str) > 1000:
-                        detail_str = detail_str[:1000] + "... (截断)"
+                        detail_str = detail_str[:1000] + "... (truncated)"
                     f.write(f"  {detail_str}\n")
             
             f.write(f"{'='*70}\n\n")
-            f.flush()  # 立即写入磁盘
+            f.flush()  # Write to disk immediately
             
     except Exception as e:
-        # 如果写入文件失败，回退到stderr输出
-        print(f"[ERROR] 无法写入追踪日志: {e}", file=sys.stderr)
+        # If writing to file fails, fall back to stderr output
+        print(f"[ERROR] Unable to write trace log: {e}", file=sys.stderr)
 
 
-# ==================== 辅助函数 ====================
+# ==================== Helper Functions ====================
 
 def debug_log(message: str):
     """
-    调试日志输出 - 写入文件而不是终端
+    Debug log output - write to file instead of terminal
     
     Args:
-        message: 调试消息
+        message: Debug message
     """
     if not DEBUG_MODE:
         return
@@ -137,11 +137,11 @@ def debug_log(message: str):
             f.write(f"[{timestamp}] [DEBUG] {message}\n")
             f.flush()
     except Exception as e:
-        print(f"[ERROR] 无法写入调试日志: {e}", file=sys.stderr)
+        print(f"[ERROR] Unable to write debug log: {e}", file=sys.stderr)
 
 
 def rotate_history_if_needed():
-    """如果历史文件太大，进行轮转"""
+    """Rotate history file if it's too large"""
     if os.path.exists("history.txt") and os.path.getsize("history.txt") > 1024 * 1024:  # 1MB
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         try:
@@ -152,7 +152,7 @@ def rotate_history_if_needed():
 
 
 def load_personality():
-    """加载人格配置"""
+    """Load personality configuration"""
     with open('personalitySSH.yml', 'r', encoding="utf-8") as file:
         identity = yaml.safe_load(file)
     return identity['personality']['prompt']
@@ -160,27 +160,26 @@ def load_personality():
 
 async def call_ai_model(messages: List[Dict[str, str]]) -> str:
     """
-    调用AI模型（异步）
+    Call AI model (asynchronously)
     
     Args:
-        messages: 消息列表
+        messages: Message list
     
     Returns:
-        AI的响应文本
+        AI response text
     """
     trace_log(
-        "步骤 6: 调用AI模型",
-        f"准备调用 {api_provider.upper()} API",
+        "Step 6: Call AI model",
+        f"Preparing to call {api_provider.upper()} API",
         {
-            "消息数量": len(messages),
-            "最后一条消息": messages[-1]["content"][:100] + "..." if len(messages[-1]["content"]) > 100 else messages[-1]["content"]
+            "Message count": len(messages),
+            "Last message": messages[-1]["content"][:100] + "..." if len(messages[-1]["content"]) > 100 else messages[-1]["content"]
         }
     )
     
     try:
         if api_provider == "openai":
             debug_log("Calling OpenAI API...")
-            # OpenAI的API是同步的，在异步上下文中运行
             loop = asyncio.get_event_loop()
             res = await loop.run_in_executor(
                 None,
@@ -193,7 +192,6 @@ async def call_ai_model(messages: List[Dict[str, str]]) -> str:
             )
         elif api_provider == "deepseek":
             debug_log("Calling DeepSeek API...")
-            # DeepSeek客户端也是同步的
             loop = asyncio.get_event_loop()
             res = await loop.run_in_executor(
                 None,
@@ -205,64 +203,64 @@ async def call_ai_model(messages: List[Dict[str, str]]) -> str:
                 )
             )
         else:
-            raise ValueError(f"不支持的API提供商: {api_provider}")
+            raise ValueError(f"Unsupported API provider: {api_provider}")
         
         msg = res.choices[0].message.content
         debug_log(f"Got response ({len(msg)} chars)")
         
         trace_log(
-            "步骤 7: AI响应接收",
-            f"收到AI响应",
+            "Step 7: AI response received",
+            f"AI response received",
             {
-                "响应长度": f"{len(msg)} 字符",
-                "响应内容": msg[:200] + "..." if len(msg) > 200 else msg
+                "Response length": f"{len(msg)} characters",
+                "Response content": msg[:200] + "..." if len(msg) > 200 else msg
             }
         )
         
         return msg
         
     except Exception as api_error:
-        print(f"\n[API ERROR] API调用失败: {api_error}", file=sys.stderr)
+        print(f"\n[API ERROR] API call failed: {api_error}", file=sys.stderr)
         import traceback
         traceback.print_exc(file=sys.stderr)
         
-        # 记录到错误日志
+        # Record to error log
         with open("api_errors.log", "a", encoding="utf-8") as error_log:
             error_log.write(f"\n[{datetime.now()}] API Error: {api_error}\n")
             error_log.write(traceback.format_exc())
         
-        # 返回错误提示
+        # Return error prompt
         return "bash: API error occurred. Please check your API configuration.\nroot@server:/root$"
 
 
 async def build_enhanced_messages(messages: List[Dict], command: str, current_cwd: str, 
                                    client: 'HoneypotMCPClient' = None, ip_address: str = "attacker_ip") -> List[Dict]:
     """
-    构建增强的消息列表（包含状态上下文）
+    Build enhanced message list (including state context)
     
-    这是实现跨会话持久化的核心函数！
-    通过将 MCP 中持久化的状态注入到 LLM 提示中，确保 LLM 知道之前会话的操作结果。
+    This is the core function for achieving cross-session persistence!
+    By injecting the state persisted in MCP into the LLM prompt, ensure that the LLM knows the results of operations from previous sessions.
     
     Args:
-        messages: 原始消息列表
-        command: 用户命令
-        current_cwd: 当前工作目录
-        client: MCP客户端实例（如果为None，使用全局mcp_client）
-        ip_address: IP地址标识
+        messages: Original message list
+        command: User command
+        current_cwd: Current working directory
+        client: MCP client instance (if None, use global mcp_client)
+        ip_address: IP address identifier
     
     Returns:
-        增强后的消息列表
+        Enhanced message list
     """
-    # 使用传入的client或全局mcp_client
+    # Use the passed client or the global mcp_client
     _mcp_client = client if client is not None else mcp_client
     
     trace_log(
-        "步骤 3: 构建增强消息",
-        f"为命令构建状态上下文",
+        "Step 3: Build enhanced messages",
+        f"Building state context for command",
         {
-            "命令": command,
-            "当前目录": current_cwd,
-            "原始消息数": len(messages)
+            "Command": command,
+            "Current directory": current_cwd,
+            "Original messages count": len(messages)
         }
     )
     
@@ -272,37 +270,37 @@ async def build_enhanced_messages(messages: List[Dict], command: str, current_cw
         return enhanced_messages
     
     try:
-        # 1. 从MCP服务器查询当前状态摘要
+        # 1. Query current state summary from MCP server
         trace_log(
-            "步骤 4: 查询系统状态",
-            "从MemorySystem获取当前状态摘要"
+            "Step 4: Query system state",
+            "Get current state summary from MemorySystem"
         )
         
         state_summary = await _mcp_client.get_state_summary(ip_address)
         
         trace_log(
-            "步骤 4.1: 状态摘要获取",
-            "当前系统状态",
-            state_summary if state_summary else {"状态": "空"}
+            "Step 4.1: State summary retrieval",
+            "Current system state",
+            state_summary if state_summary else {"State": "Empty"}
         )
         
-        # 2. 构建状态上下文 - 关键改进：根据命令类型获取相关状态
+        # 2. Build state context - Key improvement: Get relevant state based on command type
         context_parts = []
         command_parts = command.strip().split()
         cmd = command_parts[0] if command_parts else ""
         
-        # ==================== 优先检查：用户相关命令 ====================
-        # 这必须在文件读取之前检查，因为 "cat /etc/passwd | grep xxx" 也会匹配文件读取
+        # ==================== Priority Check: User-related commands ====================
+        # This must be checked before file reading, because "cat /etc/passwd | grep xxx" also matches file reading
         if cmd in ['id', 'whoami', 'w', 'who'] or 'passwd' in command or ('grep' in command and ('user' in command.lower() or 'passwd' in command)):
-            # 查询用户列表
-            trace_log("步骤 4.2: 用户查询", "检测到用户相关命令，获取用户列表")
+            # Query user list
+            trace_log("Step 4.2: User query", "User-related command detected, retrieving user list")
             result = await _mcp_client.query_state(ip_address, "user_list")
             if result.get("success") and result.get("data"):
                 users = result.get("data", {}).get("users", {})
                 groups = result.get("data", {}).get("groups", {})
                 if users:
                     user_lines = []
-                    user_groups_info = {}  # 用户->组列表映射
+                    user_groups_info = {}  # User -> Group list mapping
                     
                     for username, info in users.items():
                         uid = info.get('uid', 1000)
@@ -312,14 +310,14 @@ async def build_enhanced_messages(messages: List[Dict], command: str, current_cw
                         gecos = info.get('gecos', '')
                         user_lines.append(f"{username}:x:{uid}:{gid}:{gecos}:{home}:{shell}")
                         
-                        # 收集用户所属的组
-                        user_group_list = [username]  # 默认包含同名组
+                        # Collect groups the user belongs to
+                        user_group_list = [username]  # Default includes group of the same name
                         for grp_name, grp_info in groups.items():
                             if username in grp_info.get('members', []):
                                 user_group_list.append(grp_name)
                         user_groups_info[username] = user_group_list
                     
-                    # 构建 id 命令输出格式
+                    # Build id command output format
                     id_output_lines = []
                     for username, info in users.items():
                         uid = info.get('uid', 1000)
@@ -341,9 +339,9 @@ IMPORTANT:
 - When running 'grep backdoor_user', output: {chr(10).join([l for l in user_lines if 'backdoor' in l.lower()])}
 - When running 'id backdoor_user', show the groups including 'sudo' if the user was added to sudo group.""")
         
-        # ==================== grep 命令特殊处理（非 passwd 文件）====================
+        # ==================== Special handling for grep command (non-passwd files) ====================
         if cmd == 'grep' or 'grep' in command:
-            # 提取 grep 的目标文件
+            # Extract grep target file
             grep_target = None
             for part in command_parts:
                 if part.startswith('/') and not part.startswith("'") and 'passwd' not in part:
@@ -351,12 +349,12 @@ IMPORTANT:
                     break
             
             if grep_target:
-                # 检查文件是否存在
+                # Check if file exists
                 exists = await _mcp_client.check_file_exists(ip_address, grep_target)
                 if exists:
                     content = await _mcp_client.get_file_content(ip_address, grep_target)
                     if content:
-                        # 提取 grep 的模式
+                        # Extract grep pattern
                         pattern = None
                         for i, part in enumerate(command_parts):
                             if part == 'grep' and i + 1 < len(command_parts):
@@ -371,13 +369,13 @@ Content:
 ---
 When running 'grep {pattern if pattern else "..."} {grep_target}', output matching lines from this content.""")
         
-        # ==================== 文件读取命令 ====================
+        # ==================== File Reading Commands ====================
         if cmd in ['cat', 'head', 'tail', 'less', 'more']:
-            # 提取所有目标文件路径
+            # Extract all target file paths
             target_files = []
             for part in command_parts[1:]:
                 if not part.startswith('-') and '|' not in part:
-                    # 处理 ~ 为 /root
+                    # Handle ~ as /root
                     if part.startswith('~'):
                         part = '/root' + part[1:]
                     elif not part.startswith('/'):
@@ -385,33 +383,33 @@ When running 'grep {pattern if pattern else "..."} {grep_target}', output matchi
                     target_files.append(part)
             
             trace_log(
-                "步骤 4.3: 文件查询",
-                f"提取目标文件: {target_files}"
+                "Step 4.3: File query",
+                f"Extracted target files: {target_files}"
             )
             
             for file_path in target_files:
-                # 检查文件是否存在（尝试多种路径格式）
+                # Check if file exists (try multiple path formats)
                 paths_to_check = [file_path]
                 if file_path.startswith('/root/'):
                     paths_to_check.append('~' + file_path[5:])
                     paths_to_check.append(file_path.replace('/root/', '~/'))
                 
                 trace_log(
-                    "步骤 4.4: 检查文件存在",
-                    f"检查路径列表: {paths_to_check}"
+                    "Step 4.4: Check file existence",
+                    f"Checking path list: {paths_to_check}"
                 )
                 
                 for check_path in paths_to_check:
                     exists = await _mcp_client.check_file_exists(ip_address, check_path)
                     trace_log(
-                        "步骤 4.5: 文件检查结果",
-                        f"路径: {check_path}, 存在: {exists}"
+                        "Step 4.5: File check result",
+                        f"Path: {check_path}, Exists: {exists}"
                     )
                     if exists:
                         content = await _mcp_client.get_file_content(ip_address, check_path)
                         trace_log(
-                            "步骤 4.6: 获取文件内容",
-                            f"内容长度: {len(content) if content else 0}"
+                            "Step 4.6: Get file content",
+                            f"Content length: {len(content) if content else 0}"
                         )
                         if content:
                             context_parts.append(f"""[CRITICAL - FILE EXISTS IN PERSISTENT STATE]
@@ -423,7 +421,7 @@ IMPORTANT: You MUST output exactly this content when the user runs '{cmd} {file_
 Do NOT say "No such file or directory" - the file EXISTS.""")
                             break
         
-        # ==================== 目录列表命令 ====================
+        # ==================== Directory Listing Commands ====================
         if cmd in ['ls', 'dir', 'll']:
             target_dir = current_cwd
             for part in command_parts[1:]:
@@ -437,9 +435,9 @@ Do NOT say "No such file or directory" - the file EXISTS.""")
                     break
             
             context_parts.append(f"[Current Directory: {current_cwd}]")
-            # 可以扩展：查询目录内容
+            # Can be extended: Query directory content
         
-        # ==================== Cron 命令 ====================
+        # ==================== Cron Commands ====================
         if 'cron' in command or 'crontab' in command:
             result = await _mcp_client.query_state(ip_address, "cron_list")
             if result.get("success") and result.get("data"):
@@ -451,7 +449,7 @@ Cron jobs in the system:
 {json.dumps(cron_data, indent=2)}
 IMPORTANT: Show these cron entries when listing crontab.""")
         
-        # ==================== 服务命令 ====================
+        # ==================== Service Commands ====================
         if 'systemctl' in command or 'service' in command:
             result = await _mcp_client.query_state(ip_address, "service_list")
             if result.get("success") and result.get("data"):
@@ -463,21 +461,21 @@ Service states:
 {json.dumps(services, indent=2)}
 IMPORTANT: Reflect these service states in your response.""")
         
-        # 3. 添加状态摘要
+        # 3. Add state summary
         if state_summary:
             file_count = state_summary.get('file_count', 0)
             user_count = state_summary.get('user_count', 0)
             if file_count > 0 or user_count > 0:
                 context_parts.append(f"[System State: {file_count} files modified, {user_count} users]")
         
-        # 4. 组合上下文
+        # 4. Combine context
         state_context = "\n\n".join(context_parts)
         
-        # 5. 使用上下文优化器确保不超长
+        # 5. Use context optimizer to ensure not too long
         context_optimizer = ContextOptimizer(max_context_tokens=2000)
         optimized_context = context_optimizer.optimize_context("", state_context, "")
         
-        # 6. 如果有上下文，注入到消息中
+        # 6. If context exists, inject into messages
         if optimized_context.strip():
             enhanced_messages.insert(-1, {
                 "role": "system",
@@ -489,13 +487,13 @@ IMPORTANT: Reflect these service states in your response.""")
             debug_log(f"Injected ~{token_estimate} tokens of state context")
             
             trace_log(
-                "步骤 5: 上下文注入",
-                "将状态上下文注入到消息中",
+                "Step 5: Context Injection",
+                "Inject state context into messages",
                 {
-                    "上下文长度": f"{len(optimized_context)} 字符",
-                    "预估Token数": token_estimate,
-                    "注入位置": "倒数第二条消息",
-                    "上下文内容": optimized_context[:300] + "..." if len(optimized_context) > 300 else optimized_context
+                    "Context length": f"{len(optimized_context)} characters",
+                    "Estimated tokens": token_estimate,
+                    "Injection position": "Second to last message",
+                    "Context content": optimized_context[:300] + "..." if len(optimized_context) > 300 else optimized_context
                 }
             )
         
@@ -511,39 +509,39 @@ IMPORTANT: Reflect these service states in your response.""")
 
 async def record_event_to_mcp(command: str, response: str, current_cwd: str):
     """
-    记录事件到MCP服务器
+    Record event to MCP server
     
     Args:
-        command: 执行的命令
-        response: AI的响应
-        current_cwd: 当前工作目录
+        command: Executed command
+        response: AI response
+        current_cwd: Current working directory
     """
     trace_log(
-        "步骤 8: 分析命令",
-        "使用CommandAnalyzer分析命令",
-        {"命令": command}
+        "Step 8: Analyze command",
+        "Use CommandAnalyzer to analyze command",
+        {"Command": command}
     )
     
     try:
-        # 分析命令
+        # Analyze command
         analyzer = CommandAnalyzer()
         event_type = analyzer.determine_event_type(command)
         status = analyzer.determine_status(command, response)
         
         trace_log(
-            "步骤 8.1: 命令分析结果",
-            "确定事件类型和执行状态",
+            "Step 8.1: Command analysis result",
+            "Determine event type and execution status",
             {
-                "事件类型": event_type.value if hasattr(event_type, 'value') else str(event_type),
-                "执行状态": status.value if hasattr(status, 'value') else str(status)
+                "Event type": event_type.value if hasattr(event_type, 'value') else str(event_type),
+                "Execution status": status.value if hasattr(status, 'value') else str(status)
             }
         )
         
-        # 分析状态变化（这里简化处理，实际应该更复杂）
-        # 由于我们没有完整的SystemState，先用基础分析
+        # Analyze state changes (simplified here, should be more complex in practice)
+        # Since we don't have full SystemState, use basic analysis for now
         trace_log(
-            "步骤 9: 分析状态变化",
-            "提取命令导致的状态变化"
+            "Step 9: Analyze state changes",
+            "Extract state changes caused by command"
         )
         
         state_changes = analyzer.analyze_state_changes(
@@ -556,20 +554,20 @@ async def record_event_to_mcp(command: str, response: str, current_cwd: str):
                 changes_info.append(f"{sc.change_type}: {sc.target}")
             
             trace_log(
-                "步骤 9.1: 状态变化识别",
-                f"发现 {len(state_changes)} 个状态变化",
+                "Step 9.1: State change identification",
+                f"Found {len(state_changes)} state changes",
                 changes_info
             )
         else:
             trace_log(
-                "步骤 9.1: 状态变化识别",
-                "无状态变化（只读操作）"
+                "Step 9.1: State change identification",
+                "No state changes (read-only operation)"
             )
         
-        # 记录事件
+        # Record event
         trace_log(
-            "步骤 10: 记录事件",
-            "将事件记录到MemorySystem"
+            "Step 10: Record event",
+            "Record event to MemorySystem"
         )
         
         result = await mcp_client.record_event(
@@ -591,11 +589,11 @@ async def record_event_to_mcp(command: str, response: str, current_cwd: str):
         
         if result.get("success"):
             trace_log(
-                "步骤 11: 事件记录成功",
-                "事件已保存到持久化存储",
+                "Step 11: Event recorded successfully",
+                "Event saved to persistent storage",
                 {
-                    "事件ID": result.get("event_id", "unknown"),
-                    "存储路径": "honeypot_memory/states/ 和 graphs/"
+                    "Event ID": result.get("event_id", "unknown"),
+                    "Storage path": "honeypot_memory/states/ and graphs/"
                 }
             )
         else:
@@ -605,13 +603,13 @@ async def record_event_to_mcp(command: str, response: str, current_cwd: str):
         debug_log(f"[MCP Error] Failed to record event: {e}")
 
 
-# ==================== 主函数 ====================
+# ==================== Main Function ====================
 
 async def async_main():
-    """异步主函数"""
+    """Asynchronous main function"""
     global mcp_client
     
-    # 参数解析
+    # Argument parsing
     today = datetime.now()
     personality_prompt = load_personality()
     
@@ -627,89 +625,89 @@ async def async_main():
     
     args = parser.parse_args()
     
-    # 历史文件轮转
+    # History file rotation
     rotate_history_if_needed()
     
-    # 确保历史文件存在
+    # Ensure history file exists
     if not os.path.exists("history.txt"):
         with open("history.txt", "w", encoding="utf-8") as f:
             pass
     
-    # 初始化MCP客户端
+    # Initialize MCP client
     debug_log("Connecting to MCP state management server...")
     mcp_client = HoneypotMCPClient(storage_path="./honeypot_memory", global_singleton_mode=True)
     await mcp_client.connect()
     debug_log("MCP client connected successfully")
     
     try:
-        # 构建初始prompt（仅使用personality配置）
+        # Build initial prompt (using only personality config)
         initial_prompt = f"You are Linux OS terminal. Your personality is: {args.personality}"
         messages = [{"role": "system", "content": initial_prompt}]
         
-        # 记录会话开始
+        # Record session start
         with open("history.txt", "a", encoding="utf-8") as f:
             f.write(f"\n\n--- Session Started at {datetime.now()} ---\n")
         
-        # 初始化CWD跟踪
+        # Initialize CWD tracking
         current_cwd = "/root"
         
-        # 检查并初始化系统状态
+        # Check and initialize system state
         state_summary = await mcp_client.get_state_summary("attacker_ip")
         if state_summary.get("file_count", 0) == 0:
             debug_log("Initializing base system state...")
-            # 状态会由MCP服务器自动管理
+            # State will be managed automatically by MCP server
         
-        # 主循环
+        # Main loop
         while True:
             try:
-                # 获取AI响应
+                # Get AI response
                 msg = await call_ai_model(messages)
                 
-                # 处理AI响应
+                # Process AI response
                 message = {"content": msg, "role": 'assistant'}
                 
-                # 清理特殊情况
+                # Clean up special cases
                 if "$cd" in message["content"] or "$ cd" in message["content"]:
                     message["content"] = message["content"].split("\n")[1]
                 
                 messages.append(message)
                 
-                # 记录到历史
+                # Record to history
                 with open("history.txt", "a", encoding="utf-8") as logs:
                     logs.write(messages[-1]["content"])
                 
-                # 检查退出条件
+                # Check exit conditions
                 if "will be reported" in messages[-1]["content"]:
                     print(messages[-1]["content"])
                     break
                 
-                # 显示输出并获取用户输入
+                # Display output and get user input
                 trace_log(
-                    "步骤 1: 接收用户命令",
-                    "等待用户输入..."
+                    "Step 1: Receive user command",
+                    "Waiting for user input..."
                 )
                 
                 user_input = input(f'\n{messages[-1]["content"]}'.strip() + " ")
                 
                 trace_log(
-                    "步骤 2: 命令预处理",
-                    "处理用户输入",
+                    "Step 2: Command preprocessing",
+                    "Process user input",
                     {
-                        "原始输入": user_input,
-                        "命令长度": len(user_input)
+                        "Raw input": user_input,
+                        "Command length": len(user_input)
                     }
                 )
                 
-                # 记录用户输入
+                # Record user input
                 with open("history.txt", "a", encoding="utf-8") as logs:
                     logs.write(" " + user_input + f"\t<{datetime.now()}>\n")
                 
                 messages.append({"role": "user", "content": " " + user_input + f"\t<{datetime.now()}>\n"})
                 
-                # 提取命令
+                # Extract command
                 command = user_input.strip()
                 
-                # 更新CWD（如果是cd命令）
+                # Update CWD (if it's a cd command)
                 if command.startswith("cd"):
                     parts = command.split()
                     if len(parts) > 1:
@@ -727,12 +725,12 @@ async def async_main():
                     else:
                         current_cwd = "/root"
                 
-                # 构建增强消息（包含状态上下文）
+                # Build enhanced messages (including state context)
                 enhanced_messages = await build_enhanced_messages(messages, command, current_cwd)
-                # 直接使用增强后的消息列表
+                # Use the enhanced message list directly
                 messages = enhanced_messages
                 
-                # 记录事件到MCP（异步，不阻塞）
+                # Record event to MCP (asynchronous, non-blocking)
                 asyncio.create_task(record_event_to_mcp(command, msg, current_cwd))
                 
             except KeyboardInterrupt:
@@ -741,24 +739,24 @@ async def async_main():
                 break
     
     finally:
-        # 关闭MCP客户端
+        # Close MCP client
         debug_log("Closing MCP connection...")
         await mcp_client.close()
         debug_log("MCP connection closed")
         
-        # 写入追踪日志结束标记
+        # Write trace log end marker
         if TRACE_MODE:
             try:
                 with open(TRACE_LOG_FILE, "a", encoding="utf-8") as f:
                     f.write(f"\n{'='*70}\n")
-                    f.write(f"会话结束于 {datetime.now()}\n")
+                    f.write(f"Session ended at {datetime.now()}\n")
                     f.write(f"{'='*70}\n")
             except:
                 pass
 
 
 def main():
-    """同步main入口点"""
+    """Synchronous main entry point"""
     try:
         asyncio.run(async_main())
     except KeyboardInterrupt:
@@ -771,4 +769,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
