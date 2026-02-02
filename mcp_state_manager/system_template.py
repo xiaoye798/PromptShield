@@ -1,8 +1,8 @@
 """
-系统模板管理器 (System Template Manager)
-没用上
-定义基础系统模板，避免每次都加载完整状态信息，减少上下文长度。
-攻击者的所有操作都基于这个模板进行增量修改。
+System Template Manager
+Not currently in use
+Defines the base system template to avoid loading full state information every time, reducing context length.
+All attacker operations are based on incremental modifications to this template.
 """
 
 from typing import Dict, Any, List
@@ -10,9 +10,9 @@ from .memory_system import SystemState
 
 
 class SystemTemplate:
-    """系统模板类"""
+    """System Template Class"""
     
-    # 基础系统模板配置
+    # Base system template configuration
     BASE_TEMPLATE = {
         "os_info": {
             "hostname": "honeypot",
@@ -51,8 +51,8 @@ class SystemTemplate:
     @classmethod
     def get_base_system_info(cls) -> str:
         """
-        获取基础系统信息的简洁描述
-        这个信息会被添加到AI的system prompt中
+        Get a concise description of the base system information
+        This information will be added to the AI's system prompt
         """
         return f"""
 You are simulating a Linux terminal with the following base configuration:
@@ -72,26 +72,26 @@ If something is not mentioned in the state context, treat it as if it doesn't ex
     @classmethod
     def initialize_system_state(cls, ip_address: str) -> SystemState:
         """
-        基于模板初始化一个新的系统状态
+        Initialize a new system state based on the template
         
         Args:
-            ip_address: IP地址
+            ip_address: IP Address
             
         Returns:
-            初始化的SystemState对象
+            Initialized SystemState object
         """
         state = SystemState(ip_address=ip_address)
         
-        # 设置系统信息
+        # Set system information
         state.hostname = cls.BASE_TEMPLATE['os_info']['hostname']
         state.kernel_version = cls.BASE_TEMPLATE['os_info']['kernel_version']
         state.os_version = cls.BASE_TEMPLATE['os_info']['os_version']
         
-        # 创建默认目录
+        # Create default directories
         for directory in cls.BASE_TEMPLATE['default_directories']:
             state.filesystem.add_directory(directory, permissions="755", owner="root")
         
-        # 创建默认用户
+        # Create default users
         for username, user_info in cls.BASE_TEMPLATE['default_users'].items():
             state.users.add_user(
                 username=username,
@@ -101,11 +101,11 @@ If something is not mentioned in the state context, treat it as if it doesn't ex
                 shell=user_info['shell']
             )
         
-        # 安装默认包
+        # Install default packages
         for package in cls.BASE_TEMPLATE['default_packages']:
             state.packages.install_package(package, version="latest", manager="apt")
         
-        # 设置默认服务
+        # Set default services
         for service_name, service_info in cls.BASE_TEMPLATE['default_services'].items():
             state.services.add_service(
                 name=service_name,
@@ -113,7 +113,7 @@ If something is not mentioned in the state context, treat it as if it doesn't ex
                 enabled=service_info['enabled']
             )
         
-        # 设置环境变量
+        # Set environment variables
         state.environment = cls.BASE_TEMPLATE['environment_variables'].copy()
         
         return state
@@ -121,14 +121,14 @@ If something is not mentioned in the state context, treat it as if it doesn't ex
     @classmethod
     def get_diff_summary(cls, system_state: SystemState) -> Dict[str, Any]:
         """
-        获取与基础模板的差异摘要
-        只返回用户操作产生的增量变化
+        Get the difference summary from the base template
+        Only return incremental changes produced by user operations
         
         Args:
-            system_state: 当前系统状态
+            system_state: Current system state
             
         Returns:
-            差异摘要字典
+            Difference summary dictionary
         """
         diff = {
             "added_files": [],
@@ -140,29 +140,29 @@ If something is not mentioned in the state context, treat it as if it doesn't ex
             "deleted_items": []
         }
         
-        # 检查新增的目录（排除默认目录）
+        # Check for added directories (exclude default directories)
         default_dirs = set(cls.BASE_TEMPLATE['default_directories'])
         for directory in system_state.filesystem.directories.keys():
             if directory not in default_dirs:
                 diff["added_directories"].append(directory)
         
-        # 检查新增的文件（所有文件都是新增的，因为模板中没有预设文件）
+        # Check for added files (all files are new, as there are no preset files in the template)
         for file_path in system_state.filesystem.files.keys():
             diff["added_files"].append(file_path)
         
-        # 检查新增的用户（排除默认用户）
+        # Check for added users (exclude default users)
         default_users = set(cls.BASE_TEMPLATE['default_users'].keys())
         for username in system_state.users.users.keys():
             if username not in default_users:
                 diff["added_users"].append(username)
         
-        # 检查新增的服务（排除默认服务）
+        # Check for added services (exclude default services)
         default_services = set(cls.BASE_TEMPLATE['default_services'].keys())
         for service_name in system_state.services.services.keys():
             if service_name not in default_services:
                 diff["added_services"].append(service_name)
         
-        # 检查新安装的包（排除默认包）
+        # Check for new installed packages (exclude default packages)
         default_packages = set(cls.BASE_TEMPLATE['default_packages'])
         for package_name in system_state.packages.installed_packages.keys():
             if package_name not in default_packages:
@@ -173,14 +173,14 @@ If something is not mentioned in the state context, treat it as if it doesn't ex
     @classmethod
     def format_diff_for_context(cls, diff: Dict[str, Any], max_items: int = 50) -> str:
         """
-        将差异格式化为上下文字符串
+        Format difference into context string
         
         Args:
-            diff: 差异字典
-            max_items: 最多显示的项目数量
+            diff: Difference dictionary
+            max_items: Maximum number of items to display
             
         Returns:
-            格式化的差异描述
+            Formatted difference description
         """
         lines = []
         
@@ -211,55 +211,55 @@ If something is not mentioned in the state context, treat it as if it doesn't ex
 
 
 class ContextOptimizer:
-    """上下文优化器 - 确保上下文不超过限制"""
+    """Context Optimizer - Ensure context does not exceed limits"""
     
     def __init__(self, max_context_tokens: int = 2000):
         """
         Args:
-            max_context_tokens: 最大上下文token数（粗略估算：4字符=1token）
+            max_context_tokens: Maximum context tokens (rough estimate: 4 chars = 1 token)
         """
         self.max_context_tokens = max_context_tokens
         self.max_context_chars = max_context_tokens * 4
     
     def optimize_context(self, base_info: str, state_context: str, diff_summary: str) -> str:
         """
-        优化上下文，确保不超过长度限制
+        Optimize context to ensure it does not exceed length limit
         
-        优先级：
-        1. 基础信息（必须包含）
-        2. 命令相关的状态上下文（最重要）
-        3. 差异摘要（如果空间允许）
+        Priority:
+        1. Base Info (Must be included)
+        2. Command-related state context (Most important)
+        3. Difference Summary (If space permits)
         
         Args:
-            base_info: 基础系统信息
-            state_context: 状态上下文（与当前命令相关）
-            diff_summary: 差异摘要
+            base_info: Base system info
+            state_context: State context (related to current command)
+            diff_summary: Difference summary
             
         Returns:
-            优化后的上下文字符串
+            Optimized context string
         """
-        # 优先级1: 基础信息（必须包含）
+        # Priority 1: Base Info (Must be included)
         total_context = base_info
         remaining_space = self.max_context_chars - len(total_context)
         
-        # 优先级2: 命令相关的状态上下文
+        # Priority 2: Command-related state context
         if state_context and remaining_space > 0:
             if len(state_context) <= remaining_space:
                 total_context += "\n" + state_context
                 remaining_space -= len(state_context)
             else:
-                # 截断状态上下文
+                # Truncate state context
                 truncated = state_context[:remaining_space - 100] + "\n[...context truncated...]"
                 total_context += "\n" + truncated
                 remaining_space = 0
         
-        # 优先级3: 差异摘要（如果还有空间）
+        # Priority 3: Difference Summary (If there is space)
         if diff_summary and remaining_space > 200:
             header = "\n[System modifications since start]:\n"
             if len(header) + len(diff_summary) <= remaining_space:
                 total_context += header + diff_summary
             else:
-                # 只包含摘要的一部分
+                # Only include a part of the summary
                 available = remaining_space - len(header) - 50
                 truncated_diff = diff_summary[:available] + "..."
                 total_context += header + truncated_diff
@@ -268,13 +268,12 @@ class ContextOptimizer:
     
     def estimate_token_count(self, text: str) -> int:
         """
-        粗略估算token数量
+        Roughly estimate token count
         
         Args:
-            text: 文本内容
+            text: Text content
             
         Returns:
-            估算的token数量
+            Estimated token count
         """
         return len(text) // 4
-
