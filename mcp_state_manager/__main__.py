@@ -1,14 +1,14 @@
 """
-MCP蜜罐状态管理服务器入口点 (MCP Honeypot State Management Server Entry Point)
+MCP Honeypot State Management Server Entry Point
 
-提供标准的MCP服务器入口点，支持stdio传输协议
+Provide standard MCP server entry points and support the stdio transmission protocol
 """
 
 import sys
 import asyncio
 from pathlib import Path
 
-# 添加src目录到Python路径
+# # Add the src directory to the Python path
 src_path = Path(__file__).parent.parent
 sys.path.insert(0, str(src_path))
 
