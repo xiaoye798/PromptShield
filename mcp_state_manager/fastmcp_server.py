@@ -1,12 +1,12 @@
 """
-MCP蜜罐状态管理服务器 - FastMCP实现 (MCP Honeypot State Management Server - FastMCP Implementation)
+MCP Honeypot State Management Server - FastMCP Implementation
 
-使用官方推荐的FastMCP框架实现的MCP服务器，提供：
-- 事件记录和状态管理工具
-- 跨会话一致性检测
-- IP隔离的状态存储
-- Resources暴露系统状态
-- Lifespan资源管理
+MCP server implemented using the official recommended FastMCP framework, providing:
+- Event recording and state management tools
+- Cross-session consistency detection
+- IP-isolated state storage
+- System state exposure via Resources
+- Lifespan resource management
 """
 
 import asyncio
@@ -27,16 +27,16 @@ from .event_graph import EventGraph, EventNode, EventType, EventStatus, StateCha
 from .memory_system import MemorySystem
 from .scenario_models import ScenarioManager
 
-# 配置日志
+# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-# ====================== 数据模型 ======================
+# ====================== Data Models ======================
 
 @dataclass
 class AppContext:
-    """应用上下文 - 存储生命周期内的资源"""
+    """App Context - Stores resources within the lifecycle"""
     memory_system: MemorySystem
     scenario_manager: ScenarioManager
     storage_path: str
@@ -44,50 +44,50 @@ class AppContext:
 
 
 class EventRecordResult(BaseModel):
-    """事件记录结果"""
-    success: bool = Field(description="是否成功记录事件")
-    event_id: Optional[str] = Field(description="事件ID")
-    message: str = Field(description="结果消息")
-    metadata: Dict[str, Any] = Field(default_factory=dict, description="额外元数据")
+    """Event Recording Result"""
+    success: bool = Field(description="Whether the event was successfully recorded")
+    event_id: Optional[str] = Field(description="Event ID")
+    message: str = Field(description="Result message")
+    metadata: Dict[str, Any] = Field(default_factory=dict, description="Additional metadata")
 
 
 class StateQueryResult(BaseModel):
-    """状态查询结果"""
-    success: bool = Field(description="查询是否成功")
-    state_type: str = Field(description="状态类型")
-    data: Dict[str, Any] = Field(description="状态数据")
-    timestamp: str = Field(description="查询时间戳")
+    """State Query Result"""
+    success: bool = Field(description="Whether the query was successful")
+    state_type: str = Field(description="State type")
+    data: Dict[str, Any] = Field(description="State data")
+    timestamp: str = Field(description="Query timestamp")
 
 
-# ====================== Lifespan管理 ======================
+# ====================== Lifespan Management ======================
 
 @asynccontextmanager
 async def app_lifespan(server: FastMCP) -> AsyncIterator[AppContext]:
     """
-    管理应用生命周期 - 在服务器启动时初始化资源，关闭时清理
+    Manage application lifecycle - Initialize resources on startup, clean up on shutdown
     
-    这是MCP官方推荐的资源管理方式，避免使用全局变量
+    This is the resource management method recommended by MCP official, avoiding global variables
     """
     import os
     
-    # 从环境变量获取配置
+    # Get configuration from environment variables
     storage_path = os.environ.get("STORAGE_PATH", "./honeypot_memory")
     global_singleton_mode = os.environ.get("GLOBAL_SINGLETON_MODE", "false").lower() == "true"
     
     logger.info(f"Initializing MCP server with storage_path={storage_path}, global_singleton_mode={global_singleton_mode}")
     
-    # 初始化存储路径
+    # Initialize storage path
     storage_path_obj = Path(storage_path)
     storage_path_obj.mkdir(parents=True, exist_ok=True)
     
-    # 初始化组件
+    # Initialize components
     memory_sys = MemorySystem(str(storage_path_obj), global_singleton_mode=global_singleton_mode)
     scenario_mgr = ScenarioManager()
     
     logger.info("Memory system and scenario manager initialized successfully")
     
     try:
-        # 返回应用上下文供工具使用
+        # Return app context for tools
         yield AppContext(
             memory_system=memory_sys,
             scenario_manager=scenario_mgr,
@@ -95,11 +95,11 @@ async def app_lifespan(server: FastMCP) -> AsyncIterator[AppContext]:
             global_singleton_mode=global_singleton_mode
         )
     finally:
-        # 清理资源（如果需要）
+        # Clean up resources (if needed)
         logger.info("Cleaning up MCP server resources...")
 
 
-# 创建FastMCP服务器实例（使用Lifespan）
+# Create FastMCP server instance (using Lifespan)
 mcp = FastMCP("honeypot-state-manager", lifespan=app_lifespan)
 
 
@@ -118,9 +118,9 @@ async def record_event(
     state_changes: Optional[List[Dict[str, Any]]] = None,
     metadata: Optional[Dict[str, Any]] = None
 ) -> EventRecordResult:
-    """记录LLM蜜罐中的命令执行事件和状态变化"""
+    """Record command execution events and state changes in the LLM honeypot"""
     
-    # 从上下文获取memory_system
+    # Get memory_system from context
     memory_system = ctx.request_context.lifespan_context.memory_system
     
     if not memory_system:
@@ -131,7 +131,7 @@ async def record_event(
         )
     
     try:
-        # 转换事件类型和状态
+        # Convert event type and status
         try:
             event_type_enum = EventType(event_type.upper())
         except ValueError:
@@ -142,7 +142,7 @@ async def record_event(
         except ValueError:
             status_enum = EventStatus.SUCCESS
         
-        # 处理状态变化
+        # Process state changes
         processed_state_changes = []
         if state_changes:
             for change in state_changes:
@@ -155,7 +155,7 @@ async def record_event(
                 )
                 processed_state_changes.append(state_change)
         
-        # 创建事件节点
+        # Create event node
         event = EventNode(
             event_type=event_type_enum,
             command=command,
@@ -170,10 +170,10 @@ async def record_event(
             metadata=metadata or {}
         )
         
-        # 记录事件
+        # Record event
         event_id = memory_system.record_event(event)
         
-        # 使用MCP日志记录成功
+        # Log success using MCP logger
         await ctx.info(f"Event recorded: {command} (ID: {event_id})")
         
         return EventRecordResult(
@@ -205,9 +205,9 @@ async def query_state(
     ctx: Context[ServerSession, AppContext],
     target: Optional[str] = None
 ) -> StateQueryResult:
-    """查询特定IP的系统状态信息"""
+    """Query system state information for a specific IP"""
     
-    # 从上下文获取memory_system
+    # Get memory_system from context
     memory_system = ctx.request_context.lifespan_context.memory_system
     
     if not memory_system:
@@ -264,21 +264,21 @@ async def query_state(
                 "network_interfaces_count": len(system_state.network.interfaces)
             }
         
-        # 新增：用户列表查询
+        # Added: User list query
         elif query_type == "user_list":
             data = {
                 "users": system_state.users.users,
                 "groups": system_state.users.groups
             }
         
-        # 新增：Cron 列表查询
+        # Added: Cron list query
         elif query_type == "cron_list":
             data = {
                 "user_crontabs": system_state.cron.user_crontabs,
                 "system_cron_files": system_state.cron.system_cron_files
             }
         
-        # 新增：服务列表查询
+        # Added: Service list query
         elif query_type == "service_list":
             data = {
                 "services": system_state.services.services
@@ -313,9 +313,9 @@ async def get_event_graph(
     ctx: Context[ServerSession, AppContext],
     session_id: Optional[str] = None
 ) -> Dict[str, Any]:
-    """获取指定IP的事件图信息"""
+    """Get event graph information for a specific IP"""
     
-    # 从上下文获取memory_system
+    # Get memory_system from context
     memory_system = ctx.request_context.lifespan_context.memory_system
     
     if not memory_system:
@@ -330,14 +330,14 @@ async def get_event_graph(
     try:
         event_graph = memory_system.get_event_graph(ip_address)
         
-        # 获取事件
+        # Get events
         events = event_graph.get_events(session_id=session_id)
         
-        # 转换为字典格式
+        # Convert to dictionary format
         events_data = []
         for event in events:
             events_data.append({
-                "event_id": event.id,  # 使用id而不是event_id
+                "event_id": event.id,  # Use id instead of event_id
                 "command": event.command,
                 "session_id": event.session_id,
                 "event_type": event.event_type.value,
@@ -346,7 +346,7 @@ async def get_event_graph(
                 "user_context": event.user_context
             })
         
-        # 获取关系
+        # Get relationships
         relationships_data = []
         for edge in event_graph.edges.values():
             relationships_data.append({
@@ -382,9 +382,9 @@ async def link_ip_to_instance(
     instance_id: str,
     ctx: Context[ServerSession, AppContext]
 ) -> Dict[str, Any]:
-    """将IP关联到指定的实例ID"""
+    """Link IP to the specified instance ID"""
     
-    # 从上下文获取memory_system
+    # Get memory_system from context
     memory_system = ctx.request_context.lifespan_context.memory_system
     
     if not memory_system:
@@ -411,14 +411,14 @@ async def link_ip_to_instance(
         }
 
 
-# ====================== Resources（暴露状态数据） ======================
+# ====================== Resources (Expose State Data) ======================
 
 @mcp.resource("system://state/{ip_address}")
 def get_system_state_resource(ip_address: str, ctx: Context[ServerSession, AppContext]) -> str:
     """
-    获取完整系统状态 - 作为Resource暴露给LLM
+    Get complete system state - Exposed as a Resource to LLM
     
-    这是MCP推荐的数据暴露方式，允许LLM直接访问系统状态
+    This is the data exposure method recommended by MCP, allowing LLM to directly access system state
     """
     memory_system = ctx.request_context.lifespan_context.memory_system
     
@@ -429,7 +429,7 @@ def get_system_state_resource(ip_address: str, ctx: Context[ServerSession, AppCo
         state = memory_system.get_system_state(ip_address)
         state_dict = state.dict()
         
-        # 转换datetime为ISO格式
+        # Convert datetime to ISO format
         state_dict["timestamp"] = state_dict["timestamp"].isoformat() if hasattr(state_dict["timestamp"], "isoformat") else str(state_dict["timestamp"])
         
         return json.dumps(state_dict, indent=2, ensure_ascii=False)
@@ -438,14 +438,14 @@ def get_system_state_resource(ip_address: str, ctx: Context[ServerSession, AppCo
         return json.dumps({"error": str(e)})
 
 
-# 注意: 由于FastMCP当前版本不支持 {path:path} 路径参数语法，此资源已被禁用
-# 如需此功能，请使用对应的tool方法或考虑升级FastMCP版本
+# Note: Since current FastMCP version does not support {path:path} path parameter syntax, this resource is disabled
+# If this feature is needed, use the corresponding tool method or consider upgrading FastMCP
 # @mcp.resource("filesystem://directory/{ip_address}/{path:path}")
 # def get_directory_listing_resource(ip_address: str, path: str, ctx: Context[ServerSession, AppContext]) -> str:
 #     """
-#     获取目录内容列表 - Resource方式
+#     Get directory content list - Resource mode
 #     
-#     示例: filesystem://directory/192.168.1.1/tmp
+#     Example: filesystem://directory/192.168.1.1/tmp
 #     """
 #     memory_system = ctx.request_context.lifespan_context.memory_system
 #     
@@ -453,7 +453,7 @@ def get_system_state_resource(ip_address: str, ctx: Context[ServerSession, AppCo
 #         return json.dumps({"error": "Memory system not initialized"})
 #     
 #     try:
-#         # 确保路径以/开头
+#         # Ensure path starts with /
 #         full_path = f"/{path}" if not path.startswith("/") else path
 #         
 #         contents = memory_system.get_directory_contents(ip_address, full_path)
@@ -463,14 +463,14 @@ def get_system_state_resource(ip_address: str, ctx: Context[ServerSession, AppCo
 #         return json.dumps({"error": str(e), "files": [], "directories": []})
 
 
-# 注意: 由于FastMCP当前版本不支持 {path:path} 路径参数语法，此资源已被禁用
-# 如需此功能，请使用对应的tool方法或考虑升级FastMCP版本
+# Note: Since current FastMCP version does not support {path:path} path parameter syntax, this resource is disabled
+# If this feature is needed, use the corresponding tool method or consider upgrading FastMCP
 # @mcp.resource("filesystem://file/{ip_address}/{path:path}")
 # def get_file_content_resource(ip_address: str, path: str, ctx: Context[ServerSession, AppContext]) -> str:
 #     """
-#     获取文件内容 - Resource方式
+#     Get file content - Resource mode
 #     
-#     示例: filesystem://file/192.168.1.1/etc/passwd
+#     Example: filesystem://file/192.168.1.1/etc/passwd
 #     """
 #     memory_system = ctx.request_context.lifespan_context.memory_system
 #     
@@ -478,7 +478,7 @@ def get_system_state_resource(ip_address: str, ctx: Context[ServerSession, AppCo
 #         return "Error: Memory system not initialized"
 #     
 #     try:
-#         # 确保路径以/开头
+#         # Ensure path starts with /
 #         full_path = f"/{path}" if not path.startswith("/") else path
 #         
 #         content = memory_system.get_file_content(ip_address, full_path)
@@ -491,9 +491,9 @@ def get_system_state_resource(ip_address: str, ctx: Context[ServerSession, AppCo
 @mcp.resource("state://summary/{ip_address}")
 def get_state_summary_resource(ip_address: str, ctx: Context[ServerSession, AppContext]) -> str:
     """
-    获取系统状态摘要 - Resource方式
+    Get system state summary - Resource mode
     
-    提供快速概览，不包含详细数据
+    Provide quick overview, excluding detailed data
     """
     memory_system = ctx.request_context.lifespan_context.memory_system
     
@@ -511,9 +511,9 @@ def get_state_summary_resource(ip_address: str, ctx: Context[ServerSession, AppC
 @mcp.resource("events://graph/{ip_address}")
 def get_event_graph_resource(ip_address: str, ctx: Context[ServerSession, AppContext]) -> str:
     """
-    获取事件图 - Resource方式
+    Get event graph - Resource mode
     
-    暴露完整的事件图数据
+    Expose complete event graph data
     """
     memory_system = ctx.request_context.lifespan_context.memory_system
     
@@ -530,7 +530,7 @@ def get_event_graph_resource(ip_address: str, ctx: Context[ServerSession, AppCon
                 "message": "No event graph found for this IP"
             })
         
-        # 导出为字典
+        # Export as dictionary
         graph_data = {
             "ip_address": event_graph.ip_address,
             "events": [
@@ -560,57 +560,57 @@ def get_event_graph_resource(ip_address: str, ctx: Context[ServerSession, AppCon
         return json.dumps({"error": str(e)})
 
 
-# ====================== 主函数 ======================
+# ====================== Main Function ======================
 
 def main():
-    """主函数 - 启动MCP服务器"""
+    """Main function - Start MCP server"""
     import sys
     import os
     
-    # 注意：由于使用了Lifespan，不再需要手动调用initialize_components
-    # Lifespan会在服务器启动时自动初始化资源
+    # Note: Since Lifespan is used, manual call to initialize_components is no longer needed
+    # Lifespan will automatically initialize resources on server startup
     
-    # 检查是否有命令行参数
+    # Check for command line arguments
     if len(sys.argv) > 1:
         if "--help" in sys.argv or "-h" in sys.argv:
-            print("MCP蜜罐状态管理服务器 (MCP Honeypot State Management Server)")
-            print("使用官方MCP框架实现的MCP服务器")
+            print("MCP Honeypot State Management Server")
+            print("MCP server implemented using official MCP framework")
             print()
-            print("用法:")
-            print("  python mcp_server.py                    # 启动MCP服务器 (stdio传输)")
-            print("  python mcp_server.py --help             # 显示此帮助信息")
-            print("  python mcp_server.py --sse              # 启动SSE服务器")
-            print("  python mcp_server.py --http             # 启动HTTP服务器")
+            print("Usage:")
+            print("  python mcp_server.py                    # Start MCP server (stdio transport)")
+            print("  python mcp_server.py --help             # Show this help message")
+            print("  python mcp_server.py --sse              # Start SSE server")
+            print("  python mcp_server.py --http             # Start HTTP server")
             print()
-            print("环境变量:")
-            print("  STORAGE_PATH                            # 存储路径 (默认: ./honeypot_memory)")
-            print("  GLOBAL_SINGLETON_MODE                   # 全局单例模式开关 (true/false, 默认: false)")
+            print("Environment Variables:")
+            print("  STORAGE_PATH                            # Storage Path (Default: ./honeypot_memory)")
+            print("  GLOBAL_SINGLETON_MODE                   # Global Singleton Mode Switch (true/false, Default: false)")
             print()
-            print("MCP工具:")
-            print("  - record_event: 记录命令执行事件和状态变化")
-            print("  - query_state: 查询系统状态信息")
-            print("  - get_event_graph: 获取事件图信息")
-            print("  - link_ip_to_instance: 将IP关联到指定的实例ID")
+            print("MCP Tools:")
+            print("  - record_event: Record command execution events and state changes")
+            print("  - query_state: Query system state information")
+            print("  - get_event_graph: Get event graph information")
+            print("  - link_ip_to_instance: Link IP to specified instance ID")
             return
         
         elif "--sse" in sys.argv:
-            # SSE模式
-            print("启动SSE服务器...")
+            # SSE Mode
+            print("Starting SSE server...")
             mcp.run(transport="sse")
             return
             
         elif "--http" in sys.argv:
-            # HTTP模式 (streamable-http)
-            print("启动HTTP服务器 (streamable-http传输)...")
+            # HTTP Mode (streamable-http)
+            print("Starting HTTP server (streamable-http transport)...")
             mcp.run(transport="streamable-http")
             return
     
-    # 默认stdio模式
-    print("启动MCP服务器 (stdio传输)...", file=sys.stderr)
-    print("服务器已就绪，等待MCP客户端连接", file=sys.stderr)
+    # Default stdio mode
+    print("Starting MCP server (stdio transport)...", file=sys.stderr)
+    print("Server ready, waiting for MCP client connection", file=sys.stderr)
     
-    # 运行服务器 (stdio传输)
-    # Lifespan会自动处理初始化
+    # Run server (stdio transport)
+    # Lifespan will handle initialization automatically
     mcp.run()
 
 
