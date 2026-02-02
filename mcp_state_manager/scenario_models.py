@@ -1,8 +1,8 @@
 """
-测试场景状态模型 (Scenario State Models)
+Scenario State Models
 
-实现针对shelLM项目中11个测试场景的状态模型和验证逻辑。
-每个场景都有特定的状态变化模式和一致性验证规则。
+Implement state models and validation logic for 11 test scenarios in the shelLM project.
+Each scenario has specific state change patterns and consistency validation rules.
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ from .memory_system import SystemState
 
 
 class ScenarioResult(BaseModel):
-    """场景验证结果"""
+    """Scenario validation result"""
     scenario_id: str
     scenario_name: str
     is_consistent: bool
@@ -31,7 +31,7 @@ class ScenarioResult(BaseModel):
 
 
 class BaseScenario(ABC):
-    """基础场景类"""
+    """Base scenario class"""
     
     def __init__(self, scenario_id: str, name: str, description: str):
         self.scenario_id = scenario_id
@@ -40,31 +40,31 @@ class BaseScenario(ABC):
     
     @abstractmethod
     def validate_session_1(self, events: List[EventNode], final_state: SystemState) -> Dict[str, Any]:
-        """验证会话1的执行结果"""
+        """Validate execution result of session 1"""
         pass
     
     @abstractmethod
     def validate_session_2(self, events: List[EventNode], final_state: SystemState, 
                           session_1_state: SystemState) -> Dict[str, Any]:
-        """验证会话2的执行结果和跨会话一致性"""
+        """Validate execution result of session 2 and cross-session consistency"""
         pass
     
     @abstractmethod
     def get_expected_final_state(self) -> Dict[str, Any]:
-        """获取期望的最终状态"""
+        """Get expected final state"""
         pass
     
     def validate_scenario(self, session_1_events: List[EventNode], session_1_state: SystemState,
                          session_2_events: List[EventNode], session_2_state: SystemState) -> ScenarioResult:
-        """验证整个场景"""
+        """Validate entire scenario"""
         
-        # 验证会话1
+        # Validate session 1
         session_1_result = self.validate_session_1(session_1_events, session_1_state)
         
-        # 验证会话2
+        # Validate session 2
         session_2_result = self.validate_session_2(session_2_events, session_2_state, session_1_state)
         
-        # 计算总体一致性
+        # Calculate overall consistency
         issues = []
         issues.extend(session_1_result.get("issues", []))
         issues.extend(session_2_result.get("issues", []))
@@ -88,26 +88,26 @@ class BaseScenario(ABC):
 
 
 class PFSMScenario(BaseScenario):
-    """P-FSM场景：文件系统管理"""
+    """P-FSM Scenario: File System Management"""
     
     def __init__(self, scenario_id: str, target_path: str, operation: str):
-        super().__init__(scenario_id, f"文件系统管理-{operation}", f"测试{operation}操作的跨会话一致性")
+        super().__init__(scenario_id, f"File System Management - {operation}", f"Test cross-session consistency of {operation} operation")
         self.target_path = target_path
         self.operation = operation
 
 
 class PFSM01Scenario(PFSMScenario):
-    """P-FSM-01: 创建文件并验证存在性"""
+    """P-FSM-01: Create file and verify existence"""
     
     def __init__(self):
-        super().__init__("P-FSM-01", "/tmp/test_file.txt", "创建文件")
+        super().__init__("P-FSM-01", "/tmp/test_file.txt", "Create File")
     
     def validate_session_1(self, events: List[EventNode], final_state: SystemState) -> Dict[str, Any]:
-        """验证会话1：touch /tmp/test_file.txt"""
+        """Validate Session 1: touch /tmp/test_file.txt"""
         issues = []
         success = False
         
-        # 检查是否有touch命令事件
+        # Check for touch command event
         touch_events = [e for e in events if "touch" in e.command and self.target_path in e.command]
         
         if not touch_events:
@@ -117,7 +117,7 @@ class PFSM01Scenario(PFSMScenario):
             if touch_event.status.value != "success":
                 issues.append(f"Touch command failed: {touch_event.stderr}")
             else:
-                # 检查状态变化
+                # Check state changes
                 file_created = any(
                     change.target == self.target_path and change.change_type == "create"
                     for change in touch_event.state_changes
@@ -127,7 +127,7 @@ class PFSM01Scenario(PFSMScenario):
                 else:
                     issues.append("File creation not recorded in state changes")
         
-        # 检查最终状态
+        # Check final state
         if not final_state.filesystem.file_exists(self.target_path):
             issues.append("File not found in final state")
             success = False
@@ -141,11 +141,11 @@ class PFSM01Scenario(PFSMScenario):
     
     def validate_session_2(self, events: List[EventNode], final_state: SystemState, 
                           session_1_state: SystemState) -> Dict[str, Any]:
-        """验证会话2：ls /tmp/test_file.txt"""
+        """Validate Session 2: ls /tmp/test_file.txt"""
         issues = []
         success = False
         
-        # 检查是否有ls命令事件
+        # Check for ls command event
         ls_events = [e for e in events if "ls" in e.command and self.target_path in e.command]
         
         if not ls_events:
@@ -155,13 +155,13 @@ class PFSM01Scenario(PFSMScenario):
             if ls_event.status.value != "success":
                 issues.append(f"ls command failed: {ls_event.stderr}")
             else:
-                # 检查输出是否包含文件名
+                # Check if output contains filename
                 if self.target_path in ls_event.stdout or "test_file.txt" in ls_event.stdout:
                     success = True
                 else:
                     issues.append("File not found in ls output")
         
-        # 检查跨会话一致性
+        # Check cross-session consistency
         if session_1_state.filesystem.file_exists(self.target_path):
             if not final_state.filesystem.file_exists(self.target_path):
                 issues.append("File lost between sessions")
@@ -183,18 +183,18 @@ class PFSM01Scenario(PFSMScenario):
 
 
 class PFSM02Scenario(PFSMScenario):
-    """P-FSM-02: 写入文件内容并验证"""
+    """P-FSM-02: Write file content and verify"""
     
     def __init__(self):
-        super().__init__("P-FSM-02", "/tmp/hello.txt", "写入文件")
+        super().__init__("P-FSM-02", "/tmp/hello.txt", "Write to File")
         self.content = "Hello, World!"
     
     def validate_session_1(self, events: List[EventNode], final_state: SystemState) -> Dict[str, Any]:
-        """验证会话1：echo "Hello, World!" > /tmp/hello.txt"""
+        """Validate Session 1: echo "Hello, World!" > /tmp/hello.txt"""
         issues = []
         success = False
         
-        # 检查echo命令
+        # Check echo command
         echo_events = [e for e in events if "echo" in e.command and self.target_path in e.command]
         
         if not echo_events:
@@ -204,7 +204,7 @@ class PFSM02Scenario(PFSMScenario):
             if echo_event.status.value != "success":
                 issues.append(f"Echo command failed: {echo_event.stderr}")
             else:
-                # 检查文件内容
+                # Check file content
                 file_content = final_state.filesystem.get_file_content(self.target_path)
                 if file_content and self.content in file_content:
                     success = True
@@ -220,11 +220,11 @@ class PFSM02Scenario(PFSMScenario):
     
     def validate_session_2(self, events: List[EventNode], final_state: SystemState, 
                           session_1_state: SystemState) -> Dict[str, Any]:
-        """验证会话2：cat /tmp/hello.txt"""
+        """Validate Session 2: cat /tmp/hello.txt"""
         issues = []
         success = False
         
-        # 检查cat命令
+        # Check cat command
         cat_events = [e for e in events if "cat" in e.command and self.target_path in e.command]
         
         if not cat_events:
@@ -234,13 +234,13 @@ class PFSM02Scenario(PFSMScenario):
             if cat_event.status.value != "success":
                 issues.append(f"Cat command failed: {cat_event.stderr}")
             else:
-                # 检查输出内容
+                # Check output content
                 if self.content in cat_event.stdout:
                     success = True
                 else:
                     issues.append("File content not correctly displayed")
         
-        # 检查跨会话一致性
+        # Check cross-session consistency
         session_1_content = session_1_state.filesystem.get_file_content(self.target_path)
         session_2_content = final_state.filesystem.get_file_content(self.target_path)
         
@@ -264,17 +264,17 @@ class PFSM02Scenario(PFSMScenario):
 
 
 class PFSM03Scenario(PFSMScenario):
-    """P-FSM-03: 创建深层嵌套目录"""
+    """P-FSM-03: Create deep nested directory"""
     
     def __init__(self):
-        super().__init__("P-FSM-03", "/tmp/deep/nested/directory", "创建嵌套目录")
+        super().__init__("P-FSM-03", "/tmp/deep/nested/directory", "Create Nested Directory")
     
     def validate_session_1(self, events: List[EventNode], final_state: SystemState) -> Dict[str, Any]:
-        """验证会话1：mkdir -p /tmp/deep/nested/directory"""
+        """Validate Session 1: mkdir -p /tmp/deep/nested/directory"""
         issues = []
         success = False
         
-        # 检查mkdir命令
+        # Check mkdir command
         mkdir_events = [e for e in events if "mkdir" in e.command and "-p" in e.command]
         
         if not mkdir_events:
@@ -284,7 +284,7 @@ class PFSM03Scenario(PFSMScenario):
             if mkdir_event.status.value != "success":
                 issues.append(f"mkdir command failed: {mkdir_event.stderr}")
             else:
-                # 检查目录是否创建
+                # Check if directory created
                 if final_state.filesystem.directory_exists(self.target_path):
                     success = True
                 else:
@@ -299,11 +299,11 @@ class PFSM03Scenario(PFSMScenario):
     
     def validate_session_2(self, events: List[EventNode], final_state: SystemState, 
                           session_1_state: SystemState) -> Dict[str, Any]:
-        """验证会话2：ls -d /tmp/deep/nested/directory"""
+        """Validate Session 2: ls -d /tmp/deep/nested/directory"""
         issues = []
         success = False
         
-        # 检查ls命令
+        # Check ls command
         ls_events = [e for e in events if "ls" in e.command and "-d" in e.command]
         
         if not ls_events:
@@ -313,13 +313,13 @@ class PFSM03Scenario(PFSMScenario):
             if ls_event.status.value != "success":
                 issues.append(f"ls command failed: {ls_event.stderr}")
             else:
-                # 检查输出
+                # Check output
                 if self.target_path in ls_event.stdout:
                     success = True
                 else:
                     issues.append("Directory not found in ls output")
         
-        # 检查跨会话一致性
+        # Check cross-session consistency
         if session_1_state.filesystem.directory_exists(self.target_path):
             if not final_state.filesystem.directory_exists(self.target_path):
                 issues.append("Directory lost between sessions")
@@ -340,26 +340,26 @@ class PFSM03Scenario(PFSMScenario):
 
 
 class PUMScenario(BaseScenario):
-    """P-UM场景：用户管理"""
+    """P-UM Scenario: User Management"""
     
     def __init__(self, scenario_id: str, username: str, operation: str):
-        super().__init__(scenario_id, f"用户管理-{operation}", f"测试{operation}操作的跨会话一致性")
+        super().__init__(scenario_id, f"User Management - {operation}", f"Test cross-session consistency of {operation} operation")
         self.username = username
         self.operation = operation
 
 
 class PUM04Scenario(PUMScenario):
-    """P-UM-04: 创建用户并验证"""
+    """P-UM-04: Create user and verify"""
     
     def __init__(self):
-        super().__init__("P-UM-04", "testuser", "创建用户")
+        super().__init__("P-UM-04", "testuser", "Create User")
     
     def validate_session_1(self, events: List[EventNode], final_state: SystemState) -> Dict[str, Any]:
-        """验证会话1：useradd testuser"""
+        """Validate Session 1: useradd testuser"""
         issues = []
         success = False
         
-        # 检查useradd命令
+        # Check useradd command
         useradd_events = [e for e in events if "useradd" in e.command and self.username in e.command]
         
         if not useradd_events:
@@ -369,7 +369,7 @@ class PUM04Scenario(PUMScenario):
             if useradd_event.status.value != "success":
                 issues.append(f"useradd command failed: {useradd_event.stderr}")
             else:
-                # 检查用户是否创建
+                # Check if user created
                 if final_state.users.user_exists(self.username):
                     success = True
                 else:
@@ -384,11 +384,11 @@ class PUM04Scenario(PUMScenario):
     
     def validate_session_2(self, events: List[EventNode], final_state: SystemState, 
                           session_1_state: SystemState) -> Dict[str, Any]:
-        """验证会话2：id testuser"""
+        """Validate Session 2: id testuser"""
         issues = []
         success = False
         
-        # 检查id命令
+        # Check id command
         id_events = [e for e in events if "id" in e.command and self.username in e.command]
         
         if not id_events:
@@ -398,13 +398,13 @@ class PUM04Scenario(PUMScenario):
             if id_event.status.value != "success":
                 issues.append(f"id command failed: {id_event.stderr}")
             else:
-                # 检查输出包含用户信息
+                # Check output containing user info
                 if self.username in id_event.stdout and "uid=" in id_event.stdout:
                     success = True
                 else:
                     issues.append("User information not found in id output")
         
-        # 检查跨会话一致性
+        # Check cross-session consistency
         if session_1_state.users.user_exists(self.username):
             if not final_state.users.user_exists(self.username):
                 issues.append("User lost between sessions")
@@ -425,7 +425,7 @@ class PUM04Scenario(PUMScenario):
 
 
 class ScenarioManager:
-    """场景管理器"""
+    """Scenario Manager"""
     
     def __init__(self):
         self.scenarios = {
@@ -433,28 +433,28 @@ class ScenarioManager:
             "P-FSM-02": PFSM02Scenario(),
             "P-FSM-03": PFSM03Scenario(),
             "P-UM-04": PUM04Scenario(),
-            # 可以继续添加其他场景
+            # More scenarios can be added here
         }
     
     def get_scenario(self, scenario_id: str) -> Optional[BaseScenario]:
-        """获取场景实例"""
+        """Get scenario instance"""
         return self.scenarios.get(scenario_id)
     
     def validate_all_scenarios(self, test_data: Dict[str, Any]) -> Dict[str, ScenarioResult]:
-        """验证所有场景"""
+        """Validate all scenarios"""
         results = {}
         
         for scenario_id, scenario in self.scenarios.items():
             if scenario_id in test_data:
                 scenario_data = test_data[scenario_id]
                 
-                # 提取会话数据
+                # Extract session data
                 session_1_events = scenario_data.get("session_1_events", [])
                 session_1_state = scenario_data.get("session_1_state")
                 session_2_events = scenario_data.get("session_2_events", [])
                 session_2_state = scenario_data.get("session_2_state")
                 
-                # 验证场景
+                # Validate scenario
                 result = scenario.validate_scenario(
                     session_1_events, session_1_state,
                     session_2_events, session_2_state
@@ -465,7 +465,7 @@ class ScenarioManager:
         return results
     
     def calculate_overall_ccsr(self, results: Dict[str, ScenarioResult]) -> float:
-        """计算总体CCSR"""
+        """Calculate overall CCSR"""
         if not results:
             return 0.0
         
@@ -473,7 +473,7 @@ class ScenarioManager:
         return consistent_count / len(results)
     
     def generate_report(self, results: Dict[str, ScenarioResult]) -> Dict[str, Any]:
-        """生成验证报告"""
+        """Generate validation report"""
         overall_ccsr = self.calculate_overall_ccsr(results)
         
         report = {
@@ -495,13 +495,13 @@ class ScenarioManager:
         return report
     
     def _analyze_common_issues(self, results: Dict[str, ScenarioResult]) -> List[str]:
-        """分析常见问题"""
+        """Analyze common issues"""
         issue_counts = {}
         
         for result in results.values():
             for issue in result.issues:
                 issue_counts[issue] = issue_counts.get(issue, 0) + 1
         
-        # 返回出现频率最高的问题
+        # Return most frequent issues
         common_issues = sorted(issue_counts.items(), key=lambda x: x[1], reverse=True)
         return [issue for issue, count in common_issues if count > 1]
