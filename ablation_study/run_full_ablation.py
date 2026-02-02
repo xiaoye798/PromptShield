@@ -242,7 +242,7 @@ def run_scenario(scenario, mode, noise_condition):
 
 def main():
     p("="*70)
-    p("完整消融实验 - Full Ablation Study")
+    p("Full Ablation Study")
     p(f"10 Scenarios × 4 Modes × 3 Noise Conditions = 120 Tests")
     p(f"API: {api_provider}, Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     p("="*70)
@@ -253,11 +253,11 @@ def main():
     
     for noise in NOISE_CONDITIONS:
         p(f"\n{'='*60}")
-        p(f"噪声条件: {noise}")
+        p(f"{noise}")
         p(f"{'='*60}")
         
         for mode in MODES:
-            p(f"\n--- 模式: {mode} ---")
+            p(f"\n--- {mode} ---")
             for scen in SCENARIOS:
                 current += 1
                 try:
@@ -269,7 +269,7 @@ def main():
                                     "noise_condition": noise, "success": False, "error": str(e)})
                 time.sleep(0.5)
         
-        p(f"\n进度: {current}/{total_tests} ({current*100//total_tests}%)")
+        p(f"\n{current}/{total_tests} ({current*100//total_tests}%)")
     
     # Save results
     output_file = "ablation_study/full_ablation_results.json"
@@ -278,11 +278,11 @@ def main():
     
     # Generate summary
     p("\n" + "="*70)
-    p("实验结果汇总 - SUMMARY")
+    p("SUMMARY")
     p("="*70)
     
     for noise in NOISE_CONDITIONS:
-        p(f"\n【{noise}条件】")
+        p(f"\n【{noise}】")
         p(f"{'Mode':<15} | SFR  | Avg Context | Avg Latency")
         p("-"*55)
         for mode in MODES:
@@ -292,7 +292,7 @@ def main():
             avg_lat = sum(r.get('latency_ms', 0) for r in mode_results) / len(mode_results) if mode_results else 0
             p(f"{mode:<15} | {success:2}/10 | {avg_ctx:11.0f} | {avg_lat:10.0f}ms")
     
-    p(f"\n结果已保存: {output_file}")
+    p(f"\n{output_file}")
 
 if __name__ == "__main__":
     main()
