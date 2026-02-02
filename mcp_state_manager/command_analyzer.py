@@ -5,10 +5,10 @@ from typing import List, Dict, Any, Optional, Tuple
 from .event_graph import EventType, EventStatus, StateChange
 
 class CommandAnalyzer:
-    """分析命令和输出以确定状态变化 (Comprehensive Version for T2 Test Suite)"""
+    """Analyze commands and output to determine state changes (Comprehensive Version for T2 Test Suite)"""
     
     def determine_event_type(self, command: str) -> EventType:
-        """确定事件类型"""
+        """Determine event type"""
         command_lower = command.lower().strip()
         parts = command_lower.split()
         if not parts:
@@ -41,7 +41,7 @@ class CommandAnalyzer:
         return EventType.COMMAND_EXECUTION
     
     def determine_status(self, command: str, output: str) -> EventStatus:
-        """确定执行状态"""
+        """Determine execution status"""
         error_indicators = [
             "command not found", "permission denied", "no such file",
             "cannot create", "cannot access", "error", "failed",
@@ -58,7 +58,7 @@ class CommandAnalyzer:
         return EventStatus.SUCCESS
 
     def _resolve_path(self, path: str, cwd: str) -> str:
-        """解析路径为绝对路径"""
+        """Resolve path to absolute path"""
         if not path:
             return cwd
         
@@ -72,7 +72,7 @@ class CommandAnalyzer:
         return os.path.normpath(full_path).replace("\\", "/")
 
     def _parse_args(self, command: str) -> List[str]:
-        """使用 shlex 解析命令行参数，处理引号"""
+        """Use shlex to parse command line arguments, handling quotes"""
         try:
             return shlex.split(command)
         except ValueError:
@@ -80,10 +80,10 @@ class CommandAnalyzer:
 
     def _split_compound_commands(self, command_str: str) -> List[str]:
         """
-        引号感知的复合命令拆分
+        Quote-aware compound command splitting
         
-        在引号外找到 && 或 ; 分隔符，将命令拆分为多个子命令。
-        引号内的 ; 或 && 不被视为分隔符。
+        Find && or ; delimiters outside of quotes to split commands into multiple subcommands.
+        Inside quotes, ; or && are not treated as delimiters.
         """
         commands = []
         current_cmd = []
@@ -95,7 +95,7 @@ class CommandAnalyzer:
         while i < len(command_str):
             char = command_str[i]
             
-            # 处理转义
+            # Handle escape
             if escape_next:
                 current_cmd.append(char)
                 escape_next = False
@@ -108,7 +108,7 @@ class CommandAnalyzer:
                 i += 1
                 continue
             
-            # 引号状态切换
+            # Toggle quote status
             if char == "'" and not in_double_quote:
                 in_single_quote = not in_single_quote
                 current_cmd.append(char)
@@ -121,9 +121,9 @@ class CommandAnalyzer:
                 i += 1
                 continue
             
-            # 只在引号外检查分隔符
+            # Only check for delimiters outside of quotes
             if not in_single_quote and not in_double_quote:
-                # 检查 ' && '
+                # Check ' && '
                 if command_str[i:i+4] == ' && ':
                     cmd = ''.join(current_cmd).strip()
                     if cmd:
@@ -132,7 +132,7 @@ class CommandAnalyzer:
                     i += 4
                     continue
                 
-                # 检查 ' ; '
+                # Check ' ; '
                 if command_str[i:i+3] == ' ; ':
                     cmd = ''.join(current_cmd).strip()
                     if cmd:
@@ -141,7 +141,7 @@ class CommandAnalyzer:
                     i += 3
                     continue
                 
-                # 检查单独的 ';' (但不是 '; ' 已处理)
+                # Check single ';' (but not '; ' which is already handled)
                 if char == ';':
                     cmd = ''.join(current_cmd).strip()
                     if cmd:
@@ -153,7 +153,7 @@ class CommandAnalyzer:
             current_cmd.append(char)
             i += 1
         
-        # 添加最后一个命令
+        # Add the last command
         cmd = ''.join(current_cmd).strip()
         if cmd:
             commands.append(cmd)
@@ -161,22 +161,22 @@ class CommandAnalyzer:
         return commands
 
     def analyze_state_changes(self, command: str, output: str, cwd: str = "/root", system_state: Any = None) -> List[StateChange]:
-        """全面分析命令导致的状态变化
+        """Comprehensive analysis of state changes caused by commands
         
-        注意：对于蜜罐系统，我们基于命令的意图分析状态变化，
-        而不是依赖 LLM 的输出。这确保即使 LLM 返回错误消息，
-        状态变化仍然会被正确记录（因为攻击者的命令"本应"成功）。
+        Note: For honeypot systems, we analyze state changes based on command intent,
+        rather than relying on LLM output. This ensures that even if the LLM returns an error message,
+        state changes are still correctly recorded (as the attacker's command "should have" succeeded).
         """
         changes = []
         command_str = command.strip()
         if not command_str:
             return changes
         
-        # 使用引号感知的拆分处理复合命令
+        # Handle compound commands using quote-aware splitting
         sub_commands = self._split_compound_commands(command_str)
         
         if len(sub_commands) > 1:
-            # 有多个子命令，逐个分析
+            # Multiple subcommands, analyzing one by one
             for sub_cmd in sub_commands:
                 if sub_cmd:
                     sub_changes = self._analyze_single_command(sub_cmd, output, cwd, system_state)
@@ -187,10 +187,10 @@ class CommandAnalyzer:
         return self._analyze_single_command(command_str, output, cwd, system_state)
     
     def _analyze_single_command(self, command_str: str, output: str, cwd: str, system_state: Any) -> List[StateChange]:
-        """分析单个命令的状态变化"""
+        """Analyze state changes of a single command"""
         changes = []
         
-        # 注释：不再检查输出状态，因为蜜罐需要记录命令意图
+        # Comment: No longer checking output status, as the honeypot needs to record command intent
         # status = self.determine_status(command, output)
         # if status == EventStatus.FAILED:
         #     return changes
@@ -199,16 +199,16 @@ class CommandAnalyzer:
         # echo "..." | command -> handle complex
         # We process simple redirections here, complex pipes are hard
         
-        # 特殊处理: 管道到crontab命令
+        # Special handling: Piping to crontab command
         if "| crontab" in command_str:
-            # 提取 crontab 部分
+            # Extract crontab part
             crontab_part = command_str.split("|")[-1].strip()
             crontab_parts = self._parse_args(crontab_part)
             if crontab_parts and crontab_parts[0] == "crontab":
                 return self._handle_cron_ops("crontab", crontab_parts, command_str)
         
-        # 检查是否有真正的重定向（使用引号感知的解析器）
-        # 这修复了引号内的 > 被误识别的问题
+        # Check for real redirections (using quote-aware parser)
+        # This fixes the issue where > inside quotes was misidentified
         real_redirections = self._find_real_redirections(command_str)
         if real_redirections and "| crontab" not in command_str:
             return self._handle_redirection(command_str, cwd, system_state)
@@ -241,15 +241,15 @@ class CommandAnalyzer:
 
     def _find_real_redirections(self, command_str: str) -> List[Dict[str, Any]]:
         r"""
-        找出命令中真正的重定向操作符（忽略引号内的）
+        Find real redirection operators in the command (ignoring those inside quotes)
         
-        使用状态机解析，正确处理：
-        - 单引号 '...' 内的 > 不是重定向
-        - 双引号 "..." 内的 > 不是重定向
-        - 文件描述符重定向 2>/dev/null, 2>&1, >&2 等
-        - 转义字符 \> 不是重定向
+        Parsing with a state machine, correctly handling:
+        - > inside single quotes '...' is not a redirection
+        - > inside double quotes "..." is not a redirection
+        - File descriptor redirections like 2>/dev/null, 2>&1, >&2, etc.
+        - Escaped character \> is not a redirection
         
-        返回格式: [{'type': '>' or '>>', 'position': int, 'target': str}]
+        Return format: [{'type': '>' or '>>', 'position': int, 'target': str}]
         """
         redirections = []
         i = 0
@@ -260,7 +260,7 @@ class CommandAnalyzer:
         while i < len(command_str):
             char = command_str[i]
             
-            # 处理转义字符
+            # Handle escape characters
             if escape_next:
                 escape_next = False
                 i += 1
@@ -271,7 +271,7 @@ class CommandAnalyzer:
                 i += 1
                 continue
             
-            # 处理引号状态
+            # Handle quote status
             if char == "'" and not in_double_quote:
                 in_single_quote = not in_single_quote
                 i += 1
@@ -282,25 +282,25 @@ class CommandAnalyzer:
                 i += 1
                 continue
             
-            # 只在引号外检查重定向
+            # Only check for redirections outside of quotes
             if not in_single_quote and not in_double_quote and char == '>':
-                # 检查是否是文件描述符重定向
+                # Check if it is a file descriptor redirection
                 
-                # 检查 >& 模式 (如 >& /dev/tcp/... 或 >&2)
+                # Check for >& pattern (e.g., >& /dev/tcp/... or >&2)
                 if i + 1 < len(command_str) and command_str[i + 1] == '&':
-                    # 跳过 >& 模式（文件描述符重定向）
+                    # Skip >& pattern (file descriptor redirection)
                     i += 2
                     continue
                 
-                # 检查 数字> 模式 (如 2>/dev/null)
+                # Check for digit> pattern (e.g., 2>/dev/null)
                 if i > 0 and command_str[i - 1].isdigit():
-                    # 这是 stderr/其他fd 重定向，跳过
+                    # This is stderr/other fd redirection, skip
                     i += 1
                     continue
                 
-                # 检查 >> (追加) vs > (覆盖)
+                # Check >> (append) vs > (overwrite)
                 if i + 1 < len(command_str) and command_str[i + 1] == '>':
-                    # 是 >> 追加重定向
+                    # It is >> append redirection
                     target = self._extract_redirection_target(command_str, i + 2)
                     if target:
                         redirections.append({
@@ -311,7 +311,7 @@ class CommandAnalyzer:
                     i += 2
                     continue
                 else:
-                    # 是 > 覆盖重定向
+                    # It is > overwrite redirection
                     target = self._extract_redirection_target(command_str, i + 1)
                     if target:
                         redirections.append({
@@ -327,16 +327,16 @@ class CommandAnalyzer:
         return redirections
 
     def _extract_redirection_target(self, command_str: str, start_pos: int) -> Optional[str]:
-        """从重定向操作符后提取目标路径"""
+        """Extract target path after the redirection operator"""
         rest = command_str[start_pos:].lstrip()
         if not rest:
             return None
         
-        # 如果是文件描述符引用 (如 &1, &2)，返回 None
+        # If it is a file descriptor reference (e.g., &1, &2), return None
         if rest.startswith('&'):
             return None
         
-        # 提取路径（到空格、管道、分号、&&等为止）
+        # Extract path (until space, pipe, semicolon, &&, etc.)
         target = []
         i = 0
         in_single_quote = False
@@ -367,7 +367,7 @@ class CommandAnalyzer:
                 i += 1
                 continue
             
-            # 在引号外遇到分隔符就停止
+            # Stop when meeting a delimiter outside of quotes
             if not in_single_quote and not in_double_quote:
                 if char in ' \t|;&':
                     break
@@ -380,28 +380,28 @@ class CommandAnalyzer:
 
     def _extract_echo_content(self, command_str: str, redirect_pos: int) -> str:
         """
-        从 echo 命令中提取要写入的内容
+        Extract content to be written from echo command
         
-        处理各种复杂情况：
+        Handle various complex situations:
         - echo 'content' > file
         - echo "content with $var" > file
-        - echo -e "content\\n" > file
+        - echo -e "content\n" > file
         - echo 'content with > inside' > file
         """
-        # 获取重定向之前的部分
+        # Get the part before redirection
         lhs = command_str[:redirect_pos].strip()
         
-        # 处理管道情况: cmd1 | cmd2 > file
+        # Handle pipe cases: cmd1 | cmd2 > file
         if '|' in lhs:
             lhs = lhs.split('|')[-1].strip()
         
         if not lhs.lower().startswith('echo'):
             return ""
         
-        # 移除 echo 命令本身
+        # Remove the echo command itself
         echo_part = lhs[4:].strip()
         
-        # 处理 echo 的选项 (-e, -n, -E)
+        # Handle echo options (-e, -n, -E)
         while echo_part.startswith('-'):
             space_idx = echo_part.find(' ')
             if space_idx == -1:
@@ -412,7 +412,7 @@ class CommandAnalyzer:
             else:
                 break
         
-        # 提取引号内的内容
+        # Extract content within quotes
         content = self._extract_quoted_content(echo_part)
         return content
 
@@ -420,11 +420,11 @@ class CommandAnalyzer:
         """
         提取引号内的内容，处理嵌套引号和转义
         
-        支持:
+        Support:
         - 'single quoted content'
         - "double quoted content"
         - $'ansi-c quoting'
-        - 混合内容 'part1' "part2"
+        - Mixed content 'part1' "part2"
         """
         text = text.strip()
         
@@ -437,7 +437,7 @@ class CommandAnalyzer:
         while i < len(text):
             char = text[i]
             
-            # 处理单引号字符串
+            # Handle single-quoted strings
             if char == "'":
                 end_quote = text.find("'", i + 1)
                 if end_quote != -1:
@@ -445,13 +445,13 @@ class CommandAnalyzer:
                     i = end_quote + 1
                     continue
                 else:
-                    # 没有闭合的单引号，取剩余部分
+                    # No closing single quote, take the remaining part
                     result.append(text[i + 1:])
                     break
             
-            # 处理双引号字符串
+            # Handle double-quoted strings
             elif char == '"':
-                # 需要处理双引号内的转义
+                # Need to handle escapes inside double quotes
                 content = []
                 i += 1
                 escape_next = False
@@ -474,7 +474,7 @@ class CommandAnalyzer:
                 result.append(''.join(content))
                 continue
             
-            # 处理 $'...' 格式 (ANSI-C quoting)
+            # Handle $'...' format (ANSI-C quoting)
             elif char == '$' and i + 1 < len(text) and text[i + 1] == "'":
                 end_quote = text.find("'", i + 2)
                 if end_quote != -1:
@@ -482,12 +482,12 @@ class CommandAnalyzer:
                     i = end_quote + 1
                     continue
             
-            # 跳过空格
+            # Skip spaces
             elif char in ' \t':
                 i += 1
                 continue
             
-            # 其他字符（无引号的内容）
+            # Other characters (content without quotes)
             else:
                 word = []
                 while i < len(text) and text[i] not in ' \t\'"':
@@ -501,9 +501,9 @@ class CommandAnalyzer:
 
     def _extract_heredoc_content(self, command_str: str) -> str:
         """
-        从 heredoc 语法中提取内容
+        Extract content from heredoc syntax
         
-        支持格式:
+        Supported formats:
         - cat > file << 'EOF'
         - cat > file << EOF
         - cat > file << "EOF"
@@ -511,64 +511,64 @@ class CommandAnalyzer:
         """
         import re
         
-        # 查找 heredoc 标记
-        # 匹配 << 后面的分隔符（可能有引号）
+        # Find heredoc marker
+        # Match the delimiter after << (may have quotes)
         heredoc_match = re.search(r'<<-?\s*([\'"]?)(\w+)\1', command_str)
         if not heredoc_match:
             return ""
         
         delimiter = heredoc_match.group(2)  # 例如 'EOF'
         
-        # 找到分隔符后的内容
-        # heredoc 内容在分隔符之后，直到遇到单独一行的分隔符
+        # Find content after the delimiter
+        # heredoc content follows the delimiter until a standalone delimiter line is encountered
         start_pos = heredoc_match.end()
         
-        # 跳过可能的换行
+        # Skip potential newlines
         while start_pos < len(command_str) and command_str[start_pos] in ' \t':
             start_pos += 1
         if start_pos < len(command_str) and command_str[start_pos] == '\n':
             start_pos += 1
         
-        # 查找结束分隔符
+        # Find the end delimiter
         end_pattern = re.compile(r'^' + re.escape(delimiter) + r'\s*$', re.MULTILINE)
         end_match = end_pattern.search(command_str, start_pos)
         
         if end_match:
             content = command_str[start_pos:end_match.start()]
-            # 移除末尾的换行
+            # Remove trailing newline
             content = content.rstrip('\n')
             return content
         else:
-            # 没找到结束分隔符，取到命令末尾
+            # End delimiter not found, take until the end of command
             return command_str[start_pos:].strip()
 
     def _handle_redirection(self, command_str: str, cwd: str, system_state: Any) -> List[StateChange]:
         """
-        处理重定向命令，正确解析引号和特殊字符
+        Handle redirection commands, correctly parsing quotes and special characters
         
-        修复的问题：
-        1. 引号内的 > 不再被误识别为重定向
-        2. 文件描述符重定向 (2>&1, >&, 2>/dev/null) 被正确跳过
-        3. 复杂转义字符被正确处理
-        4. 支持 heredoc 语法 (<< EOF)
+        Refixed issues:
+        1. > inside quotes is no longer misidentified as redirection
+        2. File descriptor redirections (2>&1, >&, 2>/dev/null) are correctly skipped
+        3. Complex escape characters are correctly handled
+        4. Supports heredoc syntax (<< EOF)
         """
         changes = []
         
-        # 先检查是否是 heredoc 语法
+        # First check if it is heredoc syntax
         import re
         heredoc_match = re.search(r'<<-?\s*([\'"]?)(\w+)\1', command_str)
         if heredoc_match:
             # 是 heredoc 语法
             content = self._extract_heredoc_content(command_str)
             
-            # 找到重定向目标
+            # Find the redirection target
             redirections = self._find_real_redirections(command_str)
             if redirections:
                 redir = redirections[-1]
                 target_path = self._resolve_path(redir['target'], cwd)
                 mode = "append" if redir['type'] == '>>' else "overwrite"
                 
-                # 特殊处理 systemd service 文件
+                # Special handling for systemd service files
                 if target_path.startswith('/etc/systemd/system/') and target_path.endswith('.service'):
                     service_name = os.path.basename(target_path).replace('.service', '')
                     changes.append(StateChange(
@@ -579,7 +579,7 @@ class CommandAnalyzer:
                     ))
                     return changes
                 
-                # 一般文件
+                # General files
                 changes.append(StateChange(
                     target=target_path,
                     change_type="create" if mode == "overwrite" else "modify",
@@ -588,14 +588,14 @@ class CommandAnalyzer:
                 ))
                 return changes
         
-        # 非 heredoc 语法，使用原有逻辑
-        # 找出所有真正的重定向操作
+        # Non-heredoc syntax, using original logic
+        # Find all real redirection operations
         redirections = self._find_real_redirections(command_str)
         
         if not redirections:
             return changes
         
-        # 处理最后一个有效重定向（通常是主要的文件重定向）
+        # Handle the last valid redirection (usually the primary file redirection)
         redir = redirections[-1]
         
         mode = "append" if redir['type'] == '>>' else "overwrite"
@@ -609,7 +609,7 @@ class CommandAnalyzer:
         if '|' in lhs:
             lhs = lhs.split('|')[-1].strip()
         
-        # 解析左侧命令以提取内容
+        # Parse the left-side command to extract content
         if lhs.lower().startswith('echo'):
             content = self._extract_echo_content(command_str, redir['position'])
         elif lhs.lower().startswith('cat'):
@@ -619,15 +619,15 @@ class CommandAnalyzer:
                 if system_state and hasattr(system_state, 'filesystem') and system_state.filesystem.file_exists(src_file):
                     content = system_state.filesystem.get_file_content(src_file) or ""
         elif lhs.lower().startswith('printf'):
-            # 处理 printf 命令
+            # Handle printf command
             try:
                 args = self._parse_args(lhs)
                 if len(args) > 1:
-                    content = args[1]  # 简单处理：取格式字符串
+                    content = args[1]  # Simple handling: take the format string
             except:
                 pass
         
-        # 特殊文件处理
+        # Special file handling
         if target_path == "/etc/hosts":
             match = re.search(r"(\d+\.\d+\.\d+\.\d+)\s+([\w\.-]+)", content)
             if match:
@@ -647,7 +647,7 @@ class CommandAnalyzer:
             ))
             return changes
         
-        # 处理追加模式
+        # Handle append mode
         if mode == "append" and system_state and hasattr(system_state, 'filesystem'):
             existing = system_state.filesystem.get_file_content(target_path)
             if existing:
@@ -776,10 +776,10 @@ class CommandAnalyzer:
                 new_content = re.sub(old, new, content, count=count)
                 changes.append(StateChange(target=target_file, change_type="modify", new_value=new_content, metadata={"op": "sed"}))
             else:
-                # Blind edit: 即使没有 system_state，也记录修改操作
-                # 使用替换后的值作为新内容（假设文件只包含被替换的内容）
-                # 这对于 echo "old" > file && sed -i 's/old/new/' file 特别有用
-                new_content = new  # 假设整个内容就是被替换的结果
+                # Blind edit: Record modification even without system_state
+                # Use the replaced value as new content (assuming the file only contains the replaced content)
+                # This is particularly useful for echo "old" > file && sed -i 's/old/new/' file
+                new_content = new  # Assume the entire content is the result of replacement
                 changes.append(StateChange(
                     target=target_file, 
                     change_type="modify", 
@@ -791,9 +791,9 @@ class CommandAnalyzer:
     def _handle_user_ops(self, cmd: str, parts: List[str], system_state: Any) -> List[StateChange]:
         changes = []
         
-        # 更智能的参数解析：跳过选项的值
-        # 例如 "useradd -m -s /bin/bash backdoor_user"
-        # 需要跳过 "-s" 后面的 "/bin/bash"
+        # Smarter argument parsing: skip option values
+        # For example "useradd -m -s /bin/bash backdoor_user"
+        # Need to skip "/bin/bash" after "-s"
         option_with_values = {"-s", "-u", "-g", "-d", "-c", "-G", "-aG", "-e", "-f", "-k", "-K", "-p"}
         args = []
         skip_next = False
@@ -802,7 +802,7 @@ class CommandAnalyzer:
                 skip_next = False
                 continue
             if p.startswith("-"):
-                # 检查这个选项是否需要一个值
+                # Check if this option requires a value
                 if p in option_with_values:
                     skip_next = True
                 continue
@@ -810,7 +810,7 @@ class CommandAnalyzer:
         
         if cmd == "useradd":
             if args:
-                # 用户名是最后一个非选项参数
+                # Username is the last non-option argument
                 username = args[-1] if args else None
                 if username:
                     # Check flags: -u uid, -g gid, -d home, -s shell
@@ -829,25 +829,25 @@ class CommandAnalyzer:
                 changes.append(StateChange(target=f"group:{args[0]}", change_type="create", new_value={}, metadata={"op": "groupadd"}))
 
         elif cmd == "usermod":
-            # usermod -aG group user   (添加到组)
-            # usermod -s shell user    (修改shell)
-            # usermod -L user          (锁定账户)
-            # usermod -U user          (解锁账户)
+            # usermod -aG group user   (add to group)
+            # usermod -s shell user    (modify shell)
+            # usermod -L user          (lock account)
+            # usermod -U user          (unlock account)
             if not args: return changes
             username = args[-1]
             mod_info = {}
             
-            # 处理 shell 修改
+            # Handle shell modification
             if "-s" in parts: 
                 mod_info["shell"] = parts[parts.index("-s")+1]
             
-            # 处理锁定/解锁
+            # Handle locking/unlocking
             if "-L" in parts: 
                 mod_info["locked"] = True
             if "-U" in parts:
                 mod_info["locked"] = False
             
-            # 处理 -G 或 -aG (追加组)
+            # Handle -G or -aG (append group)
             g_idx = -1
             if "-G" in parts:
                 g_idx = parts.index("-G")
@@ -985,18 +985,18 @@ class CommandAnalyzer:
             # This logic is hard to capture purely in single command analysis without pipe context.
             # But if we see "crontab -", we can assume it succeeded in adding cron.
             if "-" in parts:
-                # 尝试从命令字符串中提取cron内容
+                # Try to extract cron content from the command string
                 cron_content = "[Stdin Cron Job]"
                 
-                # 使用引号感知的方式提取 echo 内容
-                # 查找 echo 命令的起始位置
+                # Extract echo content in a quote-aware manner
+                # Find the starting position of the echo command
                 echo_pos = command_str.lower().find('echo ')
                 if echo_pos != -1:
-                    # 从 echo 后面提取内容
+                    # Extract content after echo
                     echo_part = command_str[echo_pos + 5:].strip()
                     
-                    # 使用 _extract_quoted_content 方法提取引号内的内容
-                    # 但要找到 ) | crontab 之前的部分
+                    # Use _extract_quoted_content method to extract content within quotes
+                    # But find the part before ) | crontab
                     pipe_pos = echo_part.rfind(') | crontab')
                     if pipe_pos == -1:
                         pipe_pos = echo_part.rfind('| crontab')
@@ -1008,10 +1008,10 @@ class CommandAnalyzer:
                     if pipe_pos != -1:
                         echo_part = echo_part[:pipe_pos]
                     
-                    # 提取引号内容
+                    # Extract quoted content
                     cron_content = self._extract_quoted_content(echo_part)
                     
-                    # 如果没有提取到内容，使用原始的 echo 部分
+                    # If no content is extracted, use the original echo part
                     if not cron_content:
                         cron_content = echo_part.strip().strip('"\'')
                 
