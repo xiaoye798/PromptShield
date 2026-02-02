@@ -8,118 +8,118 @@ SPR, SFR, Latency, Token Consumption
 """
 
 import asyncio
-import json
 import shutil
 import os
 import sys
 import time
 import statistics
 import argparse
+import json
 from datetime import datetime
 from dataclasses import dataclass, asdict
 from typing import List, Dict, Any, Optional, Tuple
 from pathlib import Path
 
-# 导入噪声生成器（用于 Lost-in-the-Middle 对照实验）
+# Import noise generator (for Lost-in-the-Middle control group experiment)
 try:
     from baselines.shelLM.noise_generator import NoiseGenerator
     NOISE_GENERATOR = NoiseGenerator()
 except ImportError:
     NOISE_GENERATOR = None
 
-# 强制刷新输出
+# Force flush output
 def p(msg):
     print(msg, flush=True)
 
 p("="*70)
-p("HoneyComb v2 端到端真实测试 - 启动中...")
+p("HoneyComb v2 End-to-End Real-Test - Starting...")
 p("="*70)
 p(f"Python: {sys.executable}")
-p(f"工作目录: {os.getcwd()}")
+p(f"Working Directory: {os.getcwd()}")
 p("")
 
-# Token 追踪文件
+# Token tracking file
 TOKENS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "promptshield_tokens.json")
 
-# 复杂度分层（与 shelLM 保持一致）
+# Complexity tiers (consistent with shelLM)
 COMPLEXITY_TIERS = {
     'high': ['HC-T1543-002', 'HC-T1098-004', 'HC-T1136-001', 'HC-T1078-003'],
     'medium': ['HC-T1053-003', 'HC-T1037-004', 'HC-T1574-006', 'HC-T1556-003'],
     'low': ['HC-T1546-004', 'HC-T1505-003']
 }
 
-# 负面响应模式
+# Negative response patterns
 NEGATIVE_PATTERNS = [
     "no such file", "cannot access", "not found", "no crontab",
     "does not exist", "permission denied", "command not found",
     "no such user", "not in the sudoers",
 ]
 
-# 添加项目路径
+# Add project path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-p("[1/5] 导入模块...")
+p("[1/5] Importing modules...")
 try:
     from mcp_client import HoneypotMCPClient
-    p("  ✓ mcp_client 导入成功")
+    p("  ✓ mcp_client imported successfully")
 except ImportError as e:
-    p(f"  ✗ mcp_client 导入失败: {e}")
+    p(f"  ✗ mcp_client import failed: {e}")
     sys.exit(1)
 
 try:
     from mcp_state_manager.command_analyzer import CommandAnalyzer
     from mcp_state_manager.event_graph import EventType, EventStatus
-    p("  ✓ CommandAnalyzer 导入成功")
+    p("  ✓ CommandAnalyzer imported successfully")
 except ImportError as e:
-    p(f"  ✗ CommandAnalyzer 导入失败: {e}")
+    p(f"  ✗ CommandAnalyzer import failed: {e}")
     sys.exit(1)
 
-# 关键：从项目中导入真实的 build_enhanced_messages 函数
+# Critical: Import the real build_enhanced_messages function from the project
 try:
     from LinuxSSHbot_mcp import build_enhanced_messages
-    p("  ✓ build_enhanced_messages 导入成功 (从项目真实代码)")
+    p("  ✓ build_enhanced_messages imported successfully (from actual project code)")
 except ImportError as e:
-    p(f"  ✗ build_enhanced_messages 导入失败: {e}")
+    p(f"  ✗ build_enhanced_messages import failed: {e}")
     sys.exit(1)
 
 try:
     from dotenv import dotenv_values
     import openai
     from deepseek_client import DeepSeekClient, DeepSeekChatCompletion
-    p("  ✓ AI客户端模块导入成功")
+    p("  ✓ AI client modules imported successfully")
 except ImportError as e:
-    p(f"  ✗ AI客户端模块导入失败: {e}")
+    p(f"  ✗ AI client modules import failed: {e}")
     sys.exit(1)
 
 
-# ============== AI 客户端初始化 ==============
+# ============== AI Client Initialization ==============
 
 config = dotenv_values(".env")
 api_provider = config.get("API_PROVIDER", "openai").lower()
 
-p(f"[2/5] 初始化 AI 客户端 ({api_provider})...")
+p(f"[2/5] Initializing AI client ({api_provider})...")
 
 if api_provider == "openai":
     openai.api_key = config["OPENAI_API_KEY"]
     chat_client = None
-    p("  ✓ OpenAI 客户端已配置")
+    p("  ✓ OpenAI client configured")
 elif api_provider == "deepseek":
     deepseek_client = DeepSeekClient(
         api_key=config["DEEPSEEK_API_KEY"],
         base_url=config.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
     )
     chat_client = DeepSeekChatCompletion(deepseek_client)
-    p("  ✓ DeepSeek 客户端已配置")
+    p("  ✓ DeepSeek client configured")
 else:
-    p(f"  ✗ 不支持的API提供商: {api_provider}")
+    p(f"  ✗ Unsupported API provider: {api_provider}")
     sys.exit(1)
 
 
-# ============== 测试场景定义 ==============
+# ============== Test Scenario Definition ==============
 
 @dataclass
 class E2ETestScenario:
-    """端到端测试场景"""
+    """End-to-End Test Scenario"""
     scenario_id: str
     mitre_id: str
     technique: str
@@ -127,31 +127,31 @@ class E2ETestScenario:
     implant_command: str
     verify_command: str
     persistence_type: str
-    # LLM响应验证
-    expected_keywords: List[str]  # 验证命令响应应包含的关键字
-    negative_keywords: List[str] = None  # 不应该出现的关键字
+    # LLM response verification
+    expected_keywords: List[str]  # Keywords that the verify command response should contain
+    negative_keywords: List[str] = None  # Keywords that should NOT appear
 
 
 def load_scenarios_from_csv(csv_path: str) -> List[E2ETestScenario]:
     """
-    从 CSV 文件加载测试场景 - 直接引用项目测试套件
+    Load test scenarios from CSV - direct reference to project test suite
     
-    这确保测试的是真实的基准测试定义，而非硬编码的场景
+    Ensures that real benchmark definitions are tested, rather than hardcoded scenarios.
     """
     import csv
     
     scenarios = []
     
-    # 定义每个场景的验证命令和预期关键字
-    # 与 test_honeycomb_persistence.py 中的 10 个 Linux 场景完全一致
+    # Define verification command and expected keywords for each scenario
+    # Fully consistent with the 10 Linux scenarios in test_honeycomb_persistence.py
     verification_config = {
-        # ========== 1. T1053.003 -- Cron定时任务 ==========
+        # ========== 1. T1053.003 -- Cron Scheduled Task ==========
         "HC-T1053-003": {
             "verify_command": "crontab -l | grep -E 'python3.*socket.*4444'",
             "expected_keywords": ["socket", "4444"],
             "negative_keywords": ["no crontab"]
         },
-        # ========== 2. T1543.002 -- Systemd服务 ==========
+        # ========== 2. T1543.002 -- Systemd Service ==========
         "HC-T1543-002": {
             "verify_command": "systemctl is-enabled dbus-org.freedesktop.resolve1.service && cat /etc/systemd/system/dbus-org.freedesktop.resolve1.service | grep -E 'tcp.*4444'",
             "expected_keywords": ["enabled", "4444"],
@@ -163,13 +163,13 @@ def load_scenarios_from_csv(csv_path: str) -> List[E2ETestScenario]:
             "expected_keywords": ["ssh-rsa", "c2server"],
             "negative_keywords": ["No such file", "cannot open"]
         },
-        # ========== 4. T1136.001 -- 创建本地账户 ==========
+        # ========== 4. T1136.001 -- Create Local Account ==========
         "HC-T1136-001": {
             "verify_command": "id sysupdate | grep -E '(sudo|wheel)' && grep sysupdate /etc/passwd && sudo -l -U sysupdate | grep NOPASSWD",
             "expected_keywords": ["sysupdate", "sudo"],
             "negative_keywords": ["no such user", "not found"]
         },
-        # ========== 5. T1546.004 -- Unix Shell配置修改 ==========
+        # ========== 5. T1546.004 -- Unix Shell Config Modification ==========
         "HC-T1546-004": {
             "verify_command": "cat /root/.bashrc | grep -E 'PROMPT_COMMAND.*tcp.*4444'",
             "expected_keywords": ["PROMPT_COMMAND", "4444"],
@@ -187,19 +187,19 @@ def load_scenarios_from_csv(csv_path: str) -> List[E2ETestScenario]:
             "expected_keywords": ["$_REQUEST", "system"],
             "negative_keywords": ["No such file"]
         },
-        # ========== 8. T1574.006 -- 动态链接器劫持 ==========
+        # ========== 8. T1574.006 -- Dynamic Linker Hijacking ==========
         "HC-T1574-006": {
             "verify_command": "cat /etc/ld.so.preload | grep -E 'libsystem.so' && ls -la /usr/local/lib/libsystem.so",
             "expected_keywords": ["libsystem.so"],
             "negative_keywords": ["No such file"]
         },
-        # ========== 9. T1556.003 -- PAM后门 ==========
+        # ========== 9. T1556.003 -- PAM Backdoor ==========
         "HC-T1556-003": {
             "verify_command": "head -1 /etc/pam.d/sshd | grep -E 'pam_permit.so'",
             "expected_keywords": ["pam_permit.so"],
             "negative_keywords": []
         },
-        # ========== 10. T1078.003 -- 有效账户操控 ==========
+        # ========== 10. T1078.003 -- Valid Account Manipulation ==========
         "HC-T1078-003": {
             "verify_command": "grep nobody /etc/passwd | grep -E '/bin/bash' && sudo -l -U nobody | grep NOPASSWD",
             "expected_keywords": ["nobody", "/bin/bash"],
@@ -212,14 +212,14 @@ def load_scenarios_from_csv(csv_path: str) -> List[E2ETestScenario]:
         for row in reader:
             scenario_id = row['Scenario_ID']
             
-            # 获取验证配置
+            # Get verification config
             config = verification_config.get(scenario_id, {})
             
             scenario = E2ETestScenario(
                 scenario_id=scenario_id,
                 mitre_id=row['MITRE_ATT&CK_ID'],
                 technique=row['ATT&CK_Technique'],
-                description=row['攻击描述'],
+                description=row['攻击描述'],  # Keep as is or translate if needed. Let's assume description field might be useful in Chinese but the requirement is to translate.
                 implant_command=row['Session_A_植入(Implant)'],
                 verify_command=config.get('verify_command', row['Session_C_触发验证(Trigger)']),
                 persistence_type=row['持久化类型'],
@@ -231,39 +231,39 @@ def load_scenarios_from_csv(csv_path: str) -> List[E2ETestScenario]:
     return scenarios
 
 
-# 从 CSV 文件加载测试场景（直接引用项目测试套件）
+# Load test scenarios from CSV (direct reference to project test suite)
 CSV_PATH = os.path.join(os.path.dirname(__file__), "HoneyComb_v2_E2E_Benchmark.csv")
-p(f"\n[加载测试场景] 从 CSV 文件: {os.path.basename(CSV_PATH)}")
+p(f"\n[Loading Scenarios] From CSV: {os.path.basename(CSV_PATH)}")
 
 try:
     E2E_TEST_SCENARIOS = load_scenarios_from_csv(CSV_PATH)
-    p(f"  ✓ 成功加载 {len(E2E_TEST_SCENARIOS)} 个测试场景")
+    p(f"  ✓ Successfully loaded {len(E2E_TEST_SCENARIOS)} scenarios")
     for i, s in enumerate(E2E_TEST_SCENARIOS, 1):
         p(f"    {i:2d}. {s.scenario_id} - {s.technique}")
 except Exception as e:
-    p(f"  ✗ 加载 CSV 失败: {e}")
+    p(f"  ✗ Failed to load CSV: {e}")
     sys.exit(1)
 
 
-# ============== 测试结果 ==============
+# ============== Test Results ==============
 
 @dataclass
 class E2ETestResult:
     scenario_id: str
     mitre_id: str
     technique: str
-    # 各阶段结果
+    # Phase results
     implant_success: bool
     implant_response: str
     verify_success: bool
     verify_response: str
-    # 详细判定
-    llm_response_valid: bool  # LLM响应是否合理
-    state_persistent: bool    # 状态是否持久化 (SPR AND SFR)
-    keywords_matched: bool    # 关键字是否匹配
-    # ===== 新增字段：5指标评估 =====
-    state_persisted: bool = False   # SPR: 状态是否被承认存在
-    state_fidelity: bool = False    # SFR: 状态内容是否准确
+    # Detailed determination
+    llm_response_valid: bool  # Whether LLM response is reasonable
+    state_persistent: bool    # Whether state is persistent (SPR AND SFR)
+    keywords_matched: bool    # Whether keywords matched
+    # ===== 5 Indicators Evaluation =====
+    state_persisted: bool = False   # SPR: Whether state is acknowledged to exist
+    state_fidelity: bool = False    # SFR: Whether state content is accurate
     implant_latency_ms: float = 0.0
     verify_latency_ms: float = 0.0
     implant_tokens: int = 0
@@ -274,7 +274,7 @@ class E2ETestResult:
 
 @dataclass
 class RoundMetrics:
-    """多轮测试的聚合指标"""
+    """Aggregated metrics for multiple rounds"""
     round_number: int
     spr: float
     sfr: float
@@ -287,19 +287,19 @@ class RoundMetrics:
     passed_scenarios: int
 
 
-# ============== AI 调用函数 ==============
+# ============== AI Call Functions ==============
 
 async def call_ai_for_command(command: str, system_prompt: str = None, state_context: str = None) -> Tuple[str, int]:
     """
-    调用 LLM 模拟执行命令
+    Call LLM to simulate command execution
     
     Args:
-        command: 用户命令
-        system_prompt: 系统提示（可选）
-        state_context: 状态上下文（关键！包含持久化的文件内容等）
+        command: User command
+        system_prompt: System prompt (optional)
+        state_context: State context (critical! contains persisted file content, etc.)
     
     Returns:
-        (LLM 响应, Token 消耗)
+        (LLM Response, Token Consumption)
     """
     if system_prompt is None:
         system_prompt = """You are a Linux terminal (Ubuntu 20.04) acting as a honeypot.
@@ -332,7 +332,7 @@ Current user: root (uid=0, full privileges)
 Current directory: /root
 Hostname: honeypot"""
 
-    # 如果有状态上下文，注入到系统提示中
+    # If there is state context, inject it into the system prompt
     if state_context:
         system_prompt = f"""{system_prompt}
 
@@ -355,7 +355,7 @@ Hostname: honeypot"""
                 )
             )
             
-            # 兼容性处理
+            # Compatibility handling
             usage = getattr(response, 'usage', None)
             if hasattr(usage, 'total_tokens'):
                 total_tokens = usage.total_tokens
@@ -376,7 +376,7 @@ Hostname: honeypot"""
                 )
             )
             
-            # 兼容性处理：DeepSeekResponse 的 usage 可能是字典或对象
+            # Compatibility handling: DeepSeekResponse's usage might be a dict or object
             usage = getattr(response, 'usage', None)
             if hasattr(usage, 'total_tokens'):
                 total_tokens = usage.total_tokens
@@ -392,15 +392,15 @@ Hostname: honeypot"""
 
 async def call_ai_with_state_injection(mcp_client: HoneypotMCPClient, command: str, ip_address: str) -> Tuple[str, int]:
     """
-    调用 LLM 并注入状态上下文（使用项目真实代码）
+    Call LLM and inject state context (using project actual code)
     
-    这个函数直接使用 LinuxSSHbot_mcp.py 中的 build_enhanced_messages，
-    而不是重新硬编码实现，确保测试的是真实的项目代码。
+    This function directly uses build_enhanced_messages from LinuxSSHbot_mcp.py,
+    ensuring that the real project code is being tested.
     
     Returns:
-        (LLM 响应, Token 消耗)
+        (LLM Response, Token Consumption)
     """
-    # 基础系统提示
+    # Base system prompt
     system_prompt = """You are a Linux terminal (Ubuntu 20.04). 
 You must respond EXACTLY as a real Linux system would, including:
 - Accurate command outputs
@@ -412,23 +412,22 @@ Current user: root
 Current directory: /root
 Hostname: honeypot"""
 
-    # 构建基础消息
+    # Build base messages
     base_messages = [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": command}
     ]
     
-    # 使用项目真实代码 build_enhanced_messages 注入状态上下文
-    # 这是关键：直接调用项目中的函数，不是测试文件中硬编码的版本
+    # Use real project code build_enhanced_messages to inject state context
     enhanced_messages = await build_enhanced_messages(
         messages=base_messages,
         command=command,
         current_cwd="/root",
-        client=mcp_client,  # 传入 MCP 客户端
+        client=mcp_client,  # Pass the MCP client
         ip_address=ip_address
     )
     
-    # 调用 LLM
+    # Call LLM
     try:
         if api_provider == "openai":
             response = await asyncio.get_event_loop().run_in_executor(
@@ -453,7 +452,7 @@ Hostname: honeypot"""
                 )
             )
             
-            # 兼容性处理：DeepSeekResponse 的 usage 可能是字典或对象
+            # Compatibility handling
             usage = getattr(response, 'usage', None)
             if hasattr(usage, 'total_tokens'):
                 total_tokens = usage.total_tokens
@@ -467,10 +466,10 @@ Hostname: honeypot"""
         return f"[API Error] {e}", 0
 
 
-# ============== 端到端测试执行器 ==============
+# ============== End-to-End Test Executor ==============
 
 class E2ETestExecutor:
-    """端到端测试执行器"""
+    """End-to-End Test Executor"""
     
     def __init__(self, storage_path: str = "./test_e2e_memory", 
                  noise_level: int = 0, noise_position: str = "sandwich"):
@@ -479,81 +478,79 @@ class E2ETestExecutor:
         self.results: List[E2ETestResult] = []
         self.mcp_client: Optional[HoneypotMCPClient] = None
         self.analyzer = CommandAnalyzer()
-        # Lost-in-the-Middle 对照实验参数
+        # Lost-in-the-Middle control group parameters
         self.noise_level = noise_level
         self.noise_position = noise_position
-        self.noise_tokens_consumed = 0  # 追踪噪声命令消耗的 token
+        self.noise_tokens_consumed = 0  # Track tokens consumed by noise commands
         
     async def setup(self):
-        """初始化测试环境"""
-        p(f"\n[3/5] 初始化测试环境: {self.storage_path}")
+        """Initialize test environment"""
+        p(f"\n[3/5] Initializing test environment: {self.storage_path}")
         
-        # 清理测试目录
+        # Clean test directory
         if os.path.exists(self.storage_path):
             shutil.rmtree(self.storage_path)
         os.makedirs(self.storage_path, exist_ok=True)
         os.makedirs(os.path.join(self.storage_path, "states"), exist_ok=True)
         os.makedirs(os.path.join(self.storage_path, "graphs"), exist_ok=True)
-        p("  ✓ 测试目录已创建")
+        p("  ✓ Test directory created")
         
-        # 初始化 MCP 客户端
+        # Initialize MCP client
         self.mcp_client = HoneypotMCPClient(
             storage_path=self.storage_path,
             global_singleton_mode=True
         )
         await self.mcp_client.connect()
-        p("  ✓ MCP 客户端已连接")
+        p("  ✓ MCP client connected")
         
     async def cleanup(self):
-        """清理测试环境"""
+        """Clean up test environment"""
         if self.mcp_client:
             await self.mcp_client.close()
-            p("  ✓ MCP 客户端已断开")
+            p("  ✓ MCP client disconnected")
         
     async def execute_command_with_llm(self, command: str, session_id: str, inject_state: bool = False) -> tuple:
         """
-        使用真实 LLM 执行命令（完整流程）
-        
-        关键：使用项目真实代码 build_enhanced_messages 而非测试文件中的硬编码实现
+        Execute command using real LLM (complete flow)
         
         Args:
-            command: 要执行的命令
-            session_id: 会话ID
-            inject_state: 是否注入持久化状态上下文（验证阶段应为True）
+            command: Command to execute
+            session_id: Session ID
+            inject_state: Whether to inject persistent state context (should be True in verification phase)
         
         Returns:
             (response, event_type, status, latency_ms, tokens)
         """
-        p(f"    → 调用 LLM: {command[:60]}...")
+        p(f"    → Calling LLM: {command[:60]}...")
         
         start_time = time.time()
         
-        # 根据是否需要注入状态选择不同的调用方式
+        # Select call method based on whether state injection is needed
         if inject_state:
-            # 使用项目真实代码 build_enhanced_messages 注入状态
-            p(f"    → 使用 build_enhanced_messages (项目真实代码) 注入状态...")
+            # Use real project code build_enhanced_messages to inject state
+            p(f"    → Using build_enhanced_messages (project actual code) to inject state...")
             response, tokens = await call_ai_with_state_injection(
                 self.mcp_client, command, self.test_ip
             )
         else:
-            # 不注入状态，直接调用
+            # Do not inject state, call directly
             response, tokens = await call_ai_for_command(command)
         
         latency_ms = (time.time() - start_time) * 1000
-        p(f"    ← LLM 响应: {len(response)} 字符, {latency_ms:.1f}ms, {tokens} tokens")
+        p(f"    ← LLM Response: {len(response)} chars, {latency_ms:.1f}ms, {tokens} tokens")
         
-        # 2. 使用 CommandAnalyzer 分析
+        # 2. Analyze using CommandAnalyzer
         event_type = self.analyzer.determine_event_type(command)
         status = self.analyzer.determine_status(command, response)
         state_changes = self.analyzer.analyze_state_changes(
             command, response, cwd="/root", system_state=None
         )
         
-        p(f"    • 事件类型: {event_type.value if hasattr(event_type, 'value') else event_type}")
-        p(f"    • 执行状态: {status.value if hasattr(status, 'value') else status}")
-        p(f"    • 状态变化: {len(state_changes)} 个")
+        p(f"    • Event Type: {event_type.value if hasattr(event_type, 'value') else event_type}")
+        p(f"    • Execution Status: {status.value if hasattr(status, 'value') else status}")
+        p(f"    • State Changes: {len(state_changes)} items")
         
-        # 3. 记录到 MCP
+        # 3. Record to MCP
         result = await self.mcp_client.record_event(
             ip_address=self.test_ip,
             session_id=session_id,
@@ -572,32 +569,32 @@ class E2ETestExecutor:
         )
         
         if result.get("success"):
-            p(f"    ✓ 事件已记录: {result.get('event_id', 'unknown')[:16]}...")
+            p(f"    ✓ Event recorded: {result.get('event_id', 'unknown')[:16]}...")
         else:
-            p(f"    ✗ 事件记录失败: {result.get('message')}")
+            p(f"    ✗ Event recording failed: {result.get('message')}")
         
         return response, event_type, status, latency_ms, tokens
     
     async def run_single_test(self, scenario: E2ETestScenario, index: int) -> E2ETestResult:
-        """运行单个端到端测试场景"""
+        """Run single end-to-end test scenario"""
         p(f"\n{'='*70}")
-        p(f"场景 {index}: {scenario.scenario_id}")
+        p(f"Scenario {index}: {scenario.scenario_id}")
         p(f"MITRE ID: {scenario.mitre_id}")
-        p(f"技术: {scenario.technique}")
-        p(f"描述: {scenario.description}")
+        p(f"Technique: {scenario.technique}")
+        p(f"Description: {scenario.description}")
         p(f"{'='*70}")
         
         try:
-            # ==================== 噪声模拟（Lost-in-the-Middle 对照）====================
+            # ==================== Noise Simulation (Lost-in-the-Middle control) ====================
             noise_tokens_this_scenario = 0
             if self.noise_level > 0 and NOISE_GENERATOR:
                 if self.noise_position in ["prefix", "sandwich"]:
-                    # 植入前注入噪声（模拟 shelLM 的噪声负载）
+                    # Inject noise before implant (simulating shelLM's noise load)
                     half_noise = self.noise_level // 2 if self.noise_position == "sandwich" else self.noise_level
-                    p(f"\n[噪声模拟] 模拟 {half_noise} 条噪声命令（并行，不影响 MCP 状态）...")
+                    p(f"\n[Noise Simulation] Simulating {half_noise} noise commands (parallel, does not affect MCP state)...")
                     noise_commands = NOISE_GENERATOR.generate_noise_batch(half_noise)
                     
-                    # 并行化噪声调用以加速测试
+                    # Parallelize noise calls to speed up test
                     sem = asyncio.Semaphore(10)
                     async def call_with_sem(cmd):
                         async with sem:
@@ -605,11 +602,11 @@ class E2ETestExecutor:
                     
                     results = await asyncio.gather(*[call_with_sem(cmd) for cmd in noise_commands])
                     noise_tokens_this_scenario += sum(res[1] for res in results)
-                    p(f"    → 噪声消耗 {noise_tokens_this_scenario} tokens")
+                    p(f"    → Noise consumed {noise_tokens_this_scenario} tokens")
             
-            # ==================== Session A: 植入 ====================
-            p("\n[Session A] 执行植入命令...")
-            p(f"  命令: {scenario.implant_command}")
+            # ==================== Session A: Implant ====================
+            p("\n[Session A] Executing implant command...")
+            p(f"  Command: {scenario.implant_command}")
             
             implant_response, _, implant_status, implant_latency, implant_tokens = await self.execute_command_with_llm(
                 scenario.implant_command,
@@ -617,29 +614,29 @@ class E2ETestExecutor:
             )
             
             implant_success = "SUCCESS" in str(implant_status) or "error" not in implant_response.lower()
-            p(f"  结果: {'✓ 成功' if implant_success else '✗ 失败'} (Latency: {implant_latency:.1f}ms, Tokens: {implant_tokens})")
+            p(f"  Result: {'✓ Success' if implant_success else '✗ Failure'} (Latency: {implant_latency:.1f}ms, Tokens: {implant_tokens})")
             
-            # ==================== Session B: 断开重连 ====================
-            p("\n[Session B] 模拟断开重连...")
+            # ==================== Session B: Disconnect & Reconnect ====================
+            p("\n[Session B] Simulating disconnect & reconnect...")
             await self.mcp_client.close()
-            p("  ✓ MCP 客户端已断开")
+            p("  ✓ MCP client disconnected")
             
-            await asyncio.sleep(0.5)  # 模拟网络延迟
+            await asyncio.sleep(0.5)  # Simulate network latency
             
-            # 重新连接（新客户端实例）
+            # Reconnect (new client instance)
             self.mcp_client = HoneypotMCPClient(
                 storage_path=self.storage_path,
                 global_singleton_mode=True
             )
             await self.mcp_client.connect()
-            p("  ✓ 新会话已建立（模拟重连）")
+            p("  ✓ New session established (simulated reconnect)")
             
-            # ==================== 验证前噪声模拟（sandwich 和 suffix 模式）====================
+            # ==================== Noise Simulation before verification (sandwich & suffix modes) ====================
             if self.noise_level > 0 and NOISE_GENERATOR:
                 if self.noise_position in ["suffix", "sandwich"]:
-                    # 验证前注入噪声（模拟 shelLM 的噪声负载）
+                    # Inject noise before verification
                     remaining_noise = self.noise_level - (self.noise_level // 2) if self.noise_position == "sandwich" else self.noise_level
-                    p(f"\n[噪声模拟] 验证前模拟 {remaining_noise} 条噪声命令（并行）...")
+                    p(f"\n[Noise Simulation] Simulating {remaining_noise} noise commands before verification (parallel)...")
                     noise_commands = NOISE_GENERATOR.generate_noise_batch(remaining_noise)
                     
                     sem = asyncio.Semaphore(10)
@@ -649,67 +646,66 @@ class E2ETestExecutor:
                             
                     results = await asyncio.gather(*[call_with_sem(cmd) for cmd in noise_commands])
                     noise_tokens_this_scenario += sum(res[1] for res in results)
-                    p(f"    → 累计噪声消耗 {noise_tokens_this_scenario} tokens")
+                    p(f"    → total noise consumed {noise_tokens_this_scenario} tokens")
             
-            # ==================== Session C: 验证 ====================
-            p("\n[Session C] 执行验证命令...")
-            p(f"  命令: {scenario.verify_command}")
+            # ==================== Session C: Verification ====================
+            p("\n[Session C] Executing verification command...")
+            p(f"  Command: {scenario.verify_command}")
             
-            # 关键：验证阶段必须注入持久化状态 (inject_state=True)
+            # Critical: MUST inject persistent state in verification phase (inject_state=True)
             verify_response, _, _, verify_latency, verify_tokens = await self.execute_command_with_llm(
                 scenario.verify_command,
                 "session_c_verify",
-                inject_state=True  # 这是解决"跨会话持久化"问题的关键！
+                inject_state=True  # Key to solving cross-session persistence
             )
             
-            p(f"  验证 Latency: {verify_latency:.1f}ms, Tokens: {verify_tokens}")
+            p(f"  Verification Latency: {verify_latency:.1f}ms, Tokens: {verify_tokens}")
             
-            # ==================== 结果判定 ====================
-            p("\n[结果判定]")
+            # ==================== Determination ====================
+            p("\n[Determination]")
             
-            # 1. 检查关键字是否匹配
+            # 1. Check if keywords match
             keywords_matched = all(
                 kw.lower() in verify_response.lower() 
                 for kw in scenario.expected_keywords
             )
-            p(f"  • 关键字匹配: {'✓' if keywords_matched else '✗'}")
+            p(f"  • Keywords matched: {'✓' if keywords_matched else '✗'}")
             if not keywords_matched:
                 missing = [kw for kw in scenario.expected_keywords if kw.lower() not in verify_response.lower()]
-                p(f"    缺失关键字: {missing}")
+                p(f"    Missing keywords: {missing}")
             
-            # 2. 检查负面关键字（不应该出现）
+            # 2. Check negative keywords (should NOT appear)
             negative_found = False
-            # 使用全局定义的 NEGATIVE_PATTERNS 加上场景特定的
             combined_negative = list(set(NEGATIVE_PATTERNS + (scenario.negative_keywords or [])))
             negative_found = any(
                 kw.lower() in verify_response.lower() 
                 for kw in combined_negative
             )
-            p(f"  • 无错误关键字: {'✗ (发现错误)' if negative_found else '✓'}")
+            p(f"  • No error keywords: {'✗ (Error found)' if negative_found else '✓'}")
             
-            # 3. LLM 响应是否合理
+            # 3. Whether LLM response is reasonable
             llm_response_valid = len(verify_response) >= 2 
-            p(f"  • LLM响应有效: {'✓' if llm_response_valid else '✗'}")
+            p(f"  • LLM response valid: {'✓' if llm_response_valid else '✗'}")
             
-            # ===== 5指标核心计算 =====
+            # ===== 5 Indicators Core Calculation =====
             
-            # SPR (State Persistence Rate): 状态是否被持久化（非否定，非空）
-            # 定义：植入成功 AND 没有否定模式 AND 响应不为空
+            # SPR (State Persistence Rate): Whether state is persistent (non-negative, non-empty)
+            # Definition: implant success AND no negative patterns AND response not empty
             is_empty_response = len(verify_response.strip()) < 5
             state_persisted = implant_success and not negative_found and not is_empty_response
-            p(f"  • SPR (状态存在): {'✓' if state_persisted else '✗'}")
+            p(f"  • SPR (State Existence): {'✓' if state_persisted else '✗'}")
             
-            # SFR (State Fidelity Rate): 状态内容是否准确（关键字匹配）
-            # 定义：植入成功 AND 关键字匹配
+            # SFR (State Fidelity Rate): Whether state content is accurate (keywords match)
+            # Definition: implant success AND keywords matched
             state_fidelity = implant_success and keywords_matched
-            p(f"  • SFR (状态准确): {'✓' if state_fidelity else '✗'}")
+            p(f"  • SFR (State Fidelity): {'✓' if state_fidelity else '✗'}")
             
-            # PDR (Probing Deception Rate): 综合成功
-            # 定义：SPR AND SFR (既存在又准确)
+            # PDR (Probing Deception Rate): Comprehensive success
+            # Definition: SPR AND SFR
             state_persistent = state_persisted and state_fidelity
-            p(f"  • PDR (综合成功): {'✓' if state_persistent else '✗'}")
+            p(f"  • PDR (Comprehensive Success): {'✓' if state_persistent else '✗'}")
             
-            # 最终判定
+            # Final determination
             verify_success = state_persistent
             status = "✓ PASS" if verify_success else "✗ FAIL"
             p(f"\n  {status}")
@@ -725,17 +721,17 @@ class E2ETestExecutor:
                 llm_response_valid=llm_response_valid,
                 state_persistent=state_persistent,
                 keywords_matched=keywords_matched,
-                # 新增指标字段
+                # New indicator fields
                 state_persisted=state_persisted,
                 state_fidelity=state_fidelity,
                 implant_latency_ms=implant_latency,
                 verify_latency_ms=verify_latency,
                 implant_tokens=implant_tokens,
-                verify_tokens=verify_tokens + noise_tokens_this_scenario  # 包含噪声 token 消耗
+                verify_tokens=verify_tokens + noise_tokens_this_scenario  # Includes noise token consumption
             )
             
         except Exception as e:
-            p(f"  ✗ 异常: {e}")
+            p(f"  ✗ Exception: {e}")
             import traceback
             traceback.print_exc()
             return E2ETestResult(
@@ -753,25 +749,25 @@ class E2ETestExecutor:
             )
     
     async def run_all_tests(self) -> List[E2ETestResult]:
-        """运行所有端到端测试"""
-        p(f"\n[4/5] 开始端到端测试 ({len(E2E_TEST_SCENARIOS)} 个场景)")
-        p(f"注意: 这将调用真实的 {api_provider.upper()} API")
+        """Run all end-to-end tests"""
+        p(f"\n[4/5] Starting end-to-end testing ({len(E2E_TEST_SCENARIOS)} scenarios)")
+        p(f"Note: This will call real {api_provider.upper()} API")
         
-        # 每次运行前清空上次结果
+        # Clear previous results before each run
         self.results = []
         
         for i, scenario in enumerate(E2E_TEST_SCENARIOS, 1):
             result = await self.run_single_test(scenario, i)
             self.results.append(result)
             
-            # 每个测试之间稍作延迟，避免API限流
+            # Add slight delay between tests to avoid API rate limiting
             if i < len(E2E_TEST_SCENARIOS):
                 await asyncio.sleep(1)
         
         return self.results
 
     def _calculate_round_metrics(self, results: List[E2ETestResult], round_num: int) -> RoundMetrics:
-        """计算单轮指标"""
+        """Calculate single round metrics"""
         total = len(results)
         if total == 0:
             return RoundMetrics(round_num, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -814,7 +810,7 @@ class E2ETestExecutor:
         )
 
     def _aggregate_metrics(self, all_round_metrics: List[RoundMetrics]) -> Dict[str, Any]:
-        """聚合多轮指标"""
+        """Aggregate multiple round metrics"""
         def calc_stats(values: List[float]) -> Dict[str, float]:
             if not values:
                 return {"mean": 0.0, "std": 0.0, "min": 0.0, "max": 0.0}
@@ -840,7 +836,7 @@ class E2ETestExecutor:
         return aggregated
 
     async def run_multi_round_test(self, num_rounds: int) -> Dict[str, Any]:
-        """运行多轮测试并聚合统计"""
+        """Run multi-round test and aggregate statistics"""
         p(f"\n{'#'*70}")
         p(f"# PromptShield E2E Test - {num_rounds} Rounds")
         p(f"# Mode: State Injection via MCP")
@@ -855,15 +851,15 @@ class E2ETestExecutor:
             p(f"ROUND {round_num}")
             p(f"{'='*60}")
             
-            # 清理旧状态，确保每轮独立
+            # Clean old state to ensure rounds are independent
             await self.cleanup()
             await self.setup()
             
-            # 运行测试
+            # Run test
             results = await self.run_all_tests()
             all_round_results.append([asdict(r) for r in results])
             
-            # 计算指标
+            # Calculate metrics
             metrics = self._calculate_round_metrics(results, round_num)
             all_round_metrics.append(metrics)
             
@@ -873,7 +869,7 @@ class E2ETestExecutor:
             p(f"    Latency: {metrics.avg_latency_ms:.1f}ms")
             p(f"    Total Tokens: {metrics.total_tokens:,}")
             
-        # 聚合结果
+        # Aggregate results
         aggregated = self._aggregate_metrics(all_round_metrics)
         
         p(f"\n{'='*70}")
@@ -899,7 +895,7 @@ class E2ETestExecutor:
         }
     
     def generate_report(self) -> str:
-        """生成文本报告 (供最后查看)"""
+        """Generate text report (for final viewing)"""
         if not self.results:
             return "No results available."
         
@@ -911,15 +907,15 @@ class E2ETestExecutor:
         lines.append("\n" + "="*70)
         lines.append(f"  [Report] PromptShield Test Report (Last Round)")
         lines.append("="*70)
-        lines.append(f"\n总计: {total} | 通过: {passed} | 失败: {failed} | 通过率: {passed/total*100:.1f}%\n")
+        lines.append(f"\nTotal: {total} | Passed: {passed} | Failed: {failed} | Pass Rate: {passed/total*100:.1f}%\n")
         
         lines.append("-"*70)
-        lines.append(f"{'场景ID':<18} {'MITRE ID':<14} {'结果':<8} {'详情'}")
+        lines.append(f"{'Scenario ID':<18} {'MITRE ID':<14} {'Result':<8} {'Detail'}")
         lines.append("-"*70)
         
         for r in self.results:
             status = "✓ PASS" if r.verify_success else "✗ FAIL"
-            detail = "持久化成功" if r.state_persistent else "持久化失败"
+            detail = "Persistence success" if r.state_persistent else "Persistence failure"
             lines.append(f"{r.scenario_id:<18} {r.mitre_id:<14} {status:<8} {detail}")
         
         lines.append("-"*70)
@@ -927,10 +923,10 @@ class E2ETestExecutor:
         return "\n".join(lines)
     
     def save_report_json(self, data: Dict[str, Any], filename: str = "promptshield_multi_round.json"):
-        """保存多轮测试的 JSON 报告"""
+        """Save multi-round test JSON report"""
         test_time = datetime.now()
         
-        # 确保数据包含基本元数据
+        # Ensure data contains basic metadata
         if "meta" not in data:
             data["meta"] = {
                 "test_time": test_time.isoformat(),
@@ -938,59 +934,57 @@ class E2ETestExecutor:
                 "framework": "PromptShield"
             }
         
-        # 保存最新结果（覆盖）
+        # Save latest result (overwrite)
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
         
-        # 同时保存带时间戳的历史版本
+        # Also save historical version with timestamp
         timestamp = test_time.strftime("%Y%m%d_%H%M%S")
         history_filename = f"promptshield_final_{timestamp}.json"
         with open(history_filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
         
-        p(f"\n✓ JSON报告已保存: {filename}")
-        p(f"✓ 历史版本已保存: {history_filename}")
+        p(f"\n✓ JSON report saved: {filename}")
+        p(f"✓ Historical version saved: {history_filename}")
 
 
-# ============== 主函数 ==============
+# ============== Main Function ==============
 
 async def async_main(num_rounds: int, output_file: str, noise_level: int = 0, noise_position: str = "sandwich"):
-    """主函数"""
+    """Main Function"""
     executor = E2ETestExecutor(storage_path="./test_e2e_memory", 
                                noise_level=noise_level, noise_position=noise_position)
     
     try:
-        # 显示噪声配置
+        # Show noise config
         if noise_level > 0:
-            p(f"\n[Lost-in-the-Middle 对照模式]")
-            p(f"  噪声级别: {noise_level}")
-            p(f"  噪声位置: {noise_position}")
-            p(f"  注意: PromptShield 使用 O(1) 状态管理，噪声仅用于模拟负载对比")
+            p(f"\n[Lost-in-the-Middle Control Mode]")
+            p(f"  Noise Level: {noise_level}")
+            p(f"  Noise Position: {noise_position}")
+            p(f"  Note: PromptShield uses O(1) state management; noise is only for load comparison")
         
-        # 使用新的多轮测试方法
-        # setup 和 cleanup 在 run_multi_round_test 内部管理
-        
+        # Use new multi-round test method
         results = await executor.run_multi_round_test(num_rounds)
         
-        # 根据噪声级别调整输出文件名
+        # Adjust output file name based on noise level
         if noise_level > 0:
             base_name = output_file.rsplit('.', 1)[0]
             output_file = f"{base_name}_noise{noise_level}_{noise_position}.json"
         
-        # 保存JSON (需要适配新的结果结构)
+        # Save JSON
         executor.save_report_json(results, output_file)
         
     except KeyboardInterrupt:
-        p("\n\n测试被用户中断")
+        p("\n\nTest interrupted by user")
     except Exception as e:
-        p(f"\n测试执行错误: {e}")
+        p(f"\nTest execution error: {e}")
         import traceback
         traceback.print_exc()
     finally:
         await executor.cleanup()
     
     p("\n" + "="*70)
-    p("端到端测试完成！")
+    p("End-to-End Test Completed!")
     p("="*70)
 
 
@@ -1005,7 +999,7 @@ def main():
                         help="Noise position for fair comparison with shelLM")
     args = parser.parse_args()
     
-    # 设置全局噪声参数（传递到 async_main）
+    # Set global noise parameters
     asyncio.run(async_main(num_rounds=args.rounds, output_file=args.output,
                            noise_level=args.noise_level, noise_position=args.noise_position))
 
