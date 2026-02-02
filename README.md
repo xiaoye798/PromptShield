@@ -106,8 +106,7 @@ PromptShield/
 │   └── variant_context_builder.py  # Architectural variants
 │
 ├── HoneyComb_v2_*.csv        # HoneyComb Benchmark Suite
-├── test_honeycomb_e2e_real.py # End-to-end evaluation
-└── *_results*.json           # Experimental results
+└── test_honeycomb_e2e_real.py # End-to-end evaluation
 ```
 
 ## 🍯 HoneyComb Benchmark
