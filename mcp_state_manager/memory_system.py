@@ -1,8 +1,8 @@
 """
-结构化长期记忆系统 (Structured Long-Term Memory System)
+Structured Long-Term Memory System
 
-用于持久化存储和管理LLM蜜罐的系统状态、事件图和跨会话信息。
-支持IP隔离、状态快照、增量更新和状态恢复。
+Used for persistent storage and management of LLM honeypot system state, event graphs, and cross-session information.
+Supports IP isolation, state snapshots, incremental updates, and state recovery.
 """
 
 from __future__ import annotations
@@ -19,15 +19,15 @@ from .event_graph import EventGraph, EventNode
 
 
 class FileSystemState(BaseModel):
-    """文件系统状态"""
-    files: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="文件信息")
-    directories: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="目录信息")
-    permissions: Dict[str, str] = Field(default_factory=dict, description="权限信息")
-    links: Dict[str, str] = Field(default_factory=dict, description="链接信息")
+    """File System State"""
+    files: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="File information")
+    directories: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="Directory information")
+    permissions: Dict[str, str] = Field(default_factory=dict, description="Permission information")
+    links: Dict[str, str] = Field(default_factory=dict, description="Link information")
     
     def add_file(self, path: str, content: str = "", permissions: str = "644", 
                  owner: str = "root", size: int = 0) -> None:
-        """添加文件"""
+        """Add file"""
         self.files[path] = {
             "content": content,
             "permissions": permissions,
@@ -38,7 +38,7 @@ class FileSystemState(BaseModel):
         }
     
     def add_directory(self, path: str, permissions: str = "755", owner: str = "root") -> None:
-        """添加目录"""
+        """Add directory"""
         self.directories[path] = {
             "permissions": permissions,
             "owner": owner,
@@ -46,23 +46,23 @@ class FileSystemState(BaseModel):
         }
     
     def remove_file(self, path: str) -> bool:
-        """删除文件"""
+        """Remove file"""
         return self.files.pop(path, None) is not None
     
     def remove_directory(self, path: str) -> bool:
-        """删除目录"""
+        """Remove directory"""
         return self.directories.pop(path, None) is not None
     
     def file_exists(self, path: str) -> bool:
-        """检查文件是否存在"""
+        """Check if file exists"""
         return path in self.files
     
     def directory_exists(self, path: str) -> bool:
-        """检查目录是否存在"""
+        """Check if directory exists"""
         return path in self.directories
     
     def update_file_attributes(self, path: str, permissions: Optional[str] = None, owner: Optional[str] = None) -> bool:
-        """更新文件属性"""
+        """Update file attributes"""
         if path in self.files:
             if permissions:
                 self.files[path]["permissions"] = permissions
@@ -73,23 +73,23 @@ class FileSystemState(BaseModel):
         return False
 
     def get_file_content(self, path: str) -> Optional[str]:
-        """获取文件内容"""
+        """Get file content"""
         file_info = self.files.get(path)
         return file_info["content"] if file_info else None
 
 
 class UserState(BaseModel):
-    """用户状态"""
-    users: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="用户信息 /etc/passwd")
-    groups: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="组信息 /etc/group")
-    shadow: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="密码信息 /etc/shadow")
-    sudoers: List[str] = Field(default_factory=list, description="sudo权限")
-    current_user: str = Field(default="root", description="当前用户")
-    login_history: List[Dict[str, Any]] = Field(default_factory=list, description="登录历史")
+    """User State"""
+    users: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="User info /etc/passwd")
+    groups: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="Group info /etc/group")
+    shadow: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="Password info /etc/shadow")
+    sudoers: List[str] = Field(default_factory=list, description="sudo permissions")
+    current_user: str = Field(default="root", description="Current user")
+    login_history: List[Dict[str, Any]] = Field(default_factory=list, description="Login history")
     
     def add_user(self, username: str, uid: int = 1000, gid: int = 1000, home: str = "", 
                  shell: str = "/bin/bash", password_hash: str = "!", shadow_info: Dict = None) -> None:
-        """添加用户"""
+        """Add user"""
         self.users[username] = {
             "uid": uid,
             "gid": gid,
@@ -109,7 +109,7 @@ class UserState(BaseModel):
         }
     
     def add_group(self, groupname: str, gid: int = 1000, members: List[str] = None) -> None:
-        """添加用户组"""
+        """Add user group"""
         self.groups[groupname] = {
             "gid": gid,
             "members": members or [],
@@ -117,7 +117,7 @@ class UserState(BaseModel):
         }
 
     def modify_user(self, username: str, changes: Dict[str, Any]) -> bool:
-        """修改用户信息 (usermod)"""
+        """Modify user info (usermod)"""
         if username not in self.users:
             return False
         
@@ -134,23 +134,23 @@ class UserState(BaseModel):
         return True
 
     def set_password(self, username: str, password_hash: str) -> bool:
-        """设置密码 (passwd)"""
+        """Set password (passwd)"""
         if username in self.shadow:
             self.shadow[username]["password"] = password_hash
             return True
         return False
 
     def remove_user(self, username: str) -> bool:
-        """删除用户"""
+        """Remove user"""
         self.shadow.pop(username, None)
         return self.users.pop(username, None) is not None
     
     def user_exists(self, username: str) -> bool:
-        """检查用户是否存在"""
+        """Check if user exists"""
         return username in self.users
     
     def set_current_user(self, username: str) -> bool:
-        """设置当前用户"""
+        """Set current user"""
         if self.user_exists(username):
             self.current_user = username
             return True
@@ -158,12 +158,12 @@ class UserState(BaseModel):
 
 
 class CronState(BaseModel):
-    """计划任务状态"""
-    user_crontabs: Dict[str, List[str]] = Field(default_factory=dict, description="用户crontab")
-    system_cron_files: Dict[str, str] = Field(default_factory=dict, description="/etc/cron.d/等文件")
-    etc_crontab: List[str] = Field(default_factory=list, description="/etc/crontab内容")
-    anacrontab: List[str] = Field(default_factory=list, description="/etc/anacrontab内容")
-    at_jobs: List[str] = Field(default_factory=list, description="at任务")
+    """Cron Job State"""
+    user_crontabs: Dict[str, List[str]] = Field(default_factory=dict, description="User crontabs")
+    system_cron_files: Dict[str, str] = Field(default_factory=dict, description="System cron files /etc/cron.d/ etc.")
+    etc_crontab: List[str] = Field(default_factory=list, description="/etc/crontab content")
+    anacrontab: List[str] = Field(default_factory=list, description="/etc/anacrontab content")
+    at_jobs: List[str] = Field(default_factory=list, description="at jobs")
 
     def add_user_cron_line(self, username: str, line: str) -> None:
         if username not in self.user_crontabs:
@@ -178,13 +178,13 @@ class CronState(BaseModel):
 
 
 class ServiceState(BaseModel):
-    """服务状态"""
-    services: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="服务信息")
-    processes: Dict[int, Dict[str, Any]] = Field(default_factory=dict, description="进程信息")
+    """Service State"""
+    services: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="Service info")
+    processes: Dict[int, Dict[str, Any]] = Field(default_factory=dict, description="Process info")
     
     def add_service(self, name: str, status: str = "inactive", enabled: bool = False, 
                     unit_file_content: str = "") -> None:
-        """添加服务"""
+        """Add service"""
         self.services[name] = {
             "status": status,
             "enabled": enabled,
@@ -193,7 +193,7 @@ class ServiceState(BaseModel):
         }
     
     def update_service_status(self, name: str, status: str) -> bool:
-        """更新服务状态"""
+        """Update service status"""
         if name in self.services:
             self.services[name]["status"] = status
             self.services[name]["updated_at"] = datetime.now().isoformat()
@@ -201,7 +201,7 @@ class ServiceState(BaseModel):
         return False
 
     def update_service_enabled(self, name: str, enabled: bool) -> bool:
-        """更新服务启用状态"""
+        """Update service enabled status"""
         if name in self.services:
             self.services[name]["enabled"] = enabled
             self.services[name]["updated_at"] = datetime.now().isoformat()
@@ -209,28 +209,28 @@ class ServiceState(BaseModel):
         return False
     
     def service_exists(self, name: str) -> bool:
-        """检查服务是否存在"""
+        """Check if service exists"""
         return name in self.services
     
     def get_service_status(self, name: str) -> Optional[str]:
-        """获取服务状态"""
+        """Get service status"""
         service = self.services.get(name)
         return service["status"] if service else None
 
 
 class NetworkState(BaseModel):
-    """网络状态"""
-    interfaces: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="网络接口")
-    routes: List[str] = Field(default_factory=list, description="路由表")
-    connections: List[Dict[str, Any]] = Field(default_factory=list, description="网络连接")
-    hosts: Dict[str, str] = Field(default_factory=dict, description="/etc/hosts映射")
-    iptables_rules: List[str] = Field(default_factory=list, description="iptables规则")
-    nftables_rules: List[str] = Field(default_factory=list, description="nftables规则")
-    dns_servers: List[str] = Field(default_factory=list, description="DNS服务器")
+    """Network State"""
+    interfaces: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="Network interfaces")
+    routes: List[str] = Field(default_factory=list, description="Routing table")
+    connections: List[Dict[str, Any]] = Field(default_factory=list, description="Network connections")
+    hosts: Dict[str, str] = Field(default_factory=dict, description="/etc/hosts mapping")
+    iptables_rules: List[str] = Field(default_factory=list, description="iptables rules")
+    nftables_rules: List[str] = Field(default_factory=list, description="nftables rules")
+    dns_servers: List[str] = Field(default_factory=list, description="DNS servers")
     
     def add_interface(self, name: str, ip: str, netmask: str = "255.255.255.0", 
                      status: str = "up") -> None:
-        """添加网络接口"""
+        """Add network interface"""
         self.interfaces[name] = {
             "ip": ip,
             "netmask": netmask,
@@ -249,12 +249,12 @@ class NetworkState(BaseModel):
 
 
 class PackageState(BaseModel):
-    """软件包状态"""
-    installed_packages: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="已安装软件包")
-    available_packages: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="可用软件包")
+    """Package State"""
+    installed_packages: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="Installed packages")
+    available_packages: Dict[str, Dict[str, Any]] = Field(default_factory=dict, description="Available packages")
     
     def install_package(self, name: str, version: str = "latest", manager: str = "apt") -> None:
-        """安装软件包"""
+        """Install package"""
         self.installed_packages[name] = {
             "version": version,
             "manager": manager,
@@ -262,20 +262,20 @@ class PackageState(BaseModel):
         }
     
     def remove_package(self, name: str) -> bool:
-        """卸载软件包"""
+        """Uninstall package"""
         return self.installed_packages.pop(name, None) is not None
     
     def is_installed(self, name: str) -> bool:
-        """检查软件包是否已安装"""
+        """Check if package is installed"""
         return name in self.installed_packages
 
 
 class SystemState(BaseModel):
-    """系统状态快照"""
-    ip_address: str = Field(description="IP地址")
-    timestamp: datetime = Field(default_factory=datetime.now, description="快照时间")
+    """System State Snapshot"""
+    ip_address: str = Field(description="IP Address")
+    timestamp: datetime = Field(default_factory=datetime.now, description="Snapshot time")
     
-    # 各子系统状态
+    # Subsystem states
     filesystem: FileSystemState = Field(default_factory=FileSystemState)
     users: UserState = Field(default_factory=UserState)
     services: ServiceState = Field(default_factory=ServiceState)
@@ -283,16 +283,16 @@ class SystemState(BaseModel):
     packages: PackageState = Field(default_factory=PackageState)
     cron: CronState = Field(default_factory=CronState)
     
-    # 系统信息
-    hostname: str = Field(default="honeypot", description="主机名")
-    kernel_version: str = Field(default="5.4.0", description="内核版本")
-    os_version: str = Field(default="Ubuntu 20.04", description="操作系统版本")
-    uptime: int = Field(default=0, description="系统运行时间（秒）")
+    # System info
+    hostname: str = Field(default="honeypot", description="Hostname")
+    kernel_version: str = Field(default="5.4.0", description="Kernel version")
+    os_version: str = Field(default="Ubuntu 20.04", description="OS version")
+    uptime: int = Field(default=0, description="System uptime (seconds)")
     
-    # 环境变量
-    environment: Dict[str, str] = Field(default_factory=dict, description="环境变量")
-    kernel_modules: List[str] = Field(default_factory=list, description="内核模块")
-    sysctl_params: Dict[str, str] = Field(default_factory=dict, description="sysctl参数")
+    # Environment variables
+    environment: Dict[str, str] = Field(default_factory=dict, description="Environment variables")
+    kernel_modules: List[str] = Field(default_factory=list, description="Kernel modules")
+    sysctl_params: Dict[str, str] = Field(default_factory=dict, description="sysctl parameters")
     
     class Config:
         json_encoders = {
@@ -300,7 +300,7 @@ class SystemState(BaseModel):
         }
     
     def apply_event(self, event: EventNode) -> List[str]:
-        """应用事件到系统状态，返回应用的变化列表"""
+        """Apply event to system state, return list of changes"""
         changes = []
         
         for state_change in event.state_changes:
@@ -309,23 +309,23 @@ class SystemState(BaseModel):
             new_value = state_change.new_value
             
             if change_type == "create":
-                if target.startswith("/"):  # 文件系统路径
-                    # 检查metadata中的is_dir标志
+                if target.startswith("/"):  # File system path
+                    # Check is_dir flag in metadata
                     is_dir = state_change.metadata.get("is_dir", False) if state_change.metadata else False
-                    if target.endswith("/") or is_dir:  # 目录
+                    if target.endswith("/") or is_dir:  # Directory
                         self.filesystem.add_directory(target.rstrip("/"))
                         changes.append(f"Created directory: {target}")
-                    else:  # 文件
+                    else:  # File
                         content = new_value if isinstance(new_value, str) else ""
                         self.filesystem.add_file(target, content)
                         changes.append(f"Created file: {target}")
                         
-                        # 特殊文件处理
+                        # Special file handling
                         if target == "/etc/hostname" and content:
                             self.hostname = content.strip()
                             changes.append(f"Updated hostname to: {self.hostname}")
                 
-                elif target.startswith("user:"):  # 用户操作
+                elif target.startswith("user:"):  # User operations
                     username = target.split(":", 1)[1]
                     # Support dict or simple uid/gid if provided
                     user_info = new_value if isinstance(new_value, dict) else {}
@@ -341,7 +341,7 @@ class SystemState(BaseModel):
                     self.users.add_group(groupname)
                     changes.append(f"Created group: {groupname}")
                 
-                elif target.startswith("service:"):  # 服务操作
+                elif target.startswith("service:"):  # Service operations
                     service_name = target.split(":", 1)[1]
                     status = "inactive"
                     enabled = False
@@ -366,22 +366,22 @@ class SystemState(BaseModel):
                     changes.append(f"Added at job: {new_value}")
             
             elif change_type == "append":
-                # 文件追加操作
+                # File append operation
                 if target.startswith("/"):
                     content = new_value if isinstance(new_value, str) else str(new_value)
                     if self.filesystem.file_exists(target):
-                        # 文件已存在，追加内容
+                        # File exists, append content
                         current_content = self.filesystem.files[target].get("content", "")
                         self.filesystem.files[target]["content"] = current_content + "\n" + content if current_content else content
                         self.filesystem.files[target]["modified_at"] = datetime.now().isoformat()
                         changes.append(f"Appended to file: {target}")
                     else:
-                        # 文件不存在，创建新文件
+                        # File does not exist, create new file
                         self.filesystem.add_file(target, content)
                         changes.append(f"Created file with append: {target}")
             
             elif change_type == "create_user":
-                # 创建用户操作
+                # Create user operation
                 if target.startswith("user:"):
                     username = target.split(":", 1)[1]
                 else:
@@ -402,24 +402,24 @@ class SystemState(BaseModel):
                 changes.append(f"Created user: {username}")
             
             elif change_type == "add_group":
-                # 将用户添加到组
+                # Add user to group
                 if target.startswith("user:"):
                     username = target.split(":", 1)[1]
                 else:
                     username = target
                 group_name = new_value if isinstance(new_value, str) else str(new_value)
-                # 确保用户存在
+                # Ensure user exists
                 if not self.users.user_exists(username):
                     self.users.add_user(username, uid=1001, gid=1001)
                     changes.append(f"Auto-created user: {username}")
-                # 确保组存在
+                # Ensure group exists
                 if group_name not in self.users.groups:
                     self.users.add_group(group_name)
                     changes.append(f"Auto-created group: {group_name}")
-                # 添加用户到组
+                # Add user to group list
                 if username not in self.users.groups[group_name]["members"]:
                     self.users.groups[group_name]["members"].append(username)
-                # 同时在用户信息中记录组
+                # Also record group in user info
                 if "groups" not in self.users.users[username]:
                     self.users.users[username]["groups"] = []
                 if group_name not in self.users.users[username]["groups"]:
@@ -427,7 +427,7 @@ class SystemState(BaseModel):
                 changes.append(f"Added user {username} to group {group_name}")
             
             elif change_type == "add_cron":
-                # 添加 cron 任务
+                # Add cron job
                 if target.startswith("crontab:"):
                     username = target.split(":", 1)[1]
                 else:
@@ -437,7 +437,7 @@ class SystemState(BaseModel):
                 changes.append(f"Added cron job for {username}: {cron_line}")
             
             elif change_type == "create_at_job":
-                # 添加 at 任务
+                # Add at job
                 if isinstance(new_value, dict):
                     job_info = json.dumps(new_value)
                 elif isinstance(new_value, str):
@@ -448,7 +448,7 @@ class SystemState(BaseModel):
                 changes.append(f"Added at job: {job_info}")
             
             elif change_type == "enable":
-                # 启用服务
+                # Enable service
                 if target.startswith("service:"):
                     service_name = target.split(":", 1)[1]
                     if not self.services.service_exists(service_name):
@@ -459,23 +459,23 @@ class SystemState(BaseModel):
             
             elif change_type == "modify":
                 if target.startswith("/"):
-                    # 检查操作类型
+                    # Check operation type
                     op = state_change.metadata.get("op", "") if state_change.metadata else ""
                     
                     if self.filesystem.file_exists(target):
-                        # 文件已存在，修改内容
+                        # File exists, modify content
                         if isinstance(new_value, str):
                             if op == "redirect_append":
-                                # 追加内容
+                                # Redirect append
                                 current_content = self.filesystem.files[target].get("content", "")
                                 self.filesystem.files[target]["content"] = current_content + "\n" + new_value if current_content else new_value
                             else:
-                                # 覆盖内容
+                                # Redirect overwrite
                                 self.filesystem.files[target]["content"] = new_value
                             self.filesystem.files[target]["modified_at"] = datetime.now().isoformat()
                             changes.append(f"Modified file content: {target}")
                     elif op in ["redirect_append", "redirect_overwrite"]:
-                        # 文件不存在但是重定向操作，创建新文件
+                        # File does not exist but redirect op, create new file
                         content = new_value if isinstance(new_value, str) else ""
                         self.filesystem.add_file(target, content)
                         changes.append(f"Created file via redirection: {target}")
@@ -483,13 +483,13 @@ class SystemState(BaseModel):
                 elif target.startswith("user:"):
                     username = target.split(":", 1)[1]
                     if isinstance(new_value, dict):
-                        # 如果用户不存在，先创建用户（对于蜜罐宽松处理）
+                        # If user does not exist, create it first (lenient for honeypot)
                         if not self.users.user_exists(username):
                             self.users.add_user(username, uid=1001, gid=1001, 
                                               home=f"/home/{username}", shell="/bin/bash")
                             changes.append(f"Auto-created user {username} for modification")
                         
-                        # 如果是添加组操作，确保组存在
+                        # If adding group, ensure group exists
                         if "groups_add" in new_value:
                             for group in new_value["groups_add"]:
                                 if group not in self.users.groups:
@@ -536,7 +536,7 @@ class SystemState(BaseModel):
 
             elif change_type == "modify_attr":
                 if target.startswith("/") and self.filesystem.file_exists(target):
-                    # 修改文件属性
+                    # Modify file attributes
                     perms = new_value.get("permissions") if isinstance(new_value, dict) else None
                     owner = new_value.get("owner") if isinstance(new_value, dict) else None
                     self.filesystem.update_file_attributes(target, permissions=perms, owner=owner)
@@ -598,7 +598,7 @@ class SystemState(BaseModel):
         return changes
     
     def get_state_summary(self) -> Dict[str, Any]:
-        """获取状态摘要"""
+        """Get state summary"""
         return {
             "ip_address": self.ip_address,
             "timestamp": self.timestamp.isoformat(),
@@ -612,12 +612,12 @@ class SystemState(BaseModel):
 
 
 class MemorySystem(BaseModel):
-    """结构化长期记忆系统"""
-    storage_path: str = Field(description="存储路径")
-    instance_states: Dict[str, SystemState] = Field(default_factory=dict, description="实例状态映射")
-    instance_graphs: Dict[str, EventGraph] = Field(default_factory=dict, description="实例事件图映射")
-    ip_instance_map: Dict[str, str] = Field(default_factory=dict, description="IP到实例ID的映射")
-    global_singleton_mode: bool = Field(default=False, description="是否启用全局单例模式")
+    """Structured Long-Term Memory System"""
+    storage_path: str = Field(description="Storage path")
+    instance_states: Dict[str, SystemState] = Field(default_factory=dict, description="Instance state mapping")
+    instance_graphs: Dict[str, EventGraph] = Field(default_factory=dict, description="Instance event graph mapping")
+    ip_instance_map: Dict[str, str] = Field(default_factory=dict, description="IP to Instance ID mapping")
+    global_singleton_mode: bool = Field(default=False, description="Enable global singleton mode")
     
     def __init__(self, storage_path: str = "./data/memory", global_singleton_mode: bool = False, **data):
         super().__init__(storage_path=storage_path, global_singleton_mode=global_singleton_mode, **data)
@@ -626,14 +626,14 @@ class MemorySystem(BaseModel):
         self._load_existing_data()
     
     def get_system_state(self, ip_address: str) -> SystemState:
-        """获取指定IP的系统状态"""
+        """Get system state for specific IP"""
         return self.get_or_create_state(ip_address)
 
     def _load_existing_data(self) -> None:
-        """加载现有数据"""
+        """Load existing data"""
         storage_dir = Path(self.storage_path)
         
-        # 加载IP映射
+        # Load IP map
         map_file = storage_dir / "ip_map.json"
         if map_file.exists():
             try:
@@ -642,7 +642,7 @@ class MemorySystem(BaseModel):
             except Exception as e:
                 print(f"Failed to load IP map: {e}")
 
-        # 加载系统状态
+        # Load system states
         states_dir = storage_dir / "states"
         if states_dir.exists():
             for state_file in states_dir.glob("*.json"):
@@ -655,7 +655,7 @@ class MemorySystem(BaseModel):
                 except Exception as e:
                     print(f"Failed to load state for instance {instance_id}: {e}")
         
-        # 加载事件图
+        # Load event graphs
         graphs_dir = storage_dir / "graphs"
         if graphs_dir.exists():
             for graph_file in graphs_dir.glob("*.json"):
@@ -666,34 +666,34 @@ class MemorySystem(BaseModel):
                     print(f"Failed to load graph for instance {instance_id}: {e}")
     
     def get_instance_id(self, ip_address: str) -> str:
-        """根据IP地址获取实例ID"""
+        """Get instance ID by IP address"""
         if self.global_singleton_mode:
             return "global_default"
         
         if ip_address not in self.ip_instance_map:
-            # 默认每个IP一个实例，但支持后续手动link
+            # Default one instance per IP, but supports manual linking
             self.ip_instance_map[ip_address] = ip_address
             self._save_ip_map()
             
         return self.ip_instance_map[ip_address]
 
     def link_ip_to_instance(self, ip_address: str, instance_id: str) -> None:
-        """将IP关联到指定实例"""
+        """Link IP to specific instance"""
         self.ip_instance_map[ip_address] = instance_id
         self._save_ip_map()
 
     def get_or_create_state(self, ip_address: str) -> SystemState:
-        """获取或创建IP对应的系统状态"""
+        """Get or create system state for IP"""
         instance_id = self.get_instance_id(ip_address)
         
         if instance_id not in self.instance_states:
-            # 创建空的系统状态，让AI自由发挥
+            # Create empty system state, let AI improvise
             self.instance_states[instance_id] = SystemState(ip_address=ip_address)
             self._save_state(instance_id)
         return self.instance_states[instance_id]
     
     def get_or_create_graph(self, ip_address: str) -> EventGraph:
-        """获取或创建IP对应的事件图"""
+        """Get or create event graph for IP"""
         instance_id = self.get_instance_id(ip_address)
         
         if instance_id not in self.instance_graphs:
@@ -702,28 +702,28 @@ class MemorySystem(BaseModel):
         return self.instance_graphs[instance_id]
     
     def record_event(self, event: EventNode) -> str:
-        """记录事件并更新状态"""
+        """Record event and update state"""
         ip_address = event.ip_address
         instance_id = self.get_instance_id(ip_address)
         
-        # 获取或创建事件图和系统状态
+        # Get or create event graph and system state
         graph = self.get_or_create_graph(ip_address)
         state = self.get_or_create_state(ip_address)
         
-        # 添加事件到图中
+        # Add event to graph
         event_id = graph.add_event(event)
         
-        # 应用事件到系统状态
+        # Apply event to system state
         changes = state.apply_event(event)
         
-        # 保存更新
+        # Save updates
         self._save_graph(instance_id)
         self._save_state(instance_id)
         
         return event_id
     
     def query_state(self, ip_address: str, query_type: str, target: str) -> Any:
-        """查询系统状态"""
+        """Query system state"""
         instance_id = self.get_instance_id(ip_address)
         
         if instance_id not in self.instance_states:
@@ -747,7 +747,7 @@ class MemorySystem(BaseModel):
             return None
     
     def validate_consistency(self, ip_address: str, target: str) -> Dict[str, Any]:
-        """验证特定目标的一致性"""
+        """Validate consistency for specific target"""
         instance_id = self.get_instance_id(ip_address)
         
         if instance_id not in self.instance_graphs:
@@ -757,7 +757,7 @@ class MemorySystem(BaseModel):
         return graph.validate_state_consistency(target)
     
     def get_cross_session_state(self, ip_address: str) -> Dict[str, Any]:
-        """获取跨会话状态信息"""
+        """Get cross-session state information"""
         instance_id = self.get_instance_id(ip_address)
         
         if instance_id not in self.instance_states:
@@ -775,16 +775,16 @@ class MemorySystem(BaseModel):
         return result
     
     def get_event_graph(self, ip_address: str) -> Optional['EventGraph']:
-        """获取指定IP的事件图"""
+        """Get event graph for specific IP"""
         instance_id = self.get_instance_id(ip_address)
         return self.instance_graphs.get(instance_id)
     
     def get_state_summary(self, ip_address: str) -> Dict[str, Any]:
         """
-        获取系统状态的摘要信息，便于快速了解当前状态
+        Get system state summary for quick overview
         
         Returns:
-            包含文件数、用户数、服务数等摘要信息的字典
+            Dictionary containing file count, user count, service count etc.
         """
         state = self.get_system_state(ip_address)
         return {
@@ -800,28 +800,28 @@ class MemorySystem(BaseModel):
         }
     
     def check_file_exists(self, ip_address: str, file_path: str) -> bool:
-        """检查文件是否存在"""
+        """Check if file exists"""
         state = self.get_system_state(ip_address)
         return state.filesystem.file_exists(file_path)
     
     def check_directory_exists(self, ip_address: str, dir_path: str) -> bool:
-        """检查目录是否存在"""
+        """Check if directory exists"""
         state = self.get_system_state(ip_address)
         return state.filesystem.directory_exists(dir_path)
     
     def get_file_content(self, ip_address: str, file_path: str) -> Optional[str]:
-        """获取文件内容"""
+        """Get file content"""
         state = self.get_system_state(ip_address)
         return state.filesystem.get_file_content(file_path)
     
     def check_user_exists(self, ip_address: str, username: str) -> bool:
-        """检查用户是否存在"""
+        """Check if user exists"""
         state = self.get_system_state(ip_address)
         return state.users.user_exists(username)
     
     def get_directory_contents(self, ip_address: str, dir_path: str) -> Dict[str, List[str]]:
         """
-        获取目录内容（文件和子目录列表）
+        Get directory contents (files and subdirectories)
         
         Returns:
             {"files": [...], "directories": [...]}
@@ -844,7 +844,7 @@ class MemorySystem(BaseModel):
 
     
     def _save_ip_map(self) -> None:
-        """保存IP映射"""
+        """Save IP map"""
         storage_dir = Path(self.storage_path)
         storage_dir.mkdir(parents=True, exist_ok=True)
         
@@ -853,7 +853,7 @@ class MemorySystem(BaseModel):
             json.dump(self.ip_instance_map, f, ensure_ascii=False, indent=2)
 
     def _save_state(self, instance_id: str) -> None:
-        """保存系统状态"""
+        """Save system state"""
         if instance_id not in self.instance_states:
             return
         
@@ -867,7 +867,7 @@ class MemorySystem(BaseModel):
             json.dump(state_data, f, ensure_ascii=False, indent=2, default=str)
     
     def _save_graph(self, instance_id: str) -> None:
-        """保存事件图"""
+        """Save event graph"""
         if instance_id not in self.instance_graphs:
             return
         
@@ -878,10 +878,10 @@ class MemorySystem(BaseModel):
         self.instance_graphs[instance_id].export_to_json(str(graph_file))
     
     def cleanup_old_data(self, days: int = 30) -> None:
-        """清理旧数据"""
+        """Clean up old data"""
         cutoff_time = datetime.now().timestamp() - (days * 24 * 3600)
         
-        # 清理旧的实例状态
+        # Clean up old instance states
         to_remove = []
         for instance_id, state in self.instance_states.items():
             if state.timestamp.timestamp() < cutoff_time:
@@ -892,7 +892,7 @@ class MemorySystem(BaseModel):
             if instance_id in self.instance_graphs:
                 del self.instance_graphs[instance_id]
             
-            # 删除文件
+            # Delete files
             state_file = Path(self.storage_path) / "states" / f"{instance_id}.json"
             graph_file = Path(self.storage_path) / "graphs" / f"{instance_id}.json"
             
@@ -902,19 +902,19 @@ class MemorySystem(BaseModel):
                 graph_file.unlink()
     
     def export_ip_data(self, ip_address: str, output_dir: str) -> None:
-        """导出特定IP的所有数据"""
+        """Export all data for specific IP"""
         instance_id = self.get_instance_id(ip_address)
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
-        # 导出状态
+        # Export state
         if instance_id in self.instance_states:
             state_file = output_path / f"{ip_address}_state.json"
             with open(state_file, 'w', encoding='utf-8') as f:
                 json.dump(self.instance_states[instance_id].dict(), f, 
                          ensure_ascii=False, indent=2, default=str)
         
-        # 导出事件图
+        # Export event graph
         if instance_id in self.instance_graphs:
             graph_file = output_path / f"{ip_address}_graph.json"
             self.instance_graphs[instance_id].export_to_json(str(graph_file))
