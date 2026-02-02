@@ -1,8 +1,6 @@
 """
-MCP蜜罐客户端 - 用于LinuxSSHbot与MCP状态管理服务器通信
-(MCP Honeypot Client - For LinuxSSHbot to communicate with MCP state management server)
-
-这个客户端封装了与MCP服务器的所有通信，提供简洁的异步API。
+MCP Honeypot Client - For LinuxSSHbot to communicate with MCP state management server
+This client encapsulates all communication with the MCP server and provides a clean asynchronous API.
 """
 
 import asyncio
@@ -15,61 +13,61 @@ from typing import Any, Dict, List, Optional
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
-# 配置日志
+# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 class HoneypotMCPClient:
     """
-    蜜罐MCP客户端 - 负责与MCP状态管理服务器通信
+    Honeypot MCP Client - Responsible for communicating with the MCP state management server
     
-    使用方法:
+    Usage:
         client = HoneypotMCPClient()
         await client.connect()
         result = await client.record_event(...)
         await client.close()
     
-    或使用异步上下文管理器:
+    Or use asynchronous context manager:
         async with HoneypotMCPClient() as client:
             result = await client.record_event(...)
     """
     
     def __init__(self, storage_path: str = "./honeypot_memory", global_singleton_mode: bool = True):
         """
-        初始化MCP客户端
+        Initialize MCP client
         
         Args:
-            storage_path: 状态存储路径
-            global_singleton_mode: 是否启用全局单例模式（所有IP共享状态）
+            storage_path: Path for state storage
+            global_singleton_mode: Whether to enable global singleton mode (all IPs share state)
         """
         self.storage_path = storage_path
         self.global_singleton_mode = global_singleton_mode
         
-        # MCP服务器参数
+        # MCP server parameters
         self.server_params = StdioServerParameters(
-            command=sys.executable,  # 使用当前Python解释器
+            command=sys.executable,  # Use current Python interpreter
             args=[
-                "-m", "mcp_state_manager",  # 运行mcp_state_manager模块
+                "-m", "mcp_state_manager",  # Run mcp_state_manager module
             ],
             env={
                 "STORAGE_PATH": storage_path,
                 "GLOBAL_SINGLETON_MODE": "true" if global_singleton_mode else "false",
-                # 传递所有必要的环境变量
+                # Pass all necessary environment variables
                 **os.environ
             }
         )
         
-        # 连接对象
+        # Connection objects
         self._client_context = None
         self._session_context = None
         self.session: Optional[ClientSession] = None
         
-        # 连接状态
+        # Connection status
         self._connected = False
     
     async def connect(self) -> None:
-        """连接到MCP服务器"""
+        """Connect to MCP server"""
         if self._connected:
             logger.warning("Client already connected")
             return
@@ -77,21 +75,21 @@ class HoneypotMCPClient:
         try:
             logger.info("Connecting to MCP state management server...")
             
-            # 启动MCP服务器进程并建立stdio连接
+            # Start MCP server process and establish stdio connection
             self._client_context = stdio_client(self.server_params)
             read, write = await self._client_context.__aenter__()
             
-            # 创建客户端会话
+            # Create client session
             self._session_context = ClientSession(read, write)
             self.session = await self._session_context.__aenter__()
             
-            # 初始化连接
+            # Initialize connection
             await self.session.initialize()
             
             self._connected = True
             logger.info("Successfully connected to MCP server")
             
-            # 列出可用的工具（调试信息）
+            # List available tools (debug info)
             tools = await self.session.list_tools()
             logger.info(f"Available MCP tools: {[tool.name for tool in tools.tools]}")
             
@@ -100,7 +98,7 @@ class HoneypotMCPClient:
             raise
     
     async def close(self) -> None:
-        """关闭MCP连接"""
+        """Close MCP connection"""
         if not self._connected:
             return
         
@@ -120,20 +118,20 @@ class HoneypotMCPClient:
             logger.error(f"Error closing MCP connection: {e}")
     
     async def __aenter__(self):
-        """异步上下文管理器入口"""
+        """Asynchronous context manager entrance"""
         await self.connect()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """异步上下文管理器出口"""
+        """Asynchronous context manager exit"""
         await self.close()
     
     def _ensure_connected(self) -> None:
-        """确保已连接到MCP服务器"""
+        """Ensure connected to MCP server"""
         if not self._connected or not self.session:
             raise RuntimeError("Not connected to MCP server. Call connect() first.")
     
-    # ====================== MCP工具方法 ======================
+    # ====================== MCP Tool Methods ======================
     
     async def record_event(
         self,
@@ -150,23 +148,23 @@ class HoneypotMCPClient:
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
-        记录命令执行事件
+        Record command execution event
         
         Args:
-            ip_address: 攻击者IP
-            session_id: 会话ID
-            command: 执行的命令
-            user_context: 用户上下文
-            event_type: 事件类型 (FILE_OPERATION, USER_MANAGEMENT等)
-            status: 执行状态 (SUCCESS, FAILURE, ERROR)
-            stdout: 标准输出
-            stderr: 标准错误输出
-            return_code: 返回码
-            state_changes: 状态变化列表
-            metadata: 额外元数据
+            ip_address: Attacker IP
+            session_id: Session ID
+            command: Executed command
+            user_context: User context
+            event_type: Event type (FILE_OPERATION, USER_MANAGEMENT, etc.)
+            status: Execution status (SUCCESS, FAILURE, ERROR)
+            stdout: Standard output
+            stderr: Standard error output
+            return_code: Return code
+            state_changes: List of state changes
+            metadata: Additional metadata
         
         Returns:
-            包含success, event_id, message的字典
+            Dictionary containing success, event_id, and message
         """
         self._ensure_connected()
         
@@ -188,11 +186,11 @@ class HoneypotMCPClient:
                 }
             )
             
-            # 解析结构化输出
+            # Parse structured output
             if hasattr(result, 'structuredContent') and result.structuredContent:
                 return result.structuredContent
             
-            # 降级：解析文本内容
+            # Fallback: Parse text content
             if result.content and len(result.content) > 0:
                 content = result.content[0]
                 if hasattr(content, 'text'):
@@ -214,22 +212,22 @@ class HoneypotMCPClient:
         target: Optional[str] = None
     ) -> Dict[str, Any]:
         """
-        查询系统状态
+        Query system state
         
         Args:
-            ip_address: IP地址
-            query_type: 查询类型
-                - "file_exists": 检查文件是否存在
-                - "directory_exists": 检查目录是否存在
-                - "file_content": 获取文件内容
-                - "user_exists": 检查用户是否存在
-                - "service_status": 获取服务状态
-                - "package_installed": 检查软件包是否安装
-                - "state_summary": 获取状态摘要
-            target: 查询目标（文件路径、用户名等）
+            ip_address: IP address
+            query_type: Query type
+                - "file_exists": Check if file exists
+                - "directory_exists": Check if directory exists
+                - "file_content": Get file content
+                - "user_exists": Check if user exists
+                - "service_status": Get service status
+                - "package_installed": Check if package is installed
+                - "state_summary": Get state summary
+            target: Query target (file path, username, etc.)
         
         Returns:
-            包含success, state_type, data, timestamp的字典
+            Dictionary containing success, state_type, data, and timestamp
         """
         self._ensure_connected()
         
@@ -243,11 +241,11 @@ class HoneypotMCPClient:
                 }
             )
             
-            # 解析结构化输出
+            # Parse structured output
             if hasattr(result, 'structuredContent') and result.structuredContent:
                 return result.structuredContent
             
-            # 降级：解析文本内容
+            # Fallback: Parse text content
             if result.content and len(result.content) > 0:
                 content = result.content[0]
                 if hasattr(content, 'text'):
@@ -268,14 +266,14 @@ class HoneypotMCPClient:
         session_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """
-        获取事件图信息
+        Get event graph information
         
         Args:
-            ip_address: IP地址
-            session_id: 可选的会话ID筛选
+            ip_address: IP address
+            session_id: Optional session ID filter
         
         Returns:
-            包含events和relationships的事件图数据
+            Event graph data containing events and relationships
         """
         self._ensure_connected()
         
@@ -288,11 +286,11 @@ class HoneypotMCPClient:
                 }
             )
             
-            # 解析结构化输出
+            # Parse structured output
             if hasattr(result, 'structuredContent') and result.structuredContent:
                 return result.structuredContent
             
-            # 降级：解析文本内容
+            # Fallback: Parse text content
             if result.content and len(result.content) > 0:
                 content = result.content[0]
                 if hasattr(content, 'text'):
@@ -313,14 +311,14 @@ class HoneypotMCPClient:
         instance_id: str
     ) -> Dict[str, Any]:
         """
-        将IP关联到指定的实例ID
+        Link IP to specified instance ID
         
         Args:
-            ip_address: IP地址
-            instance_id: 实例ID
+            ip_address: IP address
+            instance_id: Instance ID
         
         Returns:
-            包含success和message的字典
+            Dictionary containing success and message
         """
         self._ensure_connected()
         
@@ -333,11 +331,11 @@ class HoneypotMCPClient:
                 }
             )
             
-            # 解析结构化输出
+            # Parse structured output
             if hasattr(result, 'structuredContent') and result.structuredContent:
                 return result.structuredContent
             
-            # 降级：解析文本内容
+            # Fallback: Parse text content
             if result.content and len(result.content) > 0:
                 content = result.content[0]
                 if hasattr(content, 'text'):
@@ -352,41 +350,41 @@ class HoneypotMCPClient:
             logger.error(f"Error linking IP to instance: {e}")
             return {"success": False, "message": str(e)}
     
-    # ====================== 便捷方法 ======================
+    # ====================== Convenience Methods ======================
     
     async def check_file_exists(self, ip_address: str, file_path: str) -> bool:
-        """检查文件是否存在"""
+        """Check if file exists"""
         result = await self.query_state(ip_address, "file_exists", file_path)
         return result.get("data", {}).get("exists", False)
     
     async def check_directory_exists(self, ip_address: str, dir_path: str) -> bool:
-        """检查目录是否存在"""
+        """Check if directory exists"""
         result = await self.query_state(ip_address, "directory_exists", dir_path)
         return result.get("data", {}).get("exists", False)
     
     async def get_file_content(self, ip_address: str, file_path: str) -> Optional[str]:
-        """获取文件内容"""
+        """Get file content"""
         result = await self.query_state(ip_address, "file_content", file_path)
         return result.get("data", {}).get("content")
     
     async def check_user_exists(self, ip_address: str, username: str) -> bool:
-        """检查用户是否存在"""
+        """Check if user exists"""
         result = await self.query_state(ip_address, "user_exists", username)
         return result.get("data", {}).get("exists", False)
     
     async def get_state_summary(self, ip_address: str) -> Dict[str, Any]:
-        """获取状态摘要"""
+        """Get state summary"""
         result = await self.query_state(ip_address, "state_summary")
         return result.get("data", {})
 
 
-# ====================== 同步包装器（用于兼容旧代码） ======================
+# ====================== Synchronous Wrapper (for compatibility with legacy code) ======================
 
 class SyncHoneypotMCPClient:
     """
-    同步MCP客户端包装器 - 用于在同步代码中使用
+    Synchronous MCP Client Wrapper - For use in synchronous code
     
-    注意：这会创建一个新的事件循环，不建议在已有异步上下文中使用
+    Note: This creates a new event loop, not recommended for use within an existing asynchronous context.
     """
     
     def __init__(self, storage_path: str = "./honeypot_memory", global_singleton_mode: bool = True):
@@ -394,53 +392,53 @@ class SyncHoneypotMCPClient:
         self._loop = None
     
     def __enter__(self):
-        """同步上下文管理器入口"""
+        """Synchronous context manager entrance"""
         self._loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self._loop)
         self._loop.run_until_complete(self._async_client.connect())
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """同步上下文管理器出口"""
+        """Synchronous context manager exit"""
         if self._loop:
             self._loop.run_until_complete(self._async_client.close())
             self._loop.close()
     
     def _run_async(self, coro):
-        """运行异步协程"""
+        """Run asynchronous coroutine"""
         if not self._loop:
             raise RuntimeError("Client not connected. Use 'with' statement.")
         return self._loop.run_until_complete(coro)
     
     def record_event(self, *args, **kwargs) -> Dict[str, Any]:
-        """同步版本的record_event"""
+        """Synchronous version of record_event"""
         return self._run_async(self._async_client.record_event(*args, **kwargs))
     
     def query_state(self, *args, **kwargs) -> Dict[str, Any]:
-        """同步版本的query_state"""
+        """Synchronous version of query_state"""
         return self._run_async(self._async_client.query_state(*args, **kwargs))
     
     def check_file_exists(self, ip_address: str, file_path: str) -> bool:
-        """同步版本的check_file_exists"""
+        """Synchronous version of check_file_exists"""
         return self._run_async(self._async_client.check_file_exists(ip_address, file_path))
     
     def check_directory_exists(self, ip_address: str, dir_path: str) -> bool:
-        """同步版本的check_directory_exists"""
+        """Synchronous version of check_directory_exists"""
         return self._run_async(self._async_client.check_directory_exists(ip_address, dir_path))
     
     def get_file_content(self, ip_address: str, file_path: str) -> Optional[str]:
-        """同步版本的get_file_content"""
+        """Synchronous version of get_file_content"""
         return self._run_async(self._async_client.get_file_content(ip_address, file_path))
 
 
-# ====================== 测试代码 ======================
+# ====================== Test Code ======================
 
 async def test_mcp_client():
-    """测试MCP客户端功能"""
+    """Test MCP Client functionality"""
     print("Testing MCP Client...")
     
     async with HoneypotMCPClient() as client:
-        # 测试1: 记录事件
+        # Test 1: Record event
         print("\n1. Testing record_event...")
         result = await client.record_event(
             ip_address="192.168.1.100",
@@ -458,17 +456,17 @@ async def test_mcp_client():
         )
         print(f"Record event result: {result}")
         
-        # 测试2: 查询文件是否存在
+        # Test 2: Check if file exists
         print("\n2. Testing check_file_exists...")
         exists = await client.check_file_exists("192.168.1.100", "/tmp/test.txt")
         print(f"File exists: {exists}")
         
-        # 测试3: 获取状态摘要
+        # Test 3: Get state summary
         print("\n3. Testing get_state_summary...")
         summary = await client.get_state_summary("192.168.1.100")
         print(f"State summary: {summary}")
         
-        # 测试4: 获取事件图
+        # Test 4: Get event graph
         print("\n4. Testing get_event_graph...")
         graph = await client.get_event_graph("192.168.1.100")
         print(f"Event graph: {graph.get('events_count')} events")
@@ -477,6 +475,5 @@ async def test_mcp_client():
 
 
 if __name__ == "__main__":
-    # 运行测试
+    # Run test
     asyncio.run(test_mcp_client())
-
