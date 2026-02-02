@@ -5,16 +5,16 @@ from datetime import datetime
 
 class DeepSeekClient:
     """
-    DeepSeek API客户端类，用于与DeepSeek服务进行交互
+    DeepSeek API client class for interacting with DeepSeek services
     """
     
     def __init__(self, api_key: str, base_url: str = "https://api.deepseek.com"):
         """
-        初始化DeepSeek客户端
+        Initialize DeepSeek client
         
         Args:
-            api_key: DeepSeek API密钥
-            base_url: API基础URL
+            api_key: DeepSeek API key
+            base_url: API base URL
         """
         self.api_key = api_key
         self.base_url = base_url.rstrip('/')
@@ -30,17 +30,17 @@ class DeepSeekClient:
                        max_tokens: int = 800,
                        stream: bool = False) -> Dict[str, Any]:
         """
-        创建聊天完成请求
+        Create chat completion request
         
         Args:
-            messages: 消息列表，格式为[{"role": "user/assistant/system", "content": "消息内容"}]
-            model: 使用的模型名称
-            temperature: 温度参数，控制输出的随机性
-            max_tokens: 最大token数量
-            stream: 是否使用流式输出
+            messages: Message list, format is [{"role": "user/assistant/system", "content": "message content"}]
+            model: Model name to use
+            temperature: Temperature parameter, controls output randomness
+            max_tokens: Maximum token count
+            stream: Whether to use streaming output
             
         Returns:
-            API响应结果
+            API response result
         """
         url = f"{self.base_url}/v1/chat/completions"
         
@@ -57,16 +57,16 @@ class DeepSeekClient:
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
-            raise Exception(f"DeepSeek API请求失败: {str(e)}")
+            raise Exception(f"DeepSeek API request failed: {str(e)}")
         except json.JSONDecodeError as e:
-            raise Exception(f"DeepSeek API响应解析失败: {str(e)}")
+            raise Exception(f"DeepSeek API response parsing failed: {str(e)}")
     
     def get_models(self) -> List[Dict[str, Any]]:
         """
-        获取可用的模型列表
+        Get list of available models
         
         Returns:
-            模型列表
+            Model list
         """
         url = f"{self.base_url}/v1/models"
         
@@ -75,14 +75,14 @@ class DeepSeekClient:
             response.raise_for_status()
             return response.json().get('data', [])
         except requests.exceptions.RequestException as e:
-            raise Exception(f"获取DeepSeek模型列表失败: {str(e)}")
+            raise Exception(f"Failed to get DeepSeek model list: {str(e)}")
     
     def validate_connection(self) -> bool:
         """
-        验证API连接是否正常
+        Validate if API connection is normal
         
         Returns:
-            连接是否成功
+            Whether connection is successful
         """
         try:
             self.get_models()
@@ -92,7 +92,7 @@ class DeepSeekClient:
 
 class DeepSeekChatCompletion:
     """
-    兼容OpenAI接口格式的DeepSeek聊天完成类
+    DeepSeek chat completion class compatible with OpenAI interface format
     """
     
     def __init__(self, client: DeepSeekClient):
@@ -105,7 +105,7 @@ class DeepSeekChatCompletion:
                max_tokens: int = 800,
                **kwargs) -> 'DeepSeekResponse':
         """
-        创建聊天完成，兼容OpenAI接口格式
+        Create chat completion, compatible with OpenAI interface format
         """
         if messages is None:
             messages = []
@@ -121,7 +121,7 @@ class DeepSeekChatCompletion:
 
 class DeepSeekResponse:
     """
-    DeepSeek API响应类，兼容OpenAI响应格式
+    DeepSeek API response class, compatible with OpenAI response format
     """
     
     def __init__(self, response_data: Dict[str, Any]):
@@ -135,7 +135,7 @@ class DeepSeekResponse:
 
 class DeepSeekChoice:
     """
-    DeepSeek选择项类，兼容OpenAI格式
+    DeepSeek choice class, compatible with OpenAI format
     """
     
     def __init__(self, choice_data: Dict[str, Any]):
@@ -146,7 +146,7 @@ class DeepSeekChoice:
 
 class DeepSeekMessage:
     """
-    DeepSeek消息类，兼容OpenAI格式
+    DeepSeek message class, compatible with OpenAI format
     """
     
     def __init__(self, message_data: Dict[str, Any]):
