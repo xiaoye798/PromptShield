@@ -1,22 +1,20 @@
 """
-MCP蜜罐状态管理包 (MCP Honeypot State Management Package)
-
-这个包提供了一个完整的MCP (Model Context Protocol) 蜜罐状态管理系统，
-用于管理和分析LLM蜜罐环境中的状态变化和事件流。
-
-主要功能：
-- 事件图管理：跟踪命令执行和状态变化的因果关系
-- 结构化长期记忆：持久化存储系统状态和历史事件
-- IP隔离的状态存储：为不同IP地址维护独立的状态空间
+MCP Honeypot State Management Package (MCP)
+This package provides a complete MCP (Model Context Protocol) honeypot state management system,
+used for managing and analyzing the state changes and event flows in the LLM honeypot environment.
+Main functions:
+- Event graph management: Tracking the cause-and-effect relationship of command execution and state changes
+- Structured long-term memory: Persistently storing system states and historical events
+- IP isolated state storage: Maintaining independent state spaces for different IP addresses
 """
 
 __version__ = "1.0.0"
 __author__ = "MCP Honeypot State Manager Team"
 
-# 导入核心模块
+# Import core modules
 from .event_graph import EventGraph, EventNode, EventType, EventStatus, StateChange
 from .memory_system import MemorySystem, SystemState
-from .fastmcp_server import mcp  # 注意：使用Lifespan，不再需要initialize_components
+from .fastmcp_server import mcp  # Note: Using Lifespan, initialize_components is no longer needed
 from .state_context_builder import StateContextBuilder
 from .system_template import SystemTemplate, ContextOptimizer
 
@@ -29,7 +27,7 @@ __all__ = [
     "MemorySystem",
     "SystemState",
     "mcp",
-    # "initialize_components",  # 已移除：使用Lifespan自动管理
+    # "initialize_components",  # Removed: Automatically managed using Lifespan
     "StateContextBuilder",
     "SystemTemplate",
     "ContextOptimizer"
