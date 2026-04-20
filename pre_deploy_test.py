@@ -1,17 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-PromptShield Pre-Deployment Test Suite
-上线前测试脚本 — 覆盖 LLM 输出质量、蜜罐真实性、数据收集完整性
-
-Usage:
-    python3 pre_deploy_test.py                    # Run all tests
-    python3 pre_deploy_test.py --part A           # Run Part A only
-    python3 pre_deploy_test.py --part B           # Run Part B only
-    python3 pre_deploy_test.py --part C           # Run Part C only
-    python3 pre_deploy_test.py --part C8          # Run HoneyComb benchmark only
-"""
-
 import asyncio
 import json
 import os
