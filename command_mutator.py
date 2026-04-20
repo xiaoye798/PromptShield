@@ -1,5 +1,3 @@
-
-
 import random
 import re
 import base64
