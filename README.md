@@ -161,10 +161,6 @@ PromptShield/
 │   ├── scenario_models.py         # Scenario data models
 │   └── system_template.py         # System configuration templates
 │
-├── baselines/                     # Baseline Systems for Comparison
-│   ├── beelzebub_real/            # Beelzebub (Go) — full source used in evaluation
-│   └── shelLM_real/               # shelLM (Python) — full source used in evaluation
-│
 ├── ablation_study/                # Ablation Study Scripts
 │   ├── run_ablation.py            # Main ablation runner
 │   ├── run_full_ablation.py       # Full ablation experiments (Ideal/N100/Sandwich)
@@ -197,9 +193,16 @@ PromptShield/
 │   │   ├── discord_monitor.py    # Real-time Discord alerting
 │   │   ├── check_honeypot.sh     # Health check script
 │   │   └── stats.py              # Traffic statistics
-│   └── scripts/                   # Container lifecycle
-│       ├── entrypoint.sh         # Container entrypoint
-│       └── setup.sh              # Environment setup
+│   ├── scripts/                   # Container lifecycle
+│   │   ├── entrypoint.sh         # Container entrypoint
+│   │   └── setup.sh              # Environment setup
+│   └── field_data/                # Anonymized Deployment Data (RQ4)
+│       ├── README.md              # Data provenance & IP anonymization notes
+│       ├── ssh_sessions.log       # Docker SSH log (IPs pseudonymized, health-checks removed)
+│       ├── history.txt            # Attacker command transcript (1 interactive session)
+│       └── honeypot_memory/       # MCP state captured during deployment
+│           ├── states/global_default.json
+│           └── graphs/global_default.json
 │
 ├── per_scenario_table_sources/    # Data Sources for Paper Appendix Tables
 │   ├── README.md                  # Data provenance documentation
@@ -217,7 +220,7 @@ PromptShield/
 ├── deepseek_client.py             # DeepSeek API client
 ├── api_selector.py                # API provider selector
 ├── personalitySSH.yml             # SSH honeypot personality configuration
-├── HoneyComb_Benchmark.csv        # HoneyComb Benchmark Suite (10 canonical scenarios)
+├── HoneyComb_Benchmark.csv        # HoneyComb Benchmark Suite (24 scenarios)
 ├── test_honeycomb_e2e_real.py     # End-to-end evaluation driver
 │
 ├── appendix_benchmark.py          # Full 24-scenario benchmark runner
