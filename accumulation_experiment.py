@@ -1,18 +1,3 @@
-#!/usr/bin/env python3
-"""
-PromptShield 状态累积实验 (State Accumulation Experiment)
-
-回应审稿人 55A 的核心质疑:
-  "It would have been good to include an experiment with a growing amount of
-   accumulated stateful effects, and a plot to show how the effectiveness of
-   the approach scales with respect to the amount of accumulated effects."
-
-实验设计:
-  在同一 Session A 中连续植入 N 个不同的持久化操作 (N = 5, 10, 20, 30, 50)
-  断开连接 (销毁对话历史)
-  在 Session B 中逐一验证所有 N 个状态是否保持
-  记录: SFR (State Fidelity Rate), SPR (State Persistence Rate), Token 消耗, 延迟
-"""
 
 import asyncio
 import json
