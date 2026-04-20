@@ -1,13 +1,3 @@
-#!/usr/bin/env python3
-"""
-PromptShield 扩展攻击回放测试 — 新增 20 个场景 (ATK-11 ~ ATK-30)
-
-覆盖 MITRE ATT&CK 技术:
-  Group A: Botnet 自动化感染链 (ATK-11~15)
-  Group B: 高级持久化技术 (ATK-16~20)
-  Group C: 内网侦察与横向移动 (ATK-21~25)
-  Group D: 数据窃取与 C2 通信 (ATK-26~30)
-"""
 
 # 导入主模块的所有基础设施
 import sys, os
