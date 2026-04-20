@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-"""
-Simple Telnet honeypot — 模拟路由器/IoT 设备登录
-Mirai botnet 的主要目标
-"""
 import sys
 import os
 import time
