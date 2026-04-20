@@ -1,14 +1,3 @@
-#!/usr/bin/env python3
-"""
-Mutated Attack Replay Test — 变异命令回放测试
-
-对每个 ATK/HC 场景随机采样 K=3 种命令变异组合，验证 PromptShield
-的状态记忆依赖语义理解而非命令模板匹配。
-
-使用 command_mutator.py 的变异引擎对 Session_A 命令施加变异，
-Session_B 验证命令保持不变，使用 verify_semantic 进行容错验证。
-"""
-
 import asyncio
 import json
 import os
