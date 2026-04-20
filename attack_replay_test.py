@@ -1,25 +1,3 @@
-#!/usr/bin/env python3
-"""
-PromptShield 真实攻击模拟器 — 基于 Cowrie/Kippo 公开日志的攻击回放
-
-数据来源：
-  - SANS ISC DShield SSH Honeypot Reports (公开)
-  - Cowrie/Kippo 公开攻击日志 (GitHub)
-  - 学术论文: "A Survey of SSH Honeypot Data" (2023)
-  - MITRE ATT&CK TTPs for SSH-based attacks
-
-模拟场景涵盖：
-  1. 自动化暴力破解后的侦察 (Reconnaissance)
-  2. 恶意软件下载 (Delivery)
-  3. 持久化安装 (Persistence)
-  4. 横向移动尝试 (Lateral Movement)
-  5. 加密货币挖矿 (Crypto Mining)
-  6. 数据窃取 (Exfiltration)
-  7. 清除痕迹 (Defense Evasion)
-  8. 多会话持久化验证 (PromptShield 核心测试)
-
-每个场景分 Session A (植入) 和 Session B (验证) 两阶段。
-"""
 
 import asyncio
 import json
