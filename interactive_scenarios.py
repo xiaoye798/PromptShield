@@ -1,15 +1,3 @@
-#!/usr/bin/env python3
-"""
-Interactive Attack Scenarios — 交互式攻击场景
-
-模拟真实攻击者的非线性行为，包括：
-  INT-01: 试错回退 (systemd 失败→cron→rc.local)
-  INT-02: 侦察驱动决策 (which python3 → 选择语言)
-  INT-03: 穿插噪声侦察
-  INT-04: 命令 typo 后纠错
-  INT-05: 三阶段会话 (植入→修改→验证)
-"""
-
 import asyncio
 import json
 import os
