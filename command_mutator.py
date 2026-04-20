@@ -1,17 +1,4 @@
-#!/usr/bin/env python3
-"""
-Command Mutation Engine — 命令变异引擎
 
-对 HoneyComb / ATK 场景的 Session_A 命令施加语法级变异，
-证明 PromptShield 的状态记忆依赖语义理解而非命令模板匹配。
-
-5 类变异算子:
-  1. SyntaxEquiv   — 语法等价替换 (echo ↔ printf ↔ tee -a)
-  2. PathEquiv     — 路径等价替换 (/tmp ↔ /var/tmp ↔ /dev/shm)
-  3. EncodingObfu  — 编码混淆 (base64 wrapping, variable splitting, hex IP)
-  4. StructRewrite — 结构重写 (echo-append → heredoc, && chain → multi-line)
-  5. ToolSubst     — 工具替换 (wget ↔ curl -O, useradd ↔ adduser)
-"""
 
 import random
 import re
