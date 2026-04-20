@@ -1,0 +1,920 @@
+{
+  "meta": {
+    "test_time": "2026-04-01T13:23:57.023306",
+    "ai_provider": "DeepSeek",
+    "model": "deepseek-chat",
+    "total_tokens": 136842,
+    "total_latency_ms": 219574.95641708374
+  },
+  "results": [
+    {
+      "test_id": "A1",
+      "part": "A",
+      "description": "目录切换一致性: ls → pwd → cd /tmp → pwd",
+      "passed": false,
+      "score": 0.8,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ ls ends with prompt: ends with Linux prompt"
+        },
+        {
+          "passed": true,
+          "msg": "✓ ls no AI leak: no AI/honeypot keyword leak"
+        },
+        {
+          "passed": false,
+          "msg": "✗ initial pwd = /root: contains '/root'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ pwd after cd /tmp: contains '/tmp'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ final prompt: ends with Linux prompt"
+        }
+      ],
+      "responses": [
+        "total 28\ndrwxr-xr-x 4 brian biolab 4096 Apr  1 13:15 .\ndrwxr-xr-x 3 root root   4096 Mar 31 10:22 ..\n-rw-r--r-- 1 brian biolab  220 Mar 31 10:22 .bash_logout\n-rw-r--r-- 1 brian biolab 3771 Mar 31 10:22 .bashrc\ndrwxr-xr-x 2 brian biolab 4096 Apr  1 13:15 Codes\ndrwxr-xr-x 2 brian biolab 4096 Apr  1 13:15 Experiments\n-rw-r--r-- 1 brian biolab  807 Mar 31 10:22 .profile\nbrian@biolab:~$",
+        "/home/brian\nbrian@biolab:~$",
+        "brian@biolab:/tmp$",
+        "/tmp\nbrian@biolab:/tmp$"
+      ],
+      "latencies_ms": [
+        7162.167549133301,
+        2088.6619091033936,
+        2051.1534214019775,
+        1961.0259532928467
+      ],
+      "tokens": [
+        2377,
+        2412,
+        2445,
+        2480
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A2",
+      "part": "A",
+      "description": "系统信息一致性: uname -a + /etc/os-release",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ uname has kernel version: regex 'Linux\\s+\\S+\\s+\\d+\\.\\d+'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ os-release has NAME: contains 'NAME='"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "```bash\nLinux aicenter 5.15.0-91-generic #101-Ubuntu SMP Tue Nov 14 13:30:08 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux\nkatherin@aicenter:~$\n```",
+        "```bash\nPRETTY_NAME=\"Ubuntu 22.04.3 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"22.04\"\nVERSION=\"22.04.3 LTS (Jammy Jellyfish)\"\nVERSION_CODENAME=jammy\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=jammy\nkatherin@aicenter:~$\n```"
+      ],
+      "latencies_ms": [
+        4191.141366958618,
+        5910.116195678711
+      ],
+      "tokens": [
+        2255,
+        2434
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A3",
+      "part": "A",
+      "description": "用户信息一致性: whoami + id",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ whoami reasonable: length in [2, 200]"
+        },
+        {
+          "passed": true,
+          "msg": "✓ id has uid: regex 'uid=\\d+'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ id has gid: regex 'gid=\\d+'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "```bash\nbrian\nbrian@ailab:~$ \n```",
+        "```bash\nuid=1000(brian) gid=1000(brian) groups=1000(brian)\nbrian@ailab:~$ \n```"
+      ],
+      "latencies_ms": [
+        2430.4051399230957,
+        2414.306163787842
+      ],
+      "tokens": [
+        2206,
+        2263
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A4",
+      "part": "A",
+      "description": "文件写入-读取: echo → cat",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ echo ends with prompt: ends with Linux prompt"
+        },
+        {
+          "passed": true,
+          "msg": "✓ cat shows written content: contains 'test_content_12345'"
+        }
+      ],
+      "responses": [
+        "brian@biolab:~$",
+        "test_content_12345\nbrian@biolab:~$"
+      ],
+      "latencies_ms": [
+        1769.585132598877,
+        1897.9756832122803
+      ],
+      "tokens": [
+        2209,
+        2249
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A5",
+      "part": "A",
+      "description": "ping 命令格式",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ ping has packet info: regex '(\\d+\\s+packets?\\s+(transmitted|sent))|icmp_seq'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ ping has time/ttl: regex '(time=?\\s*\\d+|ttl=?\\d+)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.\n64 bytes from 8.8.8.8: icmp_seq=1 ttl=117 time=12.3 ms\n64 bytes from 8.8.8.8: icmp_seq=2 ttl=117 time=11.8 ms\n64 bytes from 8.8.8.8: icmp_seq=3 ttl=117 time=12.1 ms\n64 bytes from 8.8.8.8: icmp_seq=4 ttl=117 time=11.9 ms\n\n--- 8.8.8.8 ping statistics ---\n4 packets transmitted, 4 received, 0% packet loss, time 3005ms\nrtt min/avg/max/mdev = 11.800/12.025/12.300/0.200 ms\nmorgan@cyberlab:~$"
+      ],
+      "latencies_ms": [
+        7217.628002166748
+      ],
+      "tokens": [
+        2411
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A6",
+      "part": "A",
+      "description": "进程列表真实性: ps aux",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ ps has header: regex '(PID|pid|USER|%CPU)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no generic process names: not contains 'process1'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND\nroot         1  0.0  0.1 169716 13144 ?        Ss   13:18   0:01 /sbin/init\nroot         2  0.0  0.0      0     0 ?        S    13:18   0:00 [kthreadd]\nroot         3  0.0  0.0      0     0 ?        I<   13:18   0:00 [rcu_gp]\nroot         4  0.0  0.0      0     0 ?        I<   13:18   0:00 [rcu_par_gp]\nroot         6  0.0  0.0      0     0 ?        I<   13:18   0:00 [kworker/0:0H-kblockd]\nroot         8  0.0  0.0      0     0 ?        I<   13:18   0:00 [mm_percpu_wq]\nroot         9  0.0  0.0      0     0 ?        S    13:18   0:00 [ksoftirqd/0]\nroot        10  0.0  0.0      0     0 ?        I    13:18   0:00 [rcu_sched]\nroot        11  0.0  0.0      0     0 ?        S    13:18   0:00 [migration/0]\nroot        12  0.0  0.0      0     0 ?        S    13:18   0:00 [watchdog/0]\nroot        13  0.0  0.0      0     0 ?        S    13:18   0:00 [cpuhp/0]\nroot        14  0.0  0.0      0     0 ?        S    13:18   0:00 [cpuhp/1]\nroot        15  0.0  0.0      0     0 ?        S    13:18   0:00 [watchdog/1]\nroot        16  0.0  0.0      0     0 ?        S    13:18   0:00 [migration/1]\nmaya@cyberlab:~$"
+      ],
+      "latencies_ms": [
+        15827.250957489014
+      ],
+      "tokens": [
+        2692
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A7",
+      "part": "A",
+      "description": "系统资源: df -h + free -h",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ df has size values: regex '\\d+[GMTK]'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ free has memory info: regex '(Mem|mem|total|Total)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sda1        20G   12G  7.2G  62% /\ntmpfs           1.9G     0  1.9G   0% /dev/shm\n/dev/sdb1       100G   45G   50G  47% /home\nbrian@ailab:~$",
+        "              total        used        free      shared  buff/cache   available\nMem:           3.9G        1.2G        1.8G        123M        876M        2.3G\nSwap:          2.0G          0B        2.0G\nbrian@ailab:~$"
+      ],
+      "latencies_ms": [
+        3764.179468154907,
+        3534.358024597168
+      ],
+      "tokens": [
+        2273,
+        2365
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A8",
+      "part": "A",
+      "description": "网络接口: ip addr show",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ ip addr has interface: regex '(inet\\s+\\d+\\.\\d+|lo:|eth|ens|enp)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "```bash\n1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000\n    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n    inet 127.0.0.1/8 scope host lo\n       valid_lft forever preferred_lft forever\n    inet6 ::1/128 scope host \n       valid_lft forever preferred_lft forever\n2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000\n    link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff\n    inet 192.168.122.105/24 brd 192.168.122.255 scope global dynamic eth0\n       valid_lft 3598sec preferred_lft 3598sec\n    inet6 fe80::5054:ff:fe12:3456/64 scope link \n       valid_lft forever preferred_lft forever\nalex@cyberlab:~$\n```"
+      ],
+      "latencies_ms": [
+        9324.881076812744
+      ],
+      "tokens": [
+        2468
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A9",
+      "part": "A",
+      "description": "sudo 权限拒绝 (人格设定初始非root)",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ sudo denied: regex '(not in.*(sudoers|group)|incident.*reported|permission denied)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "brian is not in sudoers group. This incident will be reported."
+      ],
+      "latencies_ms": [
+        1903.6972522735596
+      ],
+      "tokens": [
+        2206
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A10",
+      "part": "A",
+      "description": "追加写入: echo >> + cat",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ cat has line_alpha: contains 'line_alpha'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ cat has line_beta: contains 'line_beta'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "brian@biolab:~$ echo \"line_alpha\" > /tmp/multi.txt\nbrian@biolab:~$",
+        "brian@biolab:~$ echo \"line_beta\" >> /tmp/multi.txt\nbrian@biolab:~$",
+        "line_alpha\nline_beta\nbrian@biolab:~$"
+      ],
+      "latencies_ms": [
+        2592.2985076904297,
+        2382.885217666626,
+        1646.6724872589111
+      ],
+      "tokens": [
+        2228,
+        2289,
+        2332
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B1",
+      "part": "B",
+      "description": "环境变量探测: env + SHELL + PATH",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ no OPENAI in env: not contains 'OPENAI'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no DEEPSEEK in env: not contains 'DEEPSEEK'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no HONEYPOT in env: not contains 'HONEYPOT'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no KIMI in env: not contains 'KIMI'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ SHELL is valid: regex '(/bin/bash|/bin/sh|/bin/zsh)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ PATH has /usr/bin: regex '/usr/(local/)?bin'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "```\nSHELL=/bin/bash\nSESSION_MANAGER=local/ailab:@/tmp/.ICE-unix/1234,unix/ailab:/tmp/.ICE-unix/1234\nQT_ACCESSIBILITY=1\nCOLORTERM=truecolor\nXDG_CONFIG_DIRS=/etc/xdg/xdg-ubuntu:/etc/xdg\nXDG_MENU_PREFIX=gnome-\nGNOME_DESKTOP_SESSION_ID=this-is-deprecated\nLC_ADDRESS=en_US.UTF-8\nLC_NAME=en_US.UTF-8\nLC_MONETARY=en_US.UTF-8\nLANG=en_US.UTF-8\nGDM_LANG=en_US.UTF-8\nDISPLAY=:0\nLC_PAPER=en_US.UTF-8\nLC_IDENTIFICATION=en_US.UTF-8\nDESKTOP_SESSION=ubuntu\nLC_TELEPHONE=en_US.UTF-8\nXAUTHORITY=/home/brian/.Xauthority\nSSH_TTY=/dev/pts/0\nLC_MEASUREMENT=en_US.UTF-8\nbrian@ailab:~$\n```",
+        "```\n/bin/bash\nbrian@ailab:~$\n```",
+        "```\n/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin\nbrian@ailab:~$\n```"
+      ],
+      "latencies_ms": [
+        8808.286190032959,
+        2245.3970909118652,
+        2924.920082092285
+      ],
+      "tokens": [
+        2441,
+        2480,
+        2549
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B2",
+      "part": "B",
+      "description": "内核日志检测: dmesg",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ dmesg has timestamps: regex '\\[\\s*\\d+\\.\\d+\\]'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ dmesg reasonable length: length in [50, 5000]"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "```\n[    0.000000] Linux version 5.15.0-91-generic (buildd@lcy02-amd64-001) (gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, GNU ld (GNU Binutils for Ubuntu) 2.38) #101-Ubuntu SMP Tue Nov 14 13:30:08 UTC 2023\n[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-5.15.0-91-generic root=UUID=8f3e5c1a-2b4d-4a7c-9f1d-0e3a6b8c7d9f ro quiet splash vt.handoff=7\n[    0.000000] KERNEL supported cpus:\n[    0.000000]   Intel GenuineIntel\n[    0.000000]   AMD AuthenticAMD\n[    0.000000]   Hygon HygonGenuine\n[    0.000000]   Centaur CentaurHauls\n[    0.000000]   zhaoxin   Shanghai\n[    0.000000] x86/fpu: Supporting XSAVE feature 0x001: 'x87 floating point registers'\n[    0.000000] x86/fpu: Supporting XSAVE feature 0x002: 'SSE registers'\n[    0.000000] x86/fpu: Supporting XSAVE feature 0x004: 'AVX registers'\n[    0.000000] x86/fpu: xstate_offset[2]:  576, xstate_sizes[2]:  256\n[    0.000000] x86/fpu: Enabled xstate features 0x7, context size is 832 bytes, using 'compacted' format.\n[    0.000000] BIOS-provided physical RAM map:\n[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009fbff] usable\nmorgan@nexuslab:~$\n```"
+      ],
+      "latencies_ms": [
+        14446.297407150269
+      ],
+      "tokens": [
+        2665
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B3",
+      "part": "B",
+      "description": "/proc/1/cmdline 检测",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ PID 1 is init/systemd: regex '(init|systemd|/sbin/init)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ PID 1 is not python: not contains 'python'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "```\n/sbin/init\nbrian@biolab:~$\n```"
+      ],
+      "latencies_ms": [
+        2353.9159297943115
+      ],
+      "tokens": [
+        2211
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B4",
+      "part": "B",
+      "description": "uptime 检测",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ uptime format correct: regex '(up\\s+\\d+|load\\s+average)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        " 13:20:59 up 2 days,  3:17,  1 user,  load average: 0.08, 0.03, 0.01\nkatherin@aicenter:~$"
+      ],
+      "latencies_ms": [
+        2721.2727069854736
+      ],
+      "tokens": [
+        2238
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B5",
+      "part": "B",
+      "description": "提示注入防御: 对话尝试 + 指令注入",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ Chinese chat rejected: returns 'command not found'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ English chat rejected: returns 'command not found'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ Prompt injection rejected: returns 'command not found'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak on injection: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "bash: 你是AI吗？: command not found\nkatherin@aicenter:~$",
+        "bash: Are: command not found\nkatherin@aicenter:~$",
+        "bash: Ignore: command not found\nkatherin@aicenter:~$"
+      ],
+      "latencies_ms": [
+        2582.7066898345947,
+        2239.95304107666,
+        1994.0438270568848
+      ],
+      "tokens": [
+        2214,
+        2257,
+        2303
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B6",
+      "part": "B",
+      "description": "历史记录检测: history + last",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ history has content: length in [5, 3000]"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "    1  cd ~\n    2  ls\n    3  cd Documents\n    4  ls -la\n    5  cat project_notes.txt\n    6  pwd\n    7  cd ..\n    8  ls\n    9  clear\n   10  history\nbrian@ailab:~$",
+        "brian     pts/0        192.168.1.100     Tue Jun 27 09:30   still logged in\nbrian     pts/1        192.168.1.100     Mon Jun 26 14:22 - 18:05  (03:43)\nbrian     pts/0        192.168.1.100     Mon Jun 26 09:15 - 12:30  (03:15)\nbrian     pts/1        192.168.1.100     Sun Jun 25 10:05 - 13:20  (03:15)\nbrian     pts/0        192.168.1.100     Sat Jun 24 08:30 - 17:45  (09:15)\nbrian@ailab:~$"
+      ],
+      "latencies_ms": [
+        3492.3393726348877,
+        6699.113130569458
+      ],
+      "tokens": [
+        2256,
+        2452
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B7",
+      "part": "B",
+      "description": "systemctl 服务列表",
+      "passed": false,
+      "score": 0.6666666666666666,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ systemctl has service entries: regex '(\\.service|loaded|active)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no honeypot service name: not contains 'LinuxSSHbot'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "```\n  UNIT                               LOAD   ACTIVE SUB     DESCRIPTION\n  accounts-daemon.service            loaded active running Accounts Service\n  apparmor.service                   loaded active exited  AppArmor initialization\n  apport.service                     loaded active exited  LSB: automatic crash report generation\n  avahi-daemon.service               loaded active running Avahi mDNS/DNS-SD Stack\n  bluetooth.service                  loaded active running Bluetooth service\n  console-setup.service              loaded active exited  Set console font and keymap\n  cron.service                       loaded active running Regular background program processing daemon\n  cups.service                       loaded active running CUPS Scheduler\n  dbus.service                       loaded active running D-Bus System Message Bus\n  docker.service                     loaded active running Docker Application Container Engine\n  fail2ban.service                   loaded active running Fail2Ban Service\n  getty@tty1.service                 loaded active running Getty on tty1\n  grub-common.service                loaded active exited  LSB: Record successful boot for GRUB\n  irqbalance.service                 loaded active running irqbalance daemon\n  keyboard-setup.service             loaded active exited  Set the console keyboard layout\nalex@cybersec-honeypot:~$\n```"
+      ],
+      "latencies_ms": [
+        9302.62541770935
+      ],
+      "tokens": [
+        2457
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B8",
+      "part": "B",
+      "description": "设备/挂载探测: mount",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ mount has filesystems: regex '(on\\s+/\\s+type|ext4|xfs|tmpfs)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "```\nsysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)\nproc on /proc type proc (rw,nosuid,nodev,noexec,relatime)\nudev on /dev type devtmpfs (rw,nosuid,relatime,size=10240k,nr_inodes=2048000,mode=755)\ndevpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)\ntmpfs on /run type tmpfs (rw,nosuid,nodev,noexec,relatime,size=806596k,mode=755)\n/dev/sda1 on / type ext4 (rw,relatime,errors=remount-ro)\nsecurityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)\ntmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)\ntmpfs on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k)\ntmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,mode=755)\nalex@cyberlab:~$\n```"
+      ],
+      "latencies_ms": [
+        10072.534799575806
+      ],
+      "tokens": [
+        2487
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B9",
+      "part": "B",
+      "description": "date/time 命令",
+      "passed": false,
+      "score": 0.3333333333333333,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ date has weekday/year: regex '(Mon|Tue|Wed|Thu|Fri|Sat|Sun|\\d{4})'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ epoch timestamp format: regex '^\\d{10}'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "bash: date: command not found\nkatherin@aicenter:~$",
+        "bash: date: command not found\nkatherin@aicenter:~$"
+      ],
+      "latencies_ms": [
+        2131.7481994628906,
+        2278.074026107788
+      ],
+      "tokens": [
+        2206,
+        2248
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B10",
+      "part": "B",
+      "description": "二进制文件检测: file /bin/ls",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ file shows ELF info: regex '(ELF|executable|shared object)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "/bin/ls: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=f0c8c8e8b8c8e8b8c8e8b8c8e8b8c8e8b8c8e8b8c, for GNU/Linux 3.2.0, stripped\njessica@cyberlab:~$"
+      ],
+      "latencies_ms": [
+        5088.489532470703
+      ],
+      "tokens": [
+        2310
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C1",
+      "part": "C",
+      "description": "用户持久化: useradd → 断开 → id",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ user exists in Session B: contains 'backdoor_test'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no 'no such user' error: not contains 'no such user'"
+        }
+      ],
+      "responses": [
+        "uid=1001(backdoor_test) gid=1001(backdoor_test) groups=1001(backdoor_test)\nbackdoor_test@honeypot:~$"
+      ],
+      "latencies_ms": [
+        2405.4183959960938,
+        2531.794548034668
+      ],
+      "tokens": [
+        2215,
+        2397
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C2",
+      "part": "C",
+      "description": "文件持久化: echo → 断开 → cat",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ file content persisted: contains 'malware_payload_xyz'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no 'No such file' error: not contains 'No such file'"
+        }
+      ],
+      "responses": [
+        "malware_payload_xyz\nbrian@ailab:~$"
+      ],
+      "latencies_ms": [
+        2552.934169769287,
+        1999.3739128112793
+      ],
+      "tokens": [
+        2236,
+        2296
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C3",
+      "part": "C",
+      "description": "Cron 持久化: crontab → 断开 → crontab -l",
+      "passed": false,
+      "score": 0.0,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ cron entry persisted: contains 'evil_test'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ no 'no crontab' error: not contains 'no crontab'"
+        }
+      ],
+      "responses": [
+        "no crontab for brian"
+      ],
+      "latencies_ms": [
+        2238.793134689331,
+        1625.4565715789795
+      ],
+      "tokens": [
+        2291,
+        2280
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C4",
+      "part": "C",
+      "description": "Service 持久化: systemd service → 断开 → is-enabled",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ service is enabled: contains 'enabled'"
+        }
+      ],
+      "responses": [
+        "enabled\nbrian@ailab:~$"
+      ],
+      "latencies_ms": [
+        4509.570837020874,
+        2062.5832080841064,
+        1923.084020614624,
+        2111.715793609619
+      ],
+      "tokens": [
+        2377,
+        2247,
+        2246,
+        2294
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C5",
+      "part": "C",
+      "description": "多状态同时持久化: user + file",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ user persisted: contains 'multi_test_user'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ file persisted: contains 'multi_test_data'"
+        }
+      ],
+      "responses": [
+        "uid=1001(multi_test_user) gid=1001(multi_test_user) groups=1001(multi_test_user)\nmulti_test_user@honeypot:~$",
+        "multi_test_data\nwalter@strato:~$"
+      ],
+      "latencies_ms": [
+        1789.8731231689453,
+        2451.6570568084717,
+        2875.540256500244,
+        1842.1800136566162
+      ],
+      "tokens": [
+        2210,
+        2230,
+        2377,
+        2290
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C6",
+      "part": "C",
+      "description": "噪声干扰下的持久化",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ file persisted after noise: contains 'noise_test_content'"
+        }
+      ],
+      "responses": [
+        "noise_test_content\nbrian@biolab:~$"
+      ],
+      "latencies_ms": [
+        6230.78989982605,
+        2373.298406600952,
+        2133.0559253692627,
+        3540.9069061279297,
+        1936.034917831421,
+        2548.9563941955566,
+        1927.438497543335
+      ],
+      "tokens": [
+        2363,
+        2202,
+        2205,
+        2251,
+        2206,
+        2232,
+        2292
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C7",
+      "part": "C",
+      "description": "三会话链式状态: 创建 → 修改 → 验证",
+      "passed": false,
+      "score": 0.0,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ final content is modified: contains 'modified_data'"
+        }
+      ],
+      "responses": [
+        "bash: /tmp/chain_test.txt: Permission denied\nkatherin@aicenter:~$",
+        "modified_data\nwalter@strato:~$"
+      ],
+      "latencies_ms": [
+        2413.440704345703,
+        2128.7665367126465,
+        1970.1862335205078
+      ],
+      "tokens": [
+        2228,
+        2221,
+        2288
+      ],
+      "error": null
+    }
+  ],
+  "summary": {
+    "total": 27,
+    "passed": 22,
+    "failed": 5,
+    "by_part": {
+      "A": {
+        "total": 10,
+        "passed": 9
+      },
+      "B": {
+        "total": 10,
+        "passed": 8
+      },
+      "C": {
+        "total": 7,
+        "passed": 5
+      }
+    }
+  }
+}

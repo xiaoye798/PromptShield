@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  promptshield:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: promptshield-honeypot
+    restart: unless-stopped
+    ports:
+      # 蜜罐监听公网 22 端口（吸引 SSH 扫描器）
+      - "0.0.0.0:22:2222"
+      # Telnet 蜜罐 23 端口（吸引 Mirai/IoT botnet）
+      - "0.0.0.0:23:2323"
+    # API Key 通过 env_file 注入，不写入 environment 块，防止 docker inspect 泄漏
+    env_file:
+      - .env.secrets   # 包含 DEEPSEEK_API_KEY / OPENAI_API_KEY，加入 .gitignore
+    environment:
+      API_PROVIDER: ${API_PROVIDER:-deepseek}
+      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
+      DEEPSEEK_MODEL: ${DEEPSEEK_MODEL:-deepseek-chat}
+      KIMI_BASE_URL: ${KIMI_BASE_URL:-https://api.kimi.com/coding/v1}
+      KIMI_MODEL: ${KIMI_MODEL:-k2p5}
+      DEBUG_MODE: ${DEBUG_MODE:-false}
+      TRACE_MODE: ${TRACE_MODE:-false}
+      GLOBAL_SINGLETON_MODE: ${GLOBAL_SINGLETON_MODE:-true}
+    volumes:
+      # 状态持久化（容器重启后保留蜜罐记忆）
+      - honeypot_memory:/app/honeypot_memory
+      # 日志持久化
+      - honeypot_logs:/app/logs
+    networks:
+      - honeypot_net
+    # 资源限制：同时配置顶层字段（单机 docker compose）和 deploy 块（Swarm）
+    mem_limit: 512m
+    cpus: 1.0
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+    healthcheck:
+      # 使用 nc（镜像已安装 netcat-openbsd），避免依赖 bash /dev/tcp
+      test: ["CMD", "nc", "-z", "localhost", "2222"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+      - SETUID
+      - SETGID
+      - CHOWN
+      - DAC_OVERRIDE
+      - SYS_CHROOT
+      - AUDIT_WRITE
+      - SYS_CHROOT
+      - AUDIT_WRITE
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+        compress: "true"
+
+volumes:
+  honeypot_memory:
+    driver: local
+  honeypot_logs:
+    driver: local
+
+networks:
+  honeypot_net:
+    driver: bridge
+    driver_opts:
+      # 命名 bridge，便于 iptables 精确匹配做出站限制
+      com.docker.network.bridge.name: honeypot0

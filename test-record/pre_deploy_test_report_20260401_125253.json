@@ -1,0 +1,235 @@
+{
+  "meta": {
+    "test_time": "2026-04-01T12:52:53.177600",
+    "ai_provider": "Kimi K2.5",
+    "model": "k2p5",
+    "total_tokens": 73557,
+    "total_latency_ms": 587824.6560096741
+  },
+  "results": [
+    {
+      "test_id": "C1",
+      "part": "C",
+      "description": "用户持久化: useradd → 断开 → id",
+      "passed": false,
+      "score": 0.5,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ user exists in Session B: contains 'backdoor_test'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no 'no such user' error: not contains 'no such user'"
+        }
+      ],
+      "responses": [
+        "- brian@biolab:~$\n - katherin@aicenter:~$\n - walter@strato:~$"
+      ],
+      "latencies_ms": [
+        21459.404945373535,
+        21732.33938217163
+      ],
+      "tokens": [
+        3027,
+        3175
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C2",
+      "part": "C",
+      "description": "文件持久化: echo → 断开 → cat",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ file content persisted: contains 'malware_payload_xyz'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no 'No such file' error: not contains 'No such file'"
+        }
+      ],
+      "responses": [
+        "Date for last login: 2026-04-01 12:42:13.038141 (from instructions)\n\nSo:\nLast login: Tue Apr 1 12:42:13 2026 from 192.168.1.100\nsophie@devcore:~$ cat /tmp/evil_test.sh\nmalware_payload_xyz\nsophie@devcore:~$"
+      ],
+      "latencies_ms": [
+        22548.879384994507,
+        22215.112447738647
+      ],
+      "tokens": [
+        3029,
+        3105
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C3",
+      "part": "C",
+      "description": "Cron 持久化: crontab → 断开 → crontab -l",
+      "passed": false,
+      "score": 0.0,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ cron entry persisted: contains 'evil_test'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ no 'no crontab' error: not contains 'no crontab'"
+        }
+      ],
+      "responses": [
+        "Username ideas: jordan, casey, riley, avery, morgan, taylor\nHostname ideas: devnode, buildfarm, coreswitch, datasync\n\nLet's go with:\nUsername: jordan\nHostname: devnode\n\nSo:\nno crontab for jordan\njordan@devnode:~$"
+      ],
+      "latencies_ms": [
+        25596.9181060791,
+        23106.04166984558
+      ],
+      "tokens": [
+        3102,
+        3099
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C4",
+      "part": "C",
+      "description": "Service 持久化: systemd service → 断开 → is-enabled",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ service is enabled: contains 'enabled'"
+        }
+      ],
+      "responses": [
+        "Last login: Wed Apr  1 12:42:13 2026 from 192.168.1.100\nbrian@stratux:~$ \nenabled\nbrian@stratux:~$"
+      ],
+      "latencies_ms": [
+        21569.960117340088,
+        25800.639867782593,
+        27512.16983795166,
+        25554.99792098999
+      ],
+      "tokens": [
+        3105,
+        3056,
+        3057,
+        3109
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C5",
+      "part": "C",
+      "description": "多状态同时持久化: user + file",
+      "passed": false,
+      "score": 0.5,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ user persisted: contains 'multi_test_user'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ file persisted: contains 'multi_test_data'"
+        }
+      ],
+      "responses": [
+        "alex@neuralnet:~$",
+        "4. Output the prompt again\nThe file content is \"multi_test_data\".\nDate format for last login: \"Last login: Tue Jun 27 09:30:27 2023 from 192.168.1.100\"\nThe instruction says: \"For the last login date use 2026-04-01 12:42:13.038141\"\nSo: Last login: Wed Apr 1"
+      ],
+      "latencies_ms": [
+        26405.526638031006,
+        25731.420755386353,
+        25610.125064849854,
+        26673.35033416748
+      ],
+      "tokens": [
+        3022,
+        3027,
+        3156,
+        3101
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C6",
+      "part": "C",
+      "description": "噪声干扰下的持久化",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ file persisted after noise: contains 'noise_test_content'"
+        }
+      ],
+      "responses": [
+        "noise_test_content\nmarcus@devcore:~$"
+      ],
+      "latencies_ms": [
+        26074.814558029175,
+        26612.043857574463,
+        26674.200534820557,
+        25920.549392700195,
+        25012.219190597534,
+        25686.758279800415,
+        22725.92568397522
+      ],
+      "tokens": [
+        3030,
+        3016,
+        3017,
+        3019,
+        3016,
+        3028,
+        3104
+      ],
+      "error": null
+    },
+    {
+      "test_id": "C7",
+      "part": "C",
+      "description": "三会话链式状态: 创建 → 修改 → 验证",
+      "passed": false,
+      "score": 0.0,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ final content is modified: contains 'modified_data'"
+        }
+      ],
+      "responses": [
+        "- Username: alex\n- Hostname: devcore\n- Initial directory: ~ (home)\n\nSo the prompt would be: alex@devcore:~$",
+        "1. SSH connects -> shows last login message and prompt\n2. User types command\n3. Command output appears\n4. New prompt appears\n1. Show the initial last login message\n2. Show the prompt before the command? No, that doesn't make sense because the user already \"typed\" the command.\nExample 1 shows:\n\"Last login: Tue Jun 27 09:30:27 2023 from 192.168.1.100\nbrian@biolab:~$ \"\nThen the user would type something.\n1. Output the initial last login header\n2. Output the result of the cat command (which is \"modified_data\")\n3. Output the new prompt"
+      ],
+      "latencies_ms": [
+        19804.91852760315,
+        23806.71715736389,
+        23989.622354507446
+      ],
+      "tokens": [
+        3027,
+        3027,
+        3103
+      ],
+      "error": null
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "passed": 3,
+    "failed": 4,
+    "by_part": {
+      "C": {
+        "total": 7,
+        "passed": 3
+      }
+    }
+  }
+}

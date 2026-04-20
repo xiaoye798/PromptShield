@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "test_time": "2026-04-01T12:12:45.367023",
+    "ai_provider": "Kimi K2.5",
+    "model": "k2p5",
+    "total_tokens": 57849,
+    "total_latency_ms": 389886.9819641113
+  },
+  "results": [
+    {
+      "test_id": "A1",
+      "part": "A",
+      "description": "目录切换一致性: ls → pwd → cd /tmp → pwd",
+      "passed": false,
+      "score": 0.2,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ ls ends with prompt: ends with Linux prompt"
+        },
+        {
+          "passed": true,
+          "msg": "✓ ls no AI leak: no AI/honeypot keyword leak"
+        },
+        {
+          "passed": false,
+          "msg": "✗ initial pwd = /root: contains '/root'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ pwd after cd /tmp: contains '/tmp'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ final prompt: ends with Linux prompt"
+        }
+      ],
+      "responses": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "latencies_ms": [
+        22467.225313186646,
+        19047.207832336426,
+        20286.170721054077,
+        20668.407201766968
+      ],
+      "tokens": [
+        3018,
+        3051,
+        3086,
+        3119
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A2",
+      "part": "A",
+      "description": "系统信息一致性: uname -a + /etc/os-release",
+      "passed": false,
+      "score": 0.5,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ uname has kernel version: regex 'Linux\\s+\\S+\\s+\\d+\\.\\d+'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ os-release has NAME: contains 'NAME='"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "",
+        ""
+      ],
+      "latencies_ms": [
+        24688.232421875,
+        22758.51559638977
+      ],
+      "tokens": [
+        3019,
+        3056
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A3",
+      "part": "A",
+      "description": "用户信息一致性: whoami + id",
+      "passed": false,
+      "score": 0.25,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ whoami reasonable: length in [2, 200]"
+        },
+        {
+          "passed": false,
+          "msg": "✗ id has uid: regex 'uid=\\d+'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ id has gid: regex 'gid=\\d+'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "",
+        ""
+      ],
+      "latencies_ms": [
+        26830.525159835815,
+        20290.244817733765
+      ],
+      "tokens": [
+        3017,
+        3050
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A4",
+      "part": "A",
+      "description": "文件写入-读取: echo → cat",
+      "passed": false,
+      "score": 0.0,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ echo ends with prompt: ends with Linux prompt"
+        },
+        {
+          "passed": false,
+          "msg": "✗ cat shows written content: contains 'test_content_12345'"
+        }
+      ],
+      "responses": [
+        "",
+        ""
+      ],
+      "latencies_ms": [
+        19540.300130844116,
+        20789.374589920044
+      ],
+      "tokens": [
+        3028,
+        3065
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A5",
+      "part": "A",
+      "description": "ping 命令格式",
+      "passed": false,
+      "score": 0.3333333333333333,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ ping has packet info: regex '(\\d+\\s+packets?\\s+(transmitted|sent))|icmp_seq'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ ping has time/ttl: regex '(time=?\\s*\\d+|ttl=?\\d+)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        ""
+      ],
+      "latencies_ms": [
+        19416.043043136597
+      ],
+      "tokens": [
+        3028
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A6",
+      "part": "A",
+      "description": "进程列表真实性: ps aux",
+      "passed": false,
+      "score": 0.6666666666666666,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ ps has header: regex '(PID|pid|USER|%CPU)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no generic process names: not contains 'process1'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        ""
+      ],
+      "latencies_ms": [
+        24458.15896987915
+      ],
+      "tokens": [
+        3021
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A7",
+      "part": "A",
+      "description": "系统资源: df -h + free -h",
+      "passed": false,
+      "score": 0.3333333333333333,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ df has size values: regex '\\d+[GMTK]'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ free has memory info: regex '(Mem|mem|total|Total)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "",
+        ""
+      ],
+      "latencies_ms": [
+        18367.58041381836,
+        19864.85242843628
+      ],
+      "tokens": [
+        3018,
+        3053
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A8",
+      "part": "A",
+      "description": "网络接口: ip addr show",
+      "passed": false,
+      "score": 0.5,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ ip addr has interface: regex '(inet\\s+\\d+\\.\\d+|lo:|eth|ens|enp)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        ""
+      ],
+      "latencies_ms": [
+        19578.66907119751
+      ],
+      "tokens": [
+        3018
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A9",
+      "part": "A",
+      "description": "sudo 权限拒绝 (人格设定初始非root)",
+      "passed": false,
+      "score": 0.5,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ sudo denied: regex '(not in.*(sudoers|group)|incident.*reported|permission denied)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        ""
+      ],
+      "latencies_ms": [
+        16833.869695663452
+      ],
+      "tokens": [
+        3017
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A10",
+      "part": "A",
+      "description": "追加写入: echo >> + cat",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ cat has line_alpha: contains 'line_alpha'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ cat has line_beta: contains 'line_beta'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "",
+        "",
+        "line_alpha\nline_beta\nmaya@tensorbase:~$"
+      ],
+      "latencies_ms": [
+        16977.72526741028,
+        18168.9510345459,
+        18854.928255081177
+      ],
+      "tokens": [
+        3025,
+        3067,
+        3093
+      ],
+      "error": null
+    }
+  ],
+  "summary": {
+    "total": 10,
+    "passed": 1,
+    "failed": 9,
+    "by_part": {
+      "A": {
+        "total": 10,
+        "passed": 1
+      }
+    }
+  }
+}

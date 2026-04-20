@@ -1,0 +1,55 @@
+# PromptShield Honeypot — OpenSSH 配置
+# 蜜罐专用 sshd_config，监听 2222 端口
+# 所有连接强制路由到 LinuxSSHbot_mcp.py
+
+Port 2222
+ListenAddress 0.0.0.0
+
+# 认证：允许密码登录，禁用公钥（蜜罐需要低摩擦入口）
+PasswordAuthentication yes
+PermitEmptyPasswords no
+PubkeyAuthentication no
+ChallengeResponseAuthentication no
+UsePAM yes
+
+# 强制所有登录会话执行蜜罐程序
+ForceCommand /app/honeypot_command.sh
+
+# 安全限制（防止攻击者真正控制系统）
+X11Forwarding no
+AllowTcpForwarding no
+PermitTunnel no
+GatewayPorts no
+AllowAgentForwarding no
+PermitUserEnvironment no
+
+# 会话超时（蜜罐需要宽松配置，吸引攻击者长时间交互）
+ClientAliveInterval 300
+ClientAliveCountMax 3
+LoginGraceTime 120
+MaxAuthTries 20
+MaxSessions 50
+MaxStartups 100:30:200
+
+# 禁用 OpenSSH 10.0 的源 IP 惩罚机制（蜜罐需要接受所有连接）
+PerSourcePenalties no
+
+# 日志（记录攻击者行为）
+SyslogFacility AUTH
+LogLevel VERBOSE
+
+# 允许 root 登录（蜜罐需要接受所有用户名，ForceCommand 保证安全）
+PermitRootLogin yes
+
+# Banner（伪装成真实服务器）
+Banner /etc/ssh/honeypot_banner
+
+# Host Keys
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+# 允许任意用户连接（ForceCommand 会限制他们只能进蜜罐）
+# AllowUsers honeypot  # 注释掉，允许任意用户
+
+# 密钥交换算法（尽可能兼容老旧 SSH 客户端和自动化工具）
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha256
