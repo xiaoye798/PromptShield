@@ -25,7 +25,3 @@ Average row mapping:
 - PromptShield KR_N: 0.9167 -> 0.92
 - PromptShield Lat.(s): 9.9
 
-Provenance note:
-
-- These files come from the older appendix_benchmark experiment batch on 2026-04-10 and 2026-04-12.
-- They are not the later real_baseline_benchmark reports from 2026-04-14.
