@@ -2,7 +2,7 @@
 
 ## Provenance
 
-Data collected from a 14-day public honeypot deployment (2026-04-02 to 2026-04-16) on a cloud VPS in Manchester, UK, with SSH (port 22) and Telnet (port 23) exposed to the public Internet. The SSH service ran inside a Docker container with PromptShield integrated, using DeepSeek Chat (temperature=0) for response generation.
+Data collected from a public honeypot deployment on a cloud VPS, with SSH (port 22) and Telnet (port 23) exposed to the public Internet. The SSH service ran inside a Docker container with PromptShield integrated, using DeepSeek Chat (temperature=0) for response generation.
 
 Corresponds to **Section 6 (RQ4)** of the paper.
 
