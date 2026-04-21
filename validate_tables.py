@@ -1,6 +1,6 @@
 import re
 
-with open(r'c:\Users\H7946\Desktop\Raid_Paper\paper\samplepaper.tex', 'r', encoding='utf-8') as f:
+with open(r'xx.tex', 'r', encoding='utf-8') as f:
     content = f.read()
 
 # Validate Table 5: 13 columns
