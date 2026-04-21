@@ -13,7 +13,7 @@ PromptShield is a stateful defense framework designed to address the critical ar
 
 While LLM-powered honeypots offer high-fidelity interactions, they suffer from **"Persistence Violation"** — when an adversary attempts to utilize a previously implanted backdoor in a new session, the honeypot fails to recognize it. This logical discrepancy exposes the artificial nature of the environment and may cause attackers to withhold sophisticated malware to avoid exposure.
 
-Built upon the **Model Context Protocol (MCP)**, PromptShield models attacker-visible OS state as **typed components** and retrieves only the state that the current command can legitimately observe. It records state-changing commands into a structured state model and injects only command-relevant state during inference, enabling cross-session consistency with **O(1)** operational complexity.
+Built upon the **Model Context Protocol (MCP)**, PromptShield models attacker-visible OS state as **typed components** and retrieves only the state that the current command can legitimately observe. It records state-changing commands into a structured state model and injects only command-relevant state during inference, enabling cross-session consistency.
 
 ### ✨ Key Features
 
@@ -230,7 +230,6 @@ PromptShield/
 └── .env.example                   # API configuration template
 ```
 
-The public tree intentionally keeps committed artifacts such as `test-record/`, `honeypot_memory/`, and `accumulation_test_memory/`. It does not include every internal driver that produced those files in the original working repository.
 
 ## 🍯 HoneyComb Benchmark
 
@@ -344,7 +343,7 @@ query_state(
 
 ## 🐳 Deployment (RQ4)
 
-The `deployment/` directory contains everything needed to replicate the 14-day public deployment described in the paper:
+The `deployment/` directory contains everything needed to replicate the public deployment described in the paper:
 
 ```bash
 cd deployment
@@ -353,7 +352,7 @@ docker-compose up -d
 
 The deployment exposes SSH (port 22) and Telnet (port 23) with PAM configured to accept arbitrary credentials and auto-create local accounts. All sessions share a single global MCP state instance.
 
-During the 14-day deployment window:
+During the deployment window:
 - ~151,000 inbound connections were recorded
 - A coordinated SSH proxy-abuse campaign from 3 Vietnamese IPs produced 43 successful authentications using 20+ distinct usernames
 - Zero inference failures across all attacker interactions
