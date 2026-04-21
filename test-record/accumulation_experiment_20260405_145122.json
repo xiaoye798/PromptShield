@@ -1,0 +1,1008 @@
+{
+  "meta": {
+    "experiment": "State Accumulation",
+    "description": "Scalability of PromptShield with growing stateful effects",
+    "reviewer_response": "55A: accumulated stateful effects experiment",
+    "model": "deepseek-chat",
+    "test_time": "2026-04-05T14:51:22.916626",
+    "n_values": [
+      5,
+      10,
+      20,
+      30,
+      50
+    ]
+  },
+  "results": [
+    {
+      "n_operations": 5,
+      "implant_count": 5,
+      "verify_count": 5,
+      "spr": 1.0,
+      "sfr": 1.0,
+      "implant_tokens": 1169,
+      "verify_tokens": 1743,
+      "total_tokens": 2912,
+      "implant_latency_ms": 8581.59327507019,
+      "verify_latency_ms": 9570.509910583496,
+      "per_operation_details": [
+        {
+          "op_index": 0,
+          "type": "FILE_CREATE",
+          "keyword": "payload_0_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_0_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 1,
+          "type": "USER_CREATE",
+          "keyword": "testuser_1",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_1) gid=1001(testuser_1) groups=1001(testuser_1)\nroot@prod-serv"
+        },
+        {
+          "op_index": 2,
+          "type": "CRON_ADD",
+          "keyword": "job_2.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 3,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_3",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 4,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_4",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 4\n[Service]\nExecStart=/bin/bash -c 'echo svc_4 runnin"
+        }
+      ]
+    },
+    {
+      "n_operations": 10,
+      "implant_count": 10,
+      "verify_count": 10,
+      "spr": 1.0,
+      "sfr": 1.0,
+      "implant_tokens": 3855,
+      "verify_tokens": 5208,
+      "total_tokens": 9063,
+      "implant_latency_ms": 17062.15476989746,
+      "verify_latency_ms": 20388.43846321106,
+      "per_operation_details": [
+        {
+          "op_index": 0,
+          "type": "FILE_CREATE",
+          "keyword": "payload_0_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_0_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 1,
+          "type": "USER_CREATE",
+          "keyword": "testuser_1",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_1) gid=1001(testuser_1) groups=1001(testuser_1)\nroot@prod-serv"
+        },
+        {
+          "op_index": 2,
+          "type": "CRON_ADD",
+          "keyword": "job_2.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 3,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_3",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 4,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_4",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 4\n[Service]\nExecStart=/bin/bash -c 'echo svc_4 runnin"
+        },
+        {
+          "op_index": 5,
+          "type": "FILE_CREATE",
+          "keyword": "payload_5_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_5_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 6,
+          "type": "USER_CREATE",
+          "keyword": "testuser_6",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_6) gid=1001(testuser_6) groups=1001(testuser_6)\nroot@prod-serv"
+        },
+        {
+          "op_index": 7,
+          "type": "CRON_ADD",
+          "keyword": "job_7.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 8,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_8",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 9,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_9",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 9\n[Service]\nExecStart=/bin/bash -c 'echo svc_9 runnin"
+        }
+      ]
+    },
+    {
+      "n_operations": 20,
+      "implant_count": 20,
+      "verify_count": 20,
+      "spr": 1.0,
+      "sfr": 1.0,
+      "implant_tokens": 13484,
+      "verify_tokens": 18444,
+      "total_tokens": 31928,
+      "implant_latency_ms": 30586.98272705078,
+      "verify_latency_ms": 41106.24599456787,
+      "per_operation_details": [
+        {
+          "op_index": 0,
+          "type": "FILE_CREATE",
+          "keyword": "payload_0_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_0_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 1,
+          "type": "USER_CREATE",
+          "keyword": "testuser_1",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_1) gid=1001(testuser_1) groups=1001(testuser_1)\nroot@prod-serv"
+        },
+        {
+          "op_index": 2,
+          "type": "CRON_ADD",
+          "keyword": "job_2.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 3,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_3",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 4,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_4",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 4\n[Service]\nExecStart=/bin/bash -c 'echo svc_4 runnin"
+        },
+        {
+          "op_index": 5,
+          "type": "FILE_CREATE",
+          "keyword": "payload_5_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_5_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 6,
+          "type": "USER_CREATE",
+          "keyword": "testuser_6",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_6) gid=1001(testuser_6) groups=1001(testuser_6)\nroot@prod-serv"
+        },
+        {
+          "op_index": 7,
+          "type": "CRON_ADD",
+          "keyword": "job_7.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 8,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_8",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 9,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_9",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 9\n[Service]\nExecStart=/bin/bash -c 'echo svc_9 runnin"
+        },
+        {
+          "op_index": 10,
+          "type": "FILE_CREATE",
+          "keyword": "payload_10_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_10_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 11,
+          "type": "USER_CREATE",
+          "keyword": "testuser_11",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_11) gid=1001(testuser_11) groups=1001(testuser_11)\nroot@prod-s"
+        },
+        {
+          "op_index": 12,
+          "type": "CRON_ADD",
+          "keyword": "job_12.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 13,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_13",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 14,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_14",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 14\n[Service]\nExecStart=/bin/bash -c 'echo svc_14 runn"
+        },
+        {
+          "op_index": 15,
+          "type": "FILE_CREATE",
+          "keyword": "payload_15_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_15_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 16,
+          "type": "USER_CREATE",
+          "keyword": "testuser_16",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_16) gid=1001(testuser_16) groups=1001(testuser_16)\nroot@prod-s"
+        },
+        {
+          "op_index": 17,
+          "type": "CRON_ADD",
+          "keyword": "job_17.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 18,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_18",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 19,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_19",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 19\n[Service]\nExecStart=/bin/bash -c 'echo svc_19 runn"
+        }
+      ]
+    },
+    {
+      "n_operations": 30,
+      "implant_count": 30,
+      "verify_count": 30,
+      "spr": 1.0,
+      "sfr": 1.0,
+      "implant_tokens": 45157,
+      "verify_tokens": 41988,
+      "total_tokens": 87145,
+      "implant_latency_ms": 65007.81273841858,
+      "verify_latency_ms": 67804.60262298584,
+      "per_operation_details": [
+        {
+          "op_index": 0,
+          "type": "FILE_CREATE",
+          "keyword": "payload_0_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_0_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 1,
+          "type": "USER_CREATE",
+          "keyword": "testuser_1",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_1) gid=1001(testuser_1) groups=1001(testuser_1)\nroot@prod-serv"
+        },
+        {
+          "op_index": 2,
+          "type": "CRON_ADD",
+          "keyword": "job_2.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 3,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_3",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 4,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_4",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 4\n[Service]\nExecStart=/bin/bash -c 'echo svc_4 runnin"
+        },
+        {
+          "op_index": 5,
+          "type": "FILE_CREATE",
+          "keyword": "payload_5_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_5_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 6,
+          "type": "USER_CREATE",
+          "keyword": "testuser_6",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_6) gid=1001(testuser_6) groups=1001(testuser_6)\nroot@prod-serv"
+        },
+        {
+          "op_index": 7,
+          "type": "CRON_ADD",
+          "keyword": "job_7.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 8,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_8",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 9,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_9",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 9\n[Service]\nExecStart=/bin/bash -c 'echo svc_9 runnin"
+        },
+        {
+          "op_index": 10,
+          "type": "FILE_CREATE",
+          "keyword": "payload_10_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_10_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 11,
+          "type": "USER_CREATE",
+          "keyword": "testuser_11",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_11) gid=1001(testuser_11) groups=1001(testuser_11)\nroot@prod-s"
+        },
+        {
+          "op_index": 12,
+          "type": "CRON_ADD",
+          "keyword": "job_12.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 13,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_13",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 14,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_14",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 14\n[Service]\nExecStart=/bin/bash -c 'echo svc_14 runn"
+        },
+        {
+          "op_index": 15,
+          "type": "FILE_CREATE",
+          "keyword": "payload_15_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_15_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 16,
+          "type": "USER_CREATE",
+          "keyword": "testuser_16",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_16) gid=1001(testuser_16) groups=1001(testuser_16)\nroot@prod-s"
+        },
+        {
+          "op_index": 17,
+          "type": "CRON_ADD",
+          "keyword": "job_17.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 18,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_18",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 19,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_19",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 19\n[Service]\nExecStart=/bin/bash -c 'echo svc_19 runn"
+        },
+        {
+          "op_index": 20,
+          "type": "FILE_CREATE",
+          "keyword": "payload_20_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_20_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 21,
+          "type": "USER_CREATE",
+          "keyword": "testuser_21",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_21) gid=1001(testuser_21) groups=1001(testuser_21)\nroot@prod-s"
+        },
+        {
+          "op_index": 22,
+          "type": "CRON_ADD",
+          "keyword": "job_22.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 23,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_23",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 24,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_24",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 24\n[Service]\nExecStart=/bin/bash -c 'echo svc_24 runn"
+        },
+        {
+          "op_index": 25,
+          "type": "FILE_CREATE",
+          "keyword": "payload_25_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_25_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 26,
+          "type": "USER_CREATE",
+          "keyword": "testuser_26",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_26) gid=1001(testuser_26) groups=1001(testuser_26)\nroot@prod-s"
+        },
+        {
+          "op_index": 27,
+          "type": "CRON_ADD",
+          "keyword": "job_27.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 28,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_28",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 29,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_29",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 29\n[Service]\nExecStart=/bin/bash -c 'echo svc_29 runn"
+        }
+      ]
+    },
+    {
+      "n_operations": 50,
+      "implant_count": 50,
+      "verify_count": 50,
+      "spr": 1.0,
+      "sfr": 1.0,
+      "implant_tokens": 76427,
+      "verify_tokens": 129120,
+      "total_tokens": 205547,
+      "implant_latency_ms": 81744.6620464325,
+      "verify_latency_ms": 137034.912109375,
+      "per_operation_details": [
+        {
+          "op_index": 0,
+          "type": "FILE_CREATE",
+          "keyword": "payload_0_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_0_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 1,
+          "type": "USER_CREATE",
+          "keyword": "testuser_1",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_1) gid=1001(testuser_1) groups=1001(testuser_1)\nroot@prod-serv"
+        },
+        {
+          "op_index": 2,
+          "type": "CRON_ADD",
+          "keyword": "job_2.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 3,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_3",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 4,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_4",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 4\n[Service]\nExecStart=/bin/bash -c 'echo svc_4 runnin"
+        },
+        {
+          "op_index": 5,
+          "type": "FILE_CREATE",
+          "keyword": "payload_5_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_5_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 6,
+          "type": "USER_CREATE",
+          "keyword": "testuser_6",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_6) gid=1001(testuser_6) groups=1001(testuser_6)\nroot@prod-serv"
+        },
+        {
+          "op_index": 7,
+          "type": "CRON_ADD",
+          "keyword": "job_7.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 8,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_8",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 9,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_9",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 9\n[Service]\nExecStart=/bin/bash -c 'echo svc_9 runnin"
+        },
+        {
+          "op_index": 10,
+          "type": "FILE_CREATE",
+          "keyword": "payload_10_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_10_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 11,
+          "type": "USER_CREATE",
+          "keyword": "testuser_11",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_11) gid=1001(testuser_11) groups=1001(testuser_11)\nroot@prod-s"
+        },
+        {
+          "op_index": 12,
+          "type": "CRON_ADD",
+          "keyword": "job_12.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 13,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_13",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 14,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_14",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 14\n[Service]\nExecStart=/bin/bash -c 'echo svc_14 runn"
+        },
+        {
+          "op_index": 15,
+          "type": "FILE_CREATE",
+          "keyword": "payload_15_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_15_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 16,
+          "type": "USER_CREATE",
+          "keyword": "testuser_16",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_16) gid=1001(testuser_16) groups=1001(testuser_16)\nroot@prod-s"
+        },
+        {
+          "op_index": 17,
+          "type": "CRON_ADD",
+          "keyword": "job_17.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 18,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_18",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 19,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_19",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 19\n[Service]\nExecStart=/bin/bash -c 'echo svc_19 runn"
+        },
+        {
+          "op_index": 20,
+          "type": "FILE_CREATE",
+          "keyword": "payload_20_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_20_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 21,
+          "type": "USER_CREATE",
+          "keyword": "testuser_21",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_21) gid=1001(testuser_21) groups=1001(testuser_21)\nroot@prod-s"
+        },
+        {
+          "op_index": 22,
+          "type": "CRON_ADD",
+          "keyword": "job_22.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 23,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_23",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 24,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_24",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 24\n[Service]\nExecStart=/bin/bash -c 'echo svc_24 runn"
+        },
+        {
+          "op_index": 25,
+          "type": "FILE_CREATE",
+          "keyword": "payload_25_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_25_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 26,
+          "type": "USER_CREATE",
+          "keyword": "testuser_26",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_26) gid=1001(testuser_26) groups=1001(testuser_26)\nroot@prod-s"
+        },
+        {
+          "op_index": 27,
+          "type": "CRON_ADD",
+          "keyword": "job_27.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 28,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_28",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 29,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_29",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 29\n[Service]\nExecStart=/bin/bash -c 'echo svc_29 runn"
+        },
+        {
+          "op_index": 30,
+          "type": "FILE_CREATE",
+          "keyword": "payload_30_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_30_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 31,
+          "type": "USER_CREATE",
+          "keyword": "testuser_31",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_31) gid=1001(testuser_31) groups=1001(testuser_31)\nroot@prod-s"
+        },
+        {
+          "op_index": 32,
+          "type": "CRON_ADD",
+          "keyword": "job_32.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 33,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_33",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 34,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_34",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 34\n[Service]\nExecStart=/bin/bash -c 'echo svc_34 runn"
+        },
+        {
+          "op_index": 35,
+          "type": "FILE_CREATE",
+          "keyword": "payload_35_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_35_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 36,
+          "type": "USER_CREATE",
+          "keyword": "testuser_36",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_36) gid=1001(testuser_36) groups=1001(testuser_36)\nroot@prod-s"
+        },
+        {
+          "op_index": 37,
+          "type": "CRON_ADD",
+          "keyword": "job_37.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 38,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_38",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 39,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_39",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 39\n[Service]\nExecStart=/bin/bash -c 'echo svc_39 runn"
+        },
+        {
+          "op_index": 40,
+          "type": "FILE_CREATE",
+          "keyword": "payload_40_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_40_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 41,
+          "type": "USER_CREATE",
+          "keyword": "testuser_41",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_41) gid=1001(testuser_41) groups=1001(testuser_41)\nroot@prod-s"
+        },
+        {
+          "op_index": 42,
+          "type": "CRON_ADD",
+          "keyword": "job_42.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 43,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_43",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 44,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_44",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 44\n[Service]\nExecStart=/bin/bash -c 'echo svc_44 runn"
+        },
+        {
+          "op_index": 45,
+          "type": "FILE_CREATE",
+          "keyword": "payload_45_content",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "payload_45_content\nroot@prod-server-01:~$"
+        },
+        {
+          "op_index": 46,
+          "type": "USER_CREATE",
+          "keyword": "testuser_46",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "uid=1001(testuser_46) gid=1001(testuser_46) groups=1001(testuser_46)\nroot@prod-s"
+        },
+        {
+          "op_index": 47,
+          "type": "CRON_ADD",
+          "keyword": "job_47.sh",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "*/3 * * * * /tmp/job_2.sh\n*/8 * * * * /tmp/job_7.sh\n*/13 * * * * /tmp/job_12.sh\n"
+        },
+        {
+          "op_index": 48,
+          "type": "FILE_APPEND",
+          "keyword": "config_line_48",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "config_line_3\nconfig_line_8\nconfig_line_13\nconfig_line_18\nconfig_line_23\nconfig_"
+        },
+        {
+          "op_index": 49,
+          "type": "SERVICE_CREATE",
+          "keyword": "svc_49",
+          "spr": true,
+          "sfr": true,
+          "response_preview": "[Unit]\nDescription=Service 49\n[Service]\nExecStart=/bin/bash -c 'echo svc_49 runn"
+        }
+      ]
+    }
+  ]
+}

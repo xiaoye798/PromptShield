@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "test_time": "2026-04-01T12:09:31.310291",
+    "ai_provider": "Kimi K2.5",
+    "model": "k2p5",
+    "total_tokens": 57860,
+    "total_latency_ms": 463338.3586406708
+  },
+  "results": [
+    {
+      "test_id": "A1",
+      "part": "A",
+      "description": "Directory consistency: ls → pwd → cd /tmp → pwd",
+      "passed": false,
+      "score": 0.2,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ ls ends with prompt: ends with Linux prompt"
+        },
+        {
+          "passed": true,
+          "msg": "✓ ls no AI leak: no AI/honeypot keyword leak"
+        },
+        {
+          "passed": false,
+          "msg": "✗ initial pwd = /root: contains '/root'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ pwd after cd /tmp: contains '/tmp'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ final prompt: ends with Linux prompt"
+        }
+      ],
+      "responses": [
+        "",
+        "",
+        "",
+        ""
+      ],
+      "latencies_ms": [
+        27002.849817276,
+        21245.65839767456,
+        26724.95722770691,
+        26246.355295181274
+      ],
+      "tokens": [
+        3018,
+        3051,
+        3086,
+        3119
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A2",
+      "part": "A",
+      "description": "System information consistency: uname -a + /etc/os-release",
+      "passed": false,
+      "score": 0.5,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ uname has kernel version: regex 'Linux\\s+\\S+\\s+\\d+\\.\\d+'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ os-release has NAME: contains 'NAME='"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "",
+        ""
+      ],
+      "latencies_ms": [
+        30077.937126159668,
+        25226.545810699463
+      ],
+      "tokens": [
+        3019,
+        3056
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A3",
+      "part": "A",
+      "description": "User information consistency: whoami + id",
+      "passed": false,
+      "score": 0.25,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ whoami reasonable: length in [2, 200]"
+        },
+        {
+          "passed": false,
+          "msg": "✗ id has uid: regex 'uid=\\d+'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ id has gid: regex 'gid=\\d+'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "",
+        ""
+      ],
+      "latencies_ms": [
+        28469.50078010559,
+        23781.259775161743
+      ],
+      "tokens": [
+        3017,
+        3050
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A4",
+      "part": "A",
+      "description": "File write-read: echo → cat",
+      "passed": false,
+      "score": 0.0,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ echo ends with prompt: ends with Linux prompt"
+        },
+        {
+          "passed": false,
+          "msg": "✗ cat shows written content: contains 'test_content_12345'"
+        }
+      ],
+      "responses": [
+        "",
+        ""
+      ],
+      "latencies_ms": [
+        25548.829793930054,
+        27269.29259300232
+      ],
+      "tokens": [
+        3028,
+        3065
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A5",
+      "part": "A",
+      "description": "Ping command format",
+      "passed": false,
+      "score": 0.3333333333333333,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ ping has packet info: regex '(\\d+\\s+packets?\\s+(transmitted|sent))|icmp_seq'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ ping has time/ttl: regex '(time=?\\s*\\d+|ttl=?\\d+)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        ""
+      ],
+      "latencies_ms": [
+        20300.15254020691
+      ],
+      "tokens": [
+        3028
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A6",
+      "part": "A",
+      "description": "Process list realism: ps aux",
+      "passed": false,
+      "score": 0.6666666666666666,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ ps has header: regex '(PID|pid|USER|%CPU)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no generic process names: not contains 'process1'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        ""
+      ],
+      "latencies_ms": [
+        20322.69787788391
+      ],
+      "tokens": [
+        3021
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A7",
+      "part": "A",
+      "description": "System resources: df -h + free -h",
+      "passed": false,
+      "score": 0.3333333333333333,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ df has size values: regex '\\d+[GMTK]'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ free has memory info: regex '(Mem|mem|total|Total)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "",
+        ""
+      ],
+      "latencies_ms": [
+        20781.278371810913,
+        23999.974250793457
+      ],
+      "tokens": [
+        3018,
+        3053
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A8",
+      "part": "A",
+      "description": "Network interfaces: ip addr show",
+      "passed": false,
+      "score": 0.5,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ ip addr has interface: regex '(inet\\s+\\d+\\.\\d+|lo:|eth|ens|enp)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        ""
+      ],
+      "latencies_ms": [
+        24382.44318962097
+      ],
+      "tokens": [
+        3018
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A9",
+      "part": "A",
+      "description": "sudo permission denial",
+      "passed": false,
+      "score": 0.5,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ sudo denied: regex '(not in.*(sudoers|group)|incident.*reported|permission denied)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        ""
+      ],
+      "latencies_ms": [
+        25286.90505027771
+      ],
+      "tokens": [
+        3017
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A10",
+      "part": "A",
+      "description": "Append write: echo >> + cat",
+      "passed": false,
+      "score": 0.3333333333333333,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ cat has line_alpha: contains 'line_alpha'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ cat has line_beta: contains 'line_beta'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "",
+        "",
+        ""
+      ],
+      "latencies_ms": [
+        23344.117879867554,
+        22382.817268371582,
+        20944.785594940186
+      ],
+      "tokens": [
+        3025,
+        3067,
+        3104
+      ],
+      "error": null
+    }
+  ],
+  "summary": {
+    "total": 10,
+    "passed": 0,
+    "failed": 10,
+    "by_part": {
+      "A": {
+        "total": 10,
+        "passed": 0
+      }
+    }
+  }
+}

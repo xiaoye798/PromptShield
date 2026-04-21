@@ -1,0 +1,23 @@
+# MCP Honeypot Dependencies
+
+# MCP protocol core library
+mcp>=1.0.0
+
+# Data validation and models
+pydantic>=2.0.0
+
+# AI model API client
+openai>=1.0.0
+
+# Environment variable management
+python-dotenv>=1.0.0
+
+# YAML config file parsing
+PyYAML>=6.0.0
+
+# HTTP request library (async, for DeepSeek client)
+httpx>=0.24.0
+
+# Async support
+asyncio>=3.4.3
+

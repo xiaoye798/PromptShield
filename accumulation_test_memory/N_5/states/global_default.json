@@ -1,0 +1,49 @@
+{
+  "ip_address": "accum_test_5",
+  "timestamp": "2026-04-21 12:43:39.071811",
+  "filesystem": {
+    "files": {},
+    "directories": {},
+    "permissions": {},
+    "links": {}
+  },
+  "users": {
+    "users": {},
+    "groups": {},
+    "shadow": {},
+    "sudoers": [],
+    "current_user": "root",
+    "login_history": []
+  },
+  "services": {
+    "services": {},
+    "processes": {}
+  },
+  "network": {
+    "interfaces": {},
+    "routes": [],
+    "connections": [],
+    "hosts": {},
+    "iptables_rules": [],
+    "nftables_rules": [],
+    "dns_servers": []
+  },
+  "packages": {
+    "installed_packages": {},
+    "available_packages": {}
+  },
+  "cron": {
+    "user_crontabs": {},
+    "system_cron_files": {},
+    "etc_crontab": [],
+    "anacrontab": [],
+    "at_jobs": []
+  },
+  "hostname": "honeypot",
+  "kernel_version": "5.4.0",
+  "os_version": "Ubuntu 20.04",
+  "uptime": 0,
+  "environment": {},
+  "kernel_modules": [],
+  "sysctl_params": {}
+}

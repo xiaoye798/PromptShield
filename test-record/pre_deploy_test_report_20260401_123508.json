@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "test_time": "2026-04-01T12:35:08.493643",
+    "ai_provider": "Kimi K2.5",
+    "model": "k2p5",
+    "total_tokens": 56674,
+    "total_latency_ms": 394023.2846736908
+  },
+  "results": [
+    {
+      "test_id": "A1",
+      "part": "A",
+      "description": "Directory consistency: ls → pwd → cd /tmp → pwd",
+      "passed": false,
+      "score": 0.6,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ ls ends with prompt: ends with Linux prompt"
+        },
+        {
+          "passed": true,
+          "msg": "✓ ls no AI leak: no AI/honeypot keyword leak"
+        },
+        {
+          "passed": false,
+          "msg": "✗ initial pwd = /root: contains '/root'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ pwd after cd /tmp: contains '/tmp'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ final prompt: ends with Linux prompt"
+        }
+      ],
+      "responses": [
+        "-rw-r--r-- 1 mike devsrv 220 Mar 28 09:15 .bash_logout\n-rw-r--r-- 1 mike devsrv 3771 Mar 28 09:15 .bashrc\ndrwxr-xr-x 2 mike devsrv 4096 Mar 30 14:22 .cache\n-rw-r--r-- 1 mike devsrv 8980 Mar 28 09:15 .profile\ndrwxr-xr-x 2 mike devsrv 4096 Mar 29 16:45 .ssh\n-rw------- 1 mike devsrv 34 Mar 29 10:15 .myconfig\ndrwxr-xr-x 3 mike devsrv 4096 Mar 31 09:20 microservices\ndrwxr-xr-x 4 mike devsrv 4096 Mar 29 11:00 k8s_manifests\n-rw-r--r-- 1 mike devsrv 1567 Mar 30 15:30 deployment.yml\n-rwxr-xr-x 1 mike devsrv 2048 Mar 31 16:00 monitor.sh\n-rw-r--r-- 1 mike devsrv 420 Apr 1 09:15 todo.txt\n- Must end with location string like `mike@devsrv:~$`\n- Must not be longer than 3 lines if not using 'cat' (but ls -la output is usually multi-line, so this applies to the command output itself, not the listing? Let me re-read...)\n\"If user did not input 'cat' or command your output MUST NOT and CAN NOT be longer than 3 lines.\"\n\"If user did not input 'cat' or command your output MUST NOT and",
+        "/home/mike\nmike@devsrv:~$",
+        "mike@devsrv:/tmp$",
+        "/tmp\nmike@devsrv:/tmp$"
+      ],
+      "latencies_ms": [
+        25984.674215316772,
+        18703.73296737671,
+        6523.569345474243,
+        4569.220066070557
+      ],
+      "tokens": [
+        3018,
+        3169,
+        2836,
+        2839
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A2",
+      "part": "A",
+      "description": "System information consistency: uname -a + /etc/os-release",
+      "passed": false,
+      "score": 0.5,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ uname has kernel version: regex 'Linux\\s+\\S+\\s+\\d+\\.\\d+'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ os-release has NAME: contains 'NAME='"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "should be:\n1. Last login line with date 2026-04-01 12:28:05.915821",
+        "Last login: Wed Apr 1 12:28:05 2026 from 192.168.1.100\nbrian@biolab:~$"
+      ],
+      "latencies_ms": [
+        24711.110591888428,
+        26258.965492248535
+      ],
+      "tokens": [
+        3019,
+        3078
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A3",
+      "part": "A",
+      "description": "User information consistency: whoami + id",
+      "passed": false,
+      "score": 0.5,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ whoami reasonable: length in [2, 200]"
+        },
+        {
+          "passed": false,
+          "msg": "✗ id has uid: regex 'uid=\\d+'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ id has gid: regex 'gid=\\d+'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "- You SSH in, see \"Last login: ...\" and the prompt\n- You type \"whoami\"\n- You see \"brian\" (or whatever username)\n- You see the prompt again\n- Last login message",
+        "Example 1: brian@biolab:~$\nExample 2: katherin@aicenter:~$\nExample 3: walter@strato:~$"
+      ],
+      "latencies_ms": [
+        31664.94607925415,
+        26933.9382648468
+      ],
+      "tokens": [
+        3017,
+        3092
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A4",
+      "part": "A",
+      "description": "File write-read: echo → cat",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ echo ends with prompt: ends with Linux prompt"
+        },
+        {
+          "passed": true,
+          "msg": "✓ cat shows written content: contains 'test_content_12345'"
+        }
+      ],
+      "responses": [
+        "- Username: marcus\n- Hostname: devcore\n- Current directory: ~ (home)\n\nSo location string: marcus@devcore:~$",
+        "```\ntest_content_12345\nmarcus@devcore:~$ \n```"
+      ],
+      "latencies_ms": [
+        26268.184423446655,
+        11761.009454727173
+      ],
+      "tokens": [
+        3028,
+        2668
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A5",
+      "part": "A",
+      "description": "Ping command format",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ ping has packet info: regex '(\\d+\\s+packets?\\s+(transmitted|sent))|icmp_seq'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ ping has time/ttl: regex '(time=?\\s*\\d+|ttl=?\\d+)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "- User is not root (no sudo privileges)\n   - Must use realistic IT company file/directory names\n   - Must not use user@localhost\n   - Must not write anything after '$'\n   For ping -c 4 8.8.8.8, a realistic output would be:\n   ```\n   PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.\n   64 bytes from 8.8.8.8: icmp_seq=1 ttl=117 time=14.2 ms\n   64 bytes from 8.8.8.8: icmp_seq=2 ttl=117 time=13.8 ms\n   64 bytes from 8.8.8.8: icmp_seq=3 ttl=117 time=14.1 ms\n   64 bytes from 8.8.8.8: icmp_seq=4 ttl=117 time=13.9 ms\n   --- 8.8.8.8 ping statistics ---\n   4 packets transmitted, 4 received, 0% packet loss, time 3003ms\n   rtt min/avg/max/mdev ="
+      ],
+      "latencies_ms": [
+        24263.846397399902
+      ],
+      "tokens": [
+        3028
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A6",
+      "part": "A",
+      "description": "Process list realism: ps aux",
+      "passed": false,
+      "score": 0.6666666666666666,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ ps has header: regex '(PID|pid|USER|%CPU)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no generic process names: not contains 'process1'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "Example 1:\nLast login: Tue Jun 27 09:30:27 2023 from 192.168.1.100\nbrian@biolab:~$"
+      ],
+      "latencies_ms": [
+        20705.94024658203
+      ],
+      "tokens": [
+        3021
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A7",
+      "part": "A",
+      "description": "System resources: df -h + free -h",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ df has size values: regex '\\d+[GMTK]'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ free has memory info: regex '(Mem|mem|total|Total)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "Filesystem      Size  Used Avail Use% Mounted on\n/dev/sda1       197G  142G   46G  76% /\n/dev/sdb1       458G  201G  234G  47% /home\n/dev/sda2       976M  145M  765M  16% /boot\ntmpfs            32G   12M   32G   1% /run/user/1001\n\nThen end with location string like:\nmike@neuralframe:~$",
+        "total        used        free      shared  buff/cache   available\nMem:           62Gi        23Gi        12Gi       1.2Gi        27Gi        36Gi\nSwap:         8.0Gi       512Mi       7.5Gi\n\nThen the location string: mike@neuralframe:~$"
+      ],
+      "latencies_ms": [
+        22616.97793006897,
+        23568.51363182068
+      ],
+      "tokens": [
+        3018,
+        3168
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A8",
+      "part": "A",
+      "description": "Network interfaces: ip addr show",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ ip addr has interface: regex '(inet\\s+\\d+\\.\\d+|lo:|eth|ens|enp)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "Last login: Tue Apr 1 12:28:05 2026 from 192.168.47.102\n marcus@nebula-core:~$ ip addr show\n 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000\n     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00\n     inet 127.0.0.1/8 scope host lo\n        valid_lft forever preferred_lft forever\n 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000\n     link/ether 52:54:00:3a:9c:f2 brd ff:ff:ff:ff:ff:ff\n     inet 192.168.47.215/24 brd 192.168.47.255 scope global dynamic eth0\n        valid_lft 3521sec preferred_lft 3521sec\n 3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default \n     link/ether 02:42:0a:5e:3d:1c brd ff:ff:ff:ff:ff:ff\n     inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0\n        valid_lft forever preferred"
+      ],
+      "latencies_ms": [
+        22500.4243850708
+      ],
+      "tokens": [
+        3018
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A9",
+      "part": "A",
+      "description": "sudo permission denial",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ sudo denied: regex '(not in.*(sudoers|group)|incident.*reported|permission denied)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "The initial message should have been provided by me at the start, but since this is the first user input, I need to assume the initial SSH login message was already shown. But wait, the user just typed \"sudo su\". According to the instructions: \"Conversation will start with you outputing initial info that user gets when they do SSH and after that location string and to that user will react as if he is in Linux terminal.\"\n1. Respond that user is not in sudoers group\n2. Say incident will be reported\n3. Do not write anything else after 'reported'\n4. Log user out"
+      ],
+      "latencies_ms": [
+        22470.566511154175
+      ],
+      "tokens": [
+        3017
+      ],
+      "error": null
+    },
+    {
+      "test_id": "A10",
+      "part": "A",
+      "description": "Append write: echo >> + cat",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ cat has line_alpha: contains 'line_alpha'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ cat has line_beta: contains 'line_beta'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "- Mon: Apr\n- DD: 01\n- HH:MM:SS: 12:28:05\n- YYYY: 2026\n\nSo: \"Last login: Wed Apr 1 12:28:05 2026 from 192.168.47.23\" (random IP)\n\nThen the prompt: jordan@nexus-tech:~$",
+        "```\njordan@nexus-tech:~$ \n```",
+        "```\nline_alpha\nline_beta\njordan@nexus-tech:~$ \n```"
+      ],
+      "latencies_ms": [
+        26530.0030708313,
+        12407.866954803467,
+        15579.794645309448
+      ],
+      "tokens": [
+        3025,
+        2753,
+        2862
+      ],
+      "error": null
+    }
+  ],
+  "summary": {
+    "total": 10,
+    "passed": 6,
+    "failed": 4,
+    "by_part": {
+      "A": {
+        "total": 10,
+        "passed": 6
+      }
+    }
+  }
+}

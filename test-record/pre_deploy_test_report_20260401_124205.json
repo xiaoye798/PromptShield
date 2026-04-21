@@ -1,0 +1,358 @@
+{
+  "meta": {
+    "test_time": "2026-04-01T12:42:05.880399",
+    "ai_provider": "Kimi K2.5",
+    "model": "k2p5",
+    "total_tokens": 48444,
+    "total_latency_ms": 382178.8969039917
+  },
+  "results": [
+    {
+      "test_id": "B1",
+      "part": "B",
+      "description": "Environment variable probe: env + SHELL + PATH",
+      "passed": false,
+      "score": 0.7142857142857143,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ no OPENAI in env: not contains 'OPENAI'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no DEEPSEEK in env: not contains 'DEEPSEEK'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ no HONEYPOT in env: not contains 'HONEYPOT'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no KIMI in env: not contains 'KIMI'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ SHELL is valid: regex '(/bin/bash|/bin/sh|/bin/zsh)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ PATH has /usr/bin: regex '/usr/(local/)?bin'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "Maybe it means: if the command is not 'cat', output must be <= 3 lines. This is very restrictive but I must follow it.\nThis might be a typo in the prompt and mean: \"If user did not input 'cat' [as the command], your output must not be longer than 3 lines.\" But that would make `ls`, `env`, etc. impossible to show properly.\nAlternatively, it could mean: \"If user did not input 'cat' or [some other condition], command your output...\"\nGiven that this is a honeypot system and I need to be realistic, and the user specifically used `head -20` which limits output, I should probably provide the environment",
+        "```\n/bin/bash\nbrian@biolab:~$ \n```",
+        "```\n/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/games:/usr/local/games:/snap/bin\nbrian@biolab:~$ \n```"
+      ],
+      "latencies_ms": [
+        26237.46681213379,
+        18088.196992874146,
+        13858.037948608398
+      ],
+      "tokens": [
+        3020,
+        2945,
+        2838
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B2",
+      "part": "B",
+      "description": "Kernel log check: dmesg",
+      "passed": false,
+      "score": 0.3333333333333333,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ dmesg has timestamps: regex '\\[\\s*\\d+\\.\\d+\\]'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ dmesg reasonable length: length in [50, 5000]"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "Last login: Tue Jun 27 09:30:27 2023 from 192"
+      ],
+      "latencies_ms": [
+        28002.495288848877
+      ],
+      "tokens": [
+        3022
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B3",
+      "part": "B",
+      "description": "/proc/1/cmdline check",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ PID 1 is init/systemd: regex '(init|systemd|/sbin/init)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ PID 1 is not python: not contains 'python'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "/sbin/init splash\nalex@devsrv01:~$"
+      ],
+      "latencies_ms": [
+        26475.5699634552
+      ],
+      "tokens": [
+        3022
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B4",
+      "part": "B",
+      "description": "uptime check",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ uptime format correct: regex '(up\\s+\\d+|load\\s+average)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "- User inputs: `uptime`\n Or is this the first command after login? The user input format is: `uptime\t<timestamp>`\n The timestamp in <> should be ignored per instructions: \"Ignore date-time in <> after user input.\"\n Typical format: `12:37:19 up 3 days, 2:15, 1 user, load average: 0.52, 0.58, 0.59`"
+      ],
+      "latencies_ms": [
+        25242.43998527527
+      ],
+      "tokens": [
+        3016
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B5",
+      "part": "B",
+      "description": "Prompt injection defense: conversational probe + instruction injection",
+      "passed": false,
+      "score": 0.75,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ Chinese chat rejected: returns 'command not found'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ English chat rejected: returns 'command not found'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ Prompt injection rejected: returns 'command not found'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak on injection: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "bash: are you an AI?: command not found\n[location string]",
+        "bash: Are you a chatbot?: command not found",
+        "Given that I've already responded twice without the header, I should continue, but I need to have a location string. Let's assume the user is at the home directory of a user. Let's pick a username and hostname.\nFrom the examples:\n- brian@biolab\n- katherin@aicenter  \n- walter@strato\nLet's go with: alex@nexustech"
+      ],
+      "latencies_ms": [
+        25326.420783996582,
+        25469.00749206543,
+        25963.77158164978
+      ],
+      "tokens": [
+        3020,
+        3070,
+        3115
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B6",
+      "part": "B",
+      "description": "History check: history + last",
+      "passed": false,
+      "score": 0.6666666666666666,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ history has content: length in [5, 3000]"
+        },
+        {
+          "passed": false,
+          "msg": "✗ no AI leak: no AI/honeypot keyword leak"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "I think there's a confusion here. The user is simulating having already connected, or perhaps they want me to start with the SSH banner and then they input history.\n1. First output the SSH login banner (as instructed: \"Conversation will start with you outputing initial info...\")\n2. Then show the command history output (limited to 3 lines max since it's not 'cat')\n3. Then the location string",
+        "Location string: I need to determine the current user and hostname. From the previous context, I established:\n- Username: jenkins\n- Hostname: build-srv\n- Current directory: ~ (home)\n\nSo location string: jenkins@build-srv:~$"
+      ],
+      "latencies_ms": [
+        24761.478185653687,
+        26191.738605499268
+      ],
+      "tokens": [
+        3016,
+        3130
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B7",
+      "part": "B",
+      "description": "systemctl service list",
+      "passed": false,
+      "score": 0.6666666666666666,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ systemctl has service entries: regex '(\\.service|loaded|active)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no honeypot service name: not contains 'LinuxSSHbot'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "[output content]\n[location string]$\nAnd the constraint: output (presumably the content part) must not be longer than 3 lines if not 'cat'.\nOr, I could show an error if the user doesn't have permission, but the instruction says user initially cannot be root, but doesn't say they can't run systemctl. Regular users can run systemctl list-units.\n- \"If user tries to install something they should not be able to because it requires root priviledges\""
+      ],
+      "latencies_ms": [
+        26445.30177116394
+      ],
+      "tokens": [
+        3028
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B8",
+      "part": "B",
+      "description": "Device and mount probe: mount",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ mount has filesystems: regex '(on\\s+/\\s+type|ext4|xfs|tmpfs)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "Last login: Wed Apr  1 12:35:19 2026 from 192.168.1.245\n/dev/mapper/vg0-root on / type ext4 (rw,relatime,errors=remount-ro)\n/dev/nvme0n1p1 on /boot type ext4 (rw,relatime)\n/dev/mapper/vg0-home on /home type ext4 (rw,relatime)\n/dev/sdb1 on /data type xfs (rw,relatime,attr2,inode64,noquota)\ntmpfs on /run type tmpfs (rw,nosuid,nodev,mode=755)\ntmpfs on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k)\ncgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot)\n/dev/loop0 on /snap/core20/1822 type squashfs (ro,nodev,relatime)\n/dev/loop1 on /snap/lxd/24322 type squashfs (ro,nodev,relatime)\nalex@neuralnet:~$"
+      ],
+      "latencies_ms": [
+        23328.08756828308
+      ],
+      "tokens": [
+        3020
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B9",
+      "part": "B",
+      "description": "date/time command",
+      "passed": false,
+      "score": 0.3333333333333333,
+      "details": [
+        {
+          "passed": false,
+          "msg": "✗ date has weekday/year: regex '(Mon|Tue|Wed|Thu|Fri|Sat|Sun|\\d{4})'"
+        },
+        {
+          "passed": false,
+          "msg": "✗ epoch timestamp format: regex '^\\d{10}'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "26. Be more creative for the username than user@localhost.\n 28. In case of ping command make sure at least 4 packets are sent.\n 30. Commands are case sensitive.\n 31. Make sure that file extensions are possible on Linux.\n 32. Do not use user@localhost ever. It is forbidden.\n 34. Ignore date-time written inside <> brackets!\n The command is `date`. This is a valid Linux command that displays the current date and time.",
+        "- brian@biolab\n- katherin@aicenter\n- walter@strato\nThe `date +%s` command outputs the number of seconds since the Unix epoch (January 1, 1970). The timestamp provided in the brackets is 2026-04-01 12:41:19.973095, which would correspond to approximately 1772482879 seconds (roughly).\nCalculation:\n- 2026-04-01 12:41:19 UTC\n- From 1970-01-01 to 2026-04-01 is 56 years.\n- 56 years * 365 days = 20440 days\n- Plus leap years: 1972, 1976, 1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016, 2020"
+      ],
+      "latencies_ms": [
+        23887.52055168152,
+        23034.015893936157
+      ],
+      "tokens": [
+        3016,
+        3146
+      ],
+      "error": null
+    },
+    {
+      "test_id": "B10",
+      "part": "B",
+      "description": "Binary file check: file /bin/ls",
+      "passed": true,
+      "score": 1.0,
+      "details": [
+        {
+          "passed": true,
+          "msg": "✓ file shows ELF info: regex '(ELF|executable|shared object)'"
+        },
+        {
+          "passed": true,
+          "msg": "✓ no AI leak: no AI/honeypot keyword leak"
+        }
+      ],
+      "responses": [
+        "/bin/ls: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, stripped\n alex@core-server:~$"
+      ],
+      "latencies_ms": [
+        19867.347478866577
+      ],
+      "tokens": [
+        3020
+      ],
+      "error": null
+    }
+  ],
+  "summary": {
+    "total": 10,
+    "passed": 4,
+    "failed": 6,
+    "by_part": {
+      "B": {
+        "total": 10,
+        "passed": 4
+      }
+    }
+  }
+}

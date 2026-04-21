@@ -1,0 +1,35 @@
+# Python caches and environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+
+# Local secrets
+.env
+.env.secrets
+
+# Build and packaging output
+build/
+dist/
+*.egg-info/
+
+# Local logs and transient runtime files
+*.log
+history.txt
+api_errors.log
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Paper authoring artifacts are not part of this public bundle
+*.aux
+*.bbl
+*.blg
+*.out
+*.synctex.gz

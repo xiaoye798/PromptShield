@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  promptshield:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: promptshield-honeypot
+    restart: unless-stopped
+    ports:
+      # Honeypot listens on public port 22 (attracts SSH scanners)
+      - "0.0.0.0:22:2222"
+      # Telnet honeypot on port 23 (attracts Mirai/IoT botnets)
+      - "0.0.0.0:23:2323"
+    # API Key injected via env_file, not in environment block (prevents docker inspect leak)
+    env_file:
+      - .env.secrets   # Contains DEEPSEEK_API_KEY / OPENAI_API_KEY, added to .gitignore
+    environment:
+      API_PROVIDER: ${API_PROVIDER:-deepseek}
+      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
+      DEEPSEEK_MODEL: ${DEEPSEEK_MODEL:-deepseek-chat}
+      KIMI_BASE_URL: ${KIMI_BASE_URL:-https://api.kimi.com/coding/v1}
+      KIMI_MODEL: ${KIMI_MODEL:-k2p5}
+      DEBUG_MODE: ${DEBUG_MODE:-false}
+      TRACE_MODE: ${TRACE_MODE:-false}
+      GLOBAL_SINGLETON_MODE: ${GLOBAL_SINGLETON_MODE:-true}
+    volumes:
+      # State persistence (retain honeypot memory across container restarts)
+      - honeypot_memory:/app/honeypot_memory
+      # Log persistence
+      - honeypot_logs:/app/logs
+    networks:
+      - honeypot_net
+    # Resource limits: both top-level fields (standalone compose) and deploy block (Swarm)
+    mem_limit: 512m
+    cpus: 1.0
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1.0'
+    healthcheck:
+      # Use nc (netcat-openbsd installed in image), avoids bash /dev/tcp dependency
+      test: ["CMD", "nc", "-z", "localhost", "2222"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE
+      - SETUID
+      - SETGID
+      - CHOWN
+      - DAC_OVERRIDE
+      - SYS_CHROOT
+      - AUDIT_WRITE
+      - SYS_CHROOT
+      - AUDIT_WRITE
+    logging:
+      driver: json-file
+      options:
+        max-size: "50m"
+        max-file: "5"
+        compress: "true"
+
+volumes:
+  honeypot_memory:
+    driver: local
+  honeypot_logs:
+    driver: local
+
+networks:
+  honeypot_net:
+    driver: bridge
+    driver_opts:
+      # Named bridge for precise iptables egress rules
+      com.docker.network.bridge.name: honeypot0

@@ -1,0 +1,25 @@
+row,scenario
+1,T1098.004 SSH Keys
+2,T1136.001 Local Acct
+3,T1053.003 Cron
+4,T1543.002 Systemd
+5,T1546.004 Shell Cfg
+6,T1037.004 RC Scripts
+7,T1078.003 Valid Acct
+8,T1505.003 Web Shell
+9,T1574.006 Linker Hijack
+10,T1556.003 PAM Backdoor
+11,T1059.004 Gafgyt Dropper
+12,T1071.001 IRC Botnet
+13,T1499 DDoS Tool
+14,T1021.004 SSH Worm
+15,T1574.006 LD_PRELOAD Var.
+16,T1037.004 RC Local Var.
+17,T1505.003 Web Shell Var.
+18,T1548.001 SUID Backdoor
+19,T1552.004 SSH Key Theft
+20,T1552.001 Env Var Exfil
+21,T1560 Data Archive
+22,T1071.004 DNS Tunneling
+23,T1564.001 Process Hiding
+24,T1059 Reverse Shell

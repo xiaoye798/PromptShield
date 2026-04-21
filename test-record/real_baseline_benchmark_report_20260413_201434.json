@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "timestamp": "20260413_201434",
+    "model": "deepseek-chat",
+    "noise_level": 0,
+    "rows": [
+      2
+    ],
+    "systems": [
+      "Beelzebub"
+    ],
+    "n_reps": 1,
+    "beelzebub_reset_between_sessions": true,
+    "notes": {
+      "shelLM": "Uses real shelLM personality prompt and history.txt continuation semantics.",
+      "Beelzebub": "Uses real Beelzebub buildPrompt/history-store semantics with DeepSeek backend.",
+      "PromptShield": "Uses existing MCP-backed implementation from appendix_benchmark.py."
+    }
+  },
+  "results": {
+    "Beelzebub": [
+      {
+        "row": 2,
+        "label": "T1136.001 Local Acct",
+        "avg_kr": 1.0,
+        "avg_sfs": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 1.0,
+            "tokens": 1387,
+            "latency_ms": 15075.9,
+            "session_a_responses": [
+              {
+                "cmd": "useradd -m -s /bin/bash -G sudo sysadm1n",
+                "response": "useradd: Permission denied.",
+                "tokens": 120,
+                "latency_ms": 1998.2974529266357
+              },
+              {
+                "cmd": "echo 'sysadm1n:Str0ngP@ss!' | chpasswd",
+                "response": "chpasswd: (user sysadm1n) pam_chauthtok() failed, errno=1.\nAuthentication token manipulation error\nchpasswd: error detected, changes ignored",
+                "tokens": 180,
+                "latency_ms": 2540.926456451416
+              },
+              {
+                "cmd": "echo \"sysadm1n ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers",
+                "response": "tee: /etc/sudoers: Permission denied",
+                "tokens": 217,
+                "latency_ms": 1256.4780712127686
+              },
+              {
+                "cmd": "id sysadm1n",
+                "response": "uid=1001(sysadm1n) gid=1001(sysadm1n) groups=1001(sysadm1n),27(sudo)",
+                "tokens": 258,
+                "latency_ms": 2249.0456104278564
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "id sysadm1n",
+                "response": "uid=1000(sysadm1n) gid=1000(sysadm1n) groups=1000(sysadm1n),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),120(lpadmin),132(lxd),133(sambashare)",
+                "tokens": 168,
+                "latency_ms": 3291.255235671997
+              },
+              {
+                "cmd": "grep sysadm1n /etc/passwd",
+                "response": "sysadm1n:x:1000:1000:sysadm1n:/home/sysadm1n:/bin/bash",
+                "tokens": 209,
+                "latency_ms": 1985.844373703003
+              },
+              {
+                "cmd": "grep sysadm1n /etc/sudoers",
+                "response": "grep: /etc/sudoers: Permission denied",
+                "tokens": 235,
+                "latency_ms": 1754.0500164031982
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

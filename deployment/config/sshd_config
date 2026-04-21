@@ -1,0 +1,55 @@
+# PromptShield Honeypot - OpenSSH configuration
+# Honeypot-specific sshd_config listening on port 2222
+# Route every session to LinuxSSHbot_mcp.py
+
+Port 2222
+ListenAddress 0.0.0.0
+
+# Authentication: allow password logins and disable public keys for low-friction access
+PasswordAuthentication yes
+PermitEmptyPasswords no
+PubkeyAuthentication no
+ChallengeResponseAuthentication no
+UsePAM yes
+
+# Force all sessions into the honeypot program
+ForceCommand /app/honeypot_command.sh
+
+# Safety controls that prevent real system access
+X11Forwarding no
+AllowTcpForwarding no
+PermitTunnel no
+GatewayPorts no
+AllowAgentForwarding no
+PermitUserEnvironment no
+
+# Session timeouts tuned to allow longer attacker interaction
+ClientAliveInterval 300
+ClientAliveCountMax 3
+LoginGraceTime 120
+MaxAuthTries 20
+MaxSessions 50
+MaxStartups 100:30:200
+
+# Disable OpenSSH 10.0 source-IP penalties so the honeypot accepts all connections
+PerSourcePenalties no
+
+# Logging for attacker activity
+SyslogFacility AUTH
+LogLevel VERBOSE
+
+# Allow root login because ForceCommand keeps the session constrained
+PermitRootLogin yes
+
+# Banner used to resemble a real server
+Banner /etc/ssh/honeypot_banner
+
+# Host Keys
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+# Allow arbitrary usernames because ForceCommand confines them to the honeypot
+# AllowUsers honeypot  # Disabled to accept arbitrary users
+
+# Key exchange algorithms chosen for broad client and automation compatibility
+KexAlgorithms curve25519-sha256,curve25519-sha256@libssh.org,ecdh-sha2-nistp256,ecdh-sha2-nistp384,ecdh-sha2-nistp521,diffie-hellman-group14-sha256,diffie-hellman-group16-sha512,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha256

@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "timestamp": "20260413_201814",
+    "model": "deepseek-chat",
+    "noise_level": 0,
+    "rows": [
+      2
+    ],
+    "systems": [
+      "Beelzebub"
+    ],
+    "n_reps": 1,
+    "beelzebub_reset_between_sessions": false,
+    "notes": {
+      "shelLM": "Uses real shelLM personality prompt and history.txt continuation semantics.",
+      "Beelzebub": "Uses real Beelzebub buildPrompt/history-store semantics with DeepSeek backend.",
+      "PromptShield": "Uses existing MCP-backed implementation from appendix_benchmark.py."
+    }
+  },
+  "results": {
+    "Beelzebub": [
+      {
+        "row": 2,
+        "label": "T1136.001 Local Acct",
+        "avg_kr": 1.0,
+        "avg_sfs": 1.0,
+        "avg_strict_kr": 0.0,
+        "avg_strict_sfs": 0.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 1.0,
+            "implant_viable": false,
+            "strict_kr": 0.0,
+            "strict_sfs": 0.0,
+            "tokens": 1579,
+            "latency_ms": 12802.3,
+            "session_a_responses": [
+              {
+                "cmd": "useradd -m -s /bin/bash -G sudo sysadm1n",
+                "response": "useradd: Permission denied.",
+                "tokens": 120,
+                "latency_ms": 1652.130365371704
+              },
+              {
+                "cmd": "echo 'sysadm1n:Str0ngP@ss!' | chpasswd",
+                "response": "chpasswd: (user sysadm1n) pam_chauthtok() failed, error:\nAuthentication token manipulation error\nchpasswd: failed to change password",
+                "tokens": 176,
+                "latency_ms": 2350.823163986206
+              },
+              {
+                "cmd": "echo \"sysadm1n ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers",
+                "response": "tee: /etc/sudoers: Permission denied",
+                "tokens": 213,
+                "latency_ms": 1243.567705154419
+              },
+              {
+                "cmd": "id sysadm1n",
+                "response": "id: ‘sysadm1n’: no such user",
+                "tokens": 233,
+                "latency_ms": 1641.2830352783203
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "id sysadm1n",
+                "response": "id: ‘sysadm1n’: no such user",
+                "tokens": 253,
+                "latency_ms": 2240.5083179473877
+              },
+              {
+                "cmd": "grep sysadm1n /etc/passwd",
+                "response": "grep: /etc/passwd: Permission denied",
+                "tokens": 279,
+                "latency_ms": 2143.9335346221924
+              },
+              {
+                "cmd": "grep sysadm1n /etc/sudoers",
+                "response": "grep: /etc/sudoers: Permission denied",
+                "tokens": 305,
+                "latency_ms": 1530.057430267334
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

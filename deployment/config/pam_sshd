@@ -1,0 +1,5 @@
+# PAM configuration for SSH - Allow any password
+auth       sufficient   pam_permit.so
+account    sufficient   pam_permit.so
+session    optional     pam_loginuid.so
+session    optional     pam_unix.so

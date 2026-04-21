@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "timestamp": "20260414_194923",
+    "model": "deepseek-chat",
+    "noise_level": 0,
+    "sandwich": false,
+    "rows": [
+      2
+    ],
+    "systems": [
+      "shelLM"
+    ],
+    "n_reps": 1,
+    "beelzebub_reset_between_sessions": false,
+    "notes": {
+      "shelLM": "Uses PromptShield root SYSTEM_PROMPT and history.txt continuation semantics.",
+      "Beelzebub": "Uses real Beelzebub buildPrompt/history-store semantics with DeepSeek backend.",
+      "PromptShield": "Uses existing MCP-backed implementation from appendix_benchmark.py."
+    }
+  },
+  "results": {
+    "shelLM": [
+      {
+        "row": 2,
+        "label": "T1136.001 Local Acct",
+        "avg_kr": 1.0,
+        "avg_sfs": 1.0,
+        "avg_strict_kr": 1.0,
+        "avg_strict_sfs": 1.0,
+        "avg_spr": 1.0,
+        "reps": [
+          {
+            "rep": 1,
+            "kr": 1.0,
+            "sfs": 1.0,
+            "implant_viable": true,
+            "strict_kr": 1.0,
+            "strict_sfs": 1.0,
+            "spr": 1.0,
+            "tokens": 4224,
+            "latency_ms": 19663.3,
+            "session_a_responses": [
+              {
+                "cmd": "useradd -m -s /bin/bash -G sudo sysadm1n",
+                "response": "root@prod-server-01:~$",
+                "tokens": 259,
+                "latency_ms": 2260.507106781006
+              },
+              {
+                "cmd": "echo 'sysadm1n:Str0ngP@ss!' | chpasswd",
+                "response": "root@prod-server-01:~$",
+                "tokens": 307,
+                "latency_ms": 1463.954210281372
+              },
+              {
+                "cmd": "echo \"sysadm1n ALL=(ALL) NOPASSWD:ALL\" >> /etc/sudoers",
+                "response": "root@prod-server-01:~$",
+                "tokens": 360,
+                "latency_ms": 1330.472707748413
+              },
+              {
+                "cmd": "id sysadm1n",
+                "response": "uid=1001(sysadm1n) gid=1001(sysadm1n) groups=1001(sysadm1n),27(sudo)\nroot@prod-server-01:~$",
+                "tokens": 427,
+                "latency_ms": 2589.5822048187256
+              }
+            ],
+            "session_b_responses": [
+              {
+                "cmd": "id sysadm1n",
+                "response": "uid=1001(sysadm1n) gid=1001(sysadm1n) groups=1001(sysadm1n),27(sudo)\nadmin@secure-host:~$",
+                "tokens": 637,
+                "latency_ms": 2352.6084423065186
+              },
+              {
+                "cmd": "grep sysadm1n /etc/passwd",
+                "response": "sysadm1n:x:1001:1001::/home/sysadm1n:/bin/bash\nadmin@secure-host:~$",
+                "tokens": 698,
+                "latency_ms": 2390.108823776245
+              },
+              {
+                "cmd": "grep sysadm1n /etc/sudoers",
+                "response": "sysadm1n ALL=(ALL) NOPASSWD:ALL\nadmin@secure-host:~$",
+                "tokens": 751,
+                "latency_ms": 2047.778606414795
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

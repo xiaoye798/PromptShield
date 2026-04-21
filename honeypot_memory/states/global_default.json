@@ -1,0 +1,263 @@
+{
+  "ip_address": "global_default",
+  "timestamp": "2025-12-09 20:56:35.449604",
+  "filesystem": {
+    "files": {
+      "/root/test.txt": {
+        "content": "",
+        "permissions": "644",
+        "owner": "root",
+        "size": 0,
+        "created_at": "2025-12-09T20:13:25.411754",
+        "modified_at": "2025-12-09T20:13:25.411754"
+      },
+      "/root/text.txt": {
+        "content": "",
+        "permissions": "644",
+        "owner": "root",
+        "size": 0,
+        "created_at": "2025-12-09T20:14:23.280246",
+        "modified_at": "2025-12-09T20:14:23.280246"
+      },
+      "/tmp/test.txt": {
+        "content": "",
+        "permissions": "644",
+        "owner": "root",
+        "size": 0,
+        "created_at": "2025-12-09T20:27:26.951440",
+        "modified_at": "2025-12-09T20:27:26.951440"
+      },
+      "/tmp/file": {
+        "content": "",
+        "permissions": "644",
+        "owner": "root",
+        "size": 0,
+        "created_at": "2025-12-09T20:54:14.675117",
+        "modified_at": "2025-12-09T20:54:14.675117"
+      },
+      "/Desktop/test.txt": {
+        "content": "",
+        "permissions": "644",
+        "owner": "root",
+        "size": 0,
+        "created_at": "2025-12-09T20:56:16.396890",
+        "modified_at": "2025-12-09T20:56:16.396890"
+      }
+    },
+    "directories": {
+      "/": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/root": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/home": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/tmp": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/var": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/etc": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/usr": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/bin": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/sbin": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/opt": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/srv": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/mnt": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/media": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/dev": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/proc": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "/sys": {
+        "permissions": "755",
+        "owner": "root",
+        "created_at": "2025-12-09T19:06:40.794212"
+      }
+    },
+    "permissions": {},
+    "links": {}
+  },
+  "users": {
+    "users": {
+      "root": {
+        "uid": 0,
+        "gid": 0,
+        "home": "/root",
+        "shell": "/bin/bash",
+        "created_at": "2025-12-09T19:06:40.794212"
+      }
+    },
+    "groups": {},
+    "shadow": {
+      "root": {
+        "password": "!",
+        "last_change": 19000,
+        "min": 0,
+        "max": 99999,
+        "warn": 7,
+        "inactive": "",
+        "expire": ""
+      }
+    },
+    "sudoers": [],
+    "current_user": "root",
+    "login_history": []
+  },
+  "services": {
+    "services": {
+      "ssh": {
+        "status": "active",
+        "enabled": true,
+        "unit_content": "",
+        "created_at": "2025-12-09T19:06:40.794212"
+      },
+      "cron": {
+        "status": "active",
+        "enabled": true,
+        "unit_content": "",
+        "created_at": "2025-12-09T19:06:40.794212"
+      }
+    },
+    "processes": {}
+  },
+  "network": {
+    "interfaces": {},
+    "routes": [],
+    "connections": [],
+    "hosts": {},
+    "iptables_rules": [],
+    "nftables_rules": [],
+    "dns_servers": []
+  },
+  "packages": {
+    "installed_packages": {
+      "bash": {
+        "version": "latest",
+        "manager": "apt",
+        "installed_at": "2025-12-09T19:06:40.794212"
+      },
+      "coreutils": {
+        "version": "latest",
+        "manager": "apt",
+        "installed_at": "2025-12-09T19:06:40.794212"
+      },
+      "grep": {
+        "version": "latest",
+        "manager": "apt",
+        "installed_at": "2025-12-09T19:06:40.794212"
+      },
+      "sed": {
+        "version": "latest",
+        "manager": "apt",
+        "installed_at": "2025-12-09T19:06:40.794212"
+      },
+      "awk": {
+        "version": "latest",
+        "manager": "apt",
+        "installed_at": "2025-12-09T19:06:40.794212"
+      },
+      "vim": {
+        "version": "latest",
+        "manager": "apt",
+        "installed_at": "2025-12-09T19:06:40.794212"
+      },
+      "nano": {
+        "version": "latest",
+        "manager": "apt",
+        "installed_at": "2025-12-09T19:06:40.794212"
+      },
+      "systemd": {
+        "version": "latest",
+        "manager": "apt",
+        "installed_at": "2025-12-09T19:06:40.794212"
+      },
+      "openssh-server": {
+        "version": "latest",
+        "manager": "apt",
+        "installed_at": "2025-12-09T19:06:40.794212"
+      },
+      "curl": {
+        "version": "latest",
+        "manager": "apt",
+        "installed_at": "2025-12-09T19:06:40.794212"
+      },
+      "wget": {
+        "version": "latest",
+        "manager": "apt",
+        "installed_at": "2025-12-09T19:06:40.794212"
+      }
+    },
+    "available_packages": {}
+  },
+  "cron": {
+    "user_crontabs": {},
+    "system_cron_files": {},
+    "etc_crontab": [],
+    "anacrontab": [],
+    "at_jobs": []
+  },
+  "hostname": "honeypot",
+  "kernel_version": "5.4.0-42-generic",
+  "os_version": "Ubuntu 20.04.1 LTS",
+  "uptime": 0,
+  "environment": {
+    "HOME": "/root",
+    "SHELL": "/bin/bash",
+    "USER": "root",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  },
+  "kernel_modules": [],
+  "sysctl_params": {}
+}
