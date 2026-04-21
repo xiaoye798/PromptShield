@@ -1,0 +1,21 @@
+
+
+--- Session Started at 2026-04-16 03:24:08.953014 ---
+root@server:~# whoami	<2026-04-16 03:24:08.960485>
+```bash
+Last login: Wed Apr 16 03:24:08 2026 from 192.168.1.100
+brian@ailab:~$ whoami
+brian
+brian@ailab:~$ 
+``` uname -a	<2026-04-16 03:24:23.137716>
+```bash
+Linux ailab 5.15.0-91-generic #101-Ubuntu SMP Tue Nov 14 13:30:08 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
+brian@ailab:~$ 
+``` id	<2026-04-16 03:24:38.679302>
+```bash
+uid=1000(brian) gid=1000(brian) groups=1000(brian)
+brian@ailab:~$ 
+``` exit	<2026-04-16 03:24:53.829637>
+```bash
+Connection to ailab closed.
+```
