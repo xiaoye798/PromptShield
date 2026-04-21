@@ -15,13 +15,4 @@ Row mapping rule:
 - Table row n maps to the JSON object with "row": n in each source file.
 - The 24 scenario labels are aligned across all five files.
 
-Average row mapping:
-
-- shelLM KR_I: 0.8681 -> 0.87
-- shelLM KR_N: 0.8681 -> 0.87
-- shelLM Lat.(s): 9.0
-- Beelz. KR_I: 0.2569 -> 0.26
-- PromptShield KR_I: 0.9167 -> 0.92
-- PromptShield KR_N: 0.9167 -> 0.92
-- PromptShield Lat.(s): 9.9
 
