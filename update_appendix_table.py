@@ -33,7 +33,7 @@ memgpt_data = [
     (0.50, 56.8),   # 24 T1059
 ]
 
-tex_path = r"c:\Users\H7946\Desktop\Raid_Paper\paper\samplepaper.tex"
+tex_path = r"xx.tex"
 
 with open(tex_path, 'r', encoding='utf-8') as f:
     content = f.read()
